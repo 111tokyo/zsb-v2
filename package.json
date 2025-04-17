@@ -1,6 +1,6 @@
 {
   "name": "ts-quickstart-boilerplate",
-  "version": "0.1.0",
+  "version": "DEV",
   "description": "A typescript boilerplate to setup quickly a new project",
   "authors": "111tokyo",
   "license": "ISC",
@@ -10,31 +10,33 @@
     "boilerplate",
     "quickstart"
   ],
-  "main": "dist/main.js",
+  "main": "./.build/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build",
-    "dev": "nodemon --exec ts-node ./main.ts",
-    "start": "node -r module-alias/register ./.build/main.js",
+    "build": "tsc",
+    "dev": "tsc && node .",
+    "start": "node .",
     "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
-    "db:migrate": "prisma migrate dev",
-    "db:generate": "prisma generate",
-    "db:studio": "prisma studio"
+    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate --config=./src/db/drizzle-dev.config.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "@prisma/client": "^6.4.1",
-    "@types/node": "^22.13.5",
-    "module-alias": "^2.2.3",
-    "nodemon": "^3.1.9",
+    "@types/node": "^22.14.1",
+    "drizzle-kit": "^0.30.6",
     "prettier": "^3.5.3",
-    "prisma": "^6.4.1",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3",
+    "tslib": "^2.8.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
     "zod": "^3.24.2"
   },
-  "_moduleAliases": {
-    "@": "./.build"
+  "dependencies": {
+    "@libsql/client": "^0.15.3",
+    "discord-rpc.ts": "^0.2.7",
+    "discord.js": "^14.18.0",
+    "discord.js-selfbot-v13": "^3.6.1",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.41.0"
   }
 }
