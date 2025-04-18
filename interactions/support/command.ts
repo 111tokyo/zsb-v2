@@ -3,11 +3,12 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ChatInputCommandInteraction,
+  MessageFlags,
   SlashCommandBuilder,
 } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { SlashCommand } from '../../src/types/interactions';
-import config from "../../src/config"
+import config from '../../src/config';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('support')
@@ -15,18 +16,21 @@ export const slashCommand: SlashCommand = {
     .setDescriptionLocalization('fr', 'Permet de voir le serveur support ZSB'),
 
   execute: async (
-    _selfbotUser: SelfbotUser,
+    selfbotUser: SelfbotUser,
     interaction: ChatInputCommandInteraction,
   ) => {
-    const support = new ActionRowBuilder<ButtonBuilder>().addComponents( 
+    const support = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-      .setStyle(ButtonStyle.Link)
-      .setLabel('Serveur support')
-      .setURL(config.supportServerInvite)
-    )
+        .setStyle(ButtonStyle.Link)
+        .setLabel(
+          selfbotUser.lang === 'fr' ? 'Serveur support' : 'Support server',
+        )
+        .setURL(config.supportServerInvite),
+    );
 
-    await interaction.reply({ 
-      components: [support] 
-    })
+    await interaction.reply({
+      components: [support],
+      flags: MessageFlags.Ephemeral,
+    });
   },
 };

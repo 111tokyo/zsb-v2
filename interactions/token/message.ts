@@ -24,8 +24,8 @@ export const messageCommand: MessageCommand = {
     if (pvMessage) {
       await message.edit(
         selfbotUser.lang === 'fr'
-          ? `**Votre token discord a été envoyé ici: ${pvMessage.url}**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**Your discord token has been sent here: ${pvMessage.url}**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Votre token discord: ${pvMessage.url}**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+          : `**Your discord token: ${pvMessage.url}**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
       );
       setTimeout(async () => {
         await pvMessage.delete().catch(() => null);

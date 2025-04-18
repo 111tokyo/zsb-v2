@@ -5,6 +5,7 @@ export const selfbot = new Selfbot();
 
 (async () => {
   const loginResult = await selfbot.login(config.clientToken);
+
   if (loginResult === 'INVALID_TOKEN') {
     console.error('[ERROR] Selfbot login failed!');
     process.exit(1);
