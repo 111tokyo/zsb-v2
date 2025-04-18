@@ -13,11 +13,11 @@ export const slashCommand: SlashCommand = {
     .setDescriptionLocalization('fr', 'Permet de voir la latence du selfbot.'),
 
   execute: async (
-    _selfbotUser: SelfbotUser,
+    selfbotUser: SelfbotUser,
     interaction: ChatInputCommandInteraction,
   ) => {
     await interaction.reply({
-      content: `Pong! **\`${interaction.client.ws.ping}\`ms**`,
+      content: `Pong! **\`${selfbotUser.ws.ping}\`ms**`,
       flags: MessageFlags.Ephemeral,
     });
 
