@@ -1,6 +1,9 @@
 import { time } from 'discord.js';
 import { MessageCommand } from '../../src/types/interactions';
 import { VoiceBasedChannel } from 'discord.js-selfbot-v13';
+import db from '../../src/db';
+import { selfbotUsersTable } from '../../src/db/schema';
+import { eq } from 'drizzle-orm';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, args: string[]) {
@@ -56,5 +59,22 @@ export const messageCommand: MessageCommand = {
       });
       return;
     }
+
+    selfbotUser.voiceStateOptions.voiceChannelId = channel.id;
+
+    await message.edit({
+      content:
+        selfbotUser.lang === 'fr'
+          ? `**Vous avez rejoint ${channel} avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+          : `**You've succesfully joined ${channel}**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+    });
+
+    await db
+      .update(selfbotUsersTable)
+      .set({
+        voiceStateOptions: JSON.stringify(selfbotUser.voiceStateOptions),
+      })
+      .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
+      .execute();
   },
 };
