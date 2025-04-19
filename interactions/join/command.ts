@@ -39,9 +39,9 @@ export const slashCommand: SlashCommand = {
 
     const voiceConnection = await selfbotUser.voice
       .joinChannel(channel, {
-        selfDeaf: selfbotUser.voiceStateOptions.selfDeaf,
-        selfMute: selfbotUser.voiceStateOptions.selfMute,
-        selfVideo: selfbotUser.voiceStateOptions.selfVideo,
+        selfDeaf: selfbotUser.voiceOptions.selfDeaf,
+        selfMute: selfbotUser.voiceOptions.selfMute,
+        selfVideo: selfbotUser.voiceOptions.selfVideo,
       })
       .catch(() => null);
 
@@ -56,7 +56,7 @@ export const slashCommand: SlashCommand = {
       return;
     }
 
-    selfbotUser.voiceStateOptions.voiceChannelId = channel.id;
+    selfbotUser.voiceOptions.voiceChannelId = channel.id;
 
     await interaction.reply({
       content:
@@ -69,7 +69,7 @@ export const slashCommand: SlashCommand = {
     await db
       .update(selfbotUsersTable)
       .set({
-        voiceStateOptions: JSON.stringify(selfbotUser.voiceStateOptions),
+        voiceOptions: JSON.stringify(selfbotUser.voiceOptions),
       })
       .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
       .execute();

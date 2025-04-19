@@ -18,8 +18,8 @@
     "start": "node .",
     "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
-    "db:migrate": "drizzle-kit migrate",
-    "db:generate": "drizzle-kit generate --config=./src/db/drizzle-dev.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=./src/db/drizzle.config.ts",
+    "db:generate": "drizzle-kit generate --config=./src/db/drizzle.config.ts",
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {

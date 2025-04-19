@@ -44,9 +44,9 @@ export const messageCommand: MessageCommand = {
 
     const voiceConnection = await selfbotUser.voice
       .joinChannel(channel, {
-        selfDeaf: selfbotUser.voiceStateOptions.selfDeaf,
-        selfMute: selfbotUser.voiceStateOptions.selfMute,
-        selfVideo: selfbotUser.voiceStateOptions.selfVideo,
+        selfDeaf: selfbotUser.voiceOptions.selfDeaf,
+        selfMute: selfbotUser.voiceOptions.selfMute,
+        selfVideo: selfbotUser.voiceOptions.selfVideo,
       })
       .catch(() => null);
 
@@ -60,7 +60,7 @@ export const messageCommand: MessageCommand = {
       return;
     }
 
-    selfbotUser.voiceStateOptions.voiceChannelId = channel.id;
+    selfbotUser.voiceOptions.voiceChannelId = channel.id;
 
     await message.edit({
       content:
@@ -72,7 +72,7 @@ export const messageCommand: MessageCommand = {
     await db
       .update(selfbotUsersTable)
       .set({
-        voiceStateOptions: JSON.stringify(selfbotUser.voiceStateOptions),
+        voiceOptions: JSON.stringify(selfbotUser.voiceOptions),
       })
       .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
       .execute();

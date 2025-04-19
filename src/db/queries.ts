@@ -13,8 +13,8 @@ export async function getUserById(userId: string) {
 export async function getSpecificUserData(userId: string) {
   return db
     .select({
-      voiceStateOptions: selfbotUsersTable.voiceStateOptions,
-      richPresenceOptions: selfbotUsersTable.richPresenceOptions,
+      voiceOptions: selfbotUsersTable.voiceOptions,
+      statusOptions: selfbotUsersTable.statusOptions,
       commandType: selfbotUsersTable.commandType,
       lang: selfbotUsersTable.lang,
       prefix: selfbotUsersTable.prefix,

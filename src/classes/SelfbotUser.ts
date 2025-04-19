@@ -8,18 +8,18 @@ import { getSpecificUserData, getUserById } from '../db/queries';
 import { loadRichPresence } from '../loaders/richpresence';
 import { Event } from '../types/event';
 import { CommandType, LangType } from '../types/interactions';
-import { RichPresenceOptions } from '../types/richPresenceOptions';
-import { VoiceStateOptions } from '../types/voiceStateOptions';
+import { statusOptions } from '../types/statusOptions';
+import { voiceOptions } from '../types/voiceOptions';
 
 class SelfbotUser extends Client {
-  public voiceStateOptions: VoiceStateOptions = {
+  public voiceOptions: voiceOptions = {
     voiceChannelId: null,
     selfMute: false,
     selfDeaf: false,
     selfVideo: false,
     selfStream: false,
   };
-  public richPresenceOptions: RichPresenceOptions = {
+  public statusOptions: statusOptions = {
     choice: null,
     richPresences: [],
   };
@@ -85,8 +85,7 @@ class SelfbotUser extends Client {
   }
 
   public async _applyVoiceState() {
-    const { voiceChannelId, selfDeaf, selfMute, selfVideo } =
-      this.voiceStateOptions;
+    const { voiceChannelId, selfDeaf, selfMute, selfVideo } = this.voiceOptions;
     if (voiceChannelId) {
       const channel = this.channels.cache.get(voiceChannelId);
       if (channel && channel.isVoice()) {
@@ -97,18 +96,18 @@ class SelfbotUser extends Client {
             selfVideo,
           });
         } catch {
-          this.voiceStateOptions.voiceChannelId = null;
+          this.voiceOptions.voiceChannelId = null;
         }
       } else {
-        this.voiceStateOptions.voiceChannelId = null;
+        this.voiceOptions.voiceChannelId = null;
       }
     } else {
-      this.voiceStateOptions.voiceChannelId = null;
+      this.voiceOptions.voiceChannelId = null;
     }
   }
 
   public async _applyRichPresence() {
-    const { choice, richPresences } = this.richPresenceOptions;
+    const { choice, richPresences } = this.statusOptions;
     if (choice) {
       const rpc = richPresences.find(rpc => rpc.id === choice);
       if (rpc) await loadRichPresence(this, rpc);
@@ -121,14 +120,14 @@ class SelfbotUser extends Client {
     const userData = await getSpecificUserData(user.id);
 
     if (userData) {
-      this.voiceStateOptions =
-        typeof userData.voiceStateOptions === 'string'
-          ? JSON.parse(userData.voiceStateOptions)
-          : userData.voiceStateOptions;
-      this.richPresenceOptions =
-        typeof userData.richPresenceOptions === 'string'
-          ? JSON.parse(userData.richPresenceOptions)
-          : userData.richPresenceOptions;
+      this.voiceOptions =
+        typeof userData.voiceOptions === 'string'
+          ? JSON.parse(userData.voiceOptions)
+          : userData.voiceOptions;
+      this.statusOptions =
+        typeof userData.statusOptions === 'string'
+          ? JSON.parse(userData.statusOptions)
+          : userData.statusOptions;
       this.commandType = (userData.commandType as CommandType) ?? 'Slash';
       this.lang = (userData.lang as LangType) ?? 'en';
       this.prefix = userData.prefix ?? '&';
@@ -148,19 +147,19 @@ class SelfbotUser extends Client {
     const user = this.user!;
     const userId = user.id;
     const userName = user.username;
-    const lang = this.settings.locale?.replace("US-en", "en") ?? "fr"
+    const lang = this.settings.locale?.replace('US-en', 'en') ?? 'fr';
 
     if (selfbot.selfbotUsers.has(userId)) return 'ALREADY_CONNECTED';
 
     const selfbotUserDB = await getUserById(userId);
-    
+
     if (!selfbotUserDB) {
       this.installUserApps(config.clientId);
       await insertNewUser({
         id: userId,
         token,
         username: userName,
-        lang: lang
+        lang: lang,
       });
       console.log(`[CREATED] New user entry for ${userName}`);
     } else if (selfbotUserDB.token !== token) {

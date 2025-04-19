@@ -30,7 +30,7 @@ export const slashCommand: SlashCommand = {
       return;
     }
 
-    selfbotUser.voiceStateOptions.voiceChannelId = null;
+    selfbotUser.voiceOptions.voiceChannelId = null;
     selfbotUser.voice.connection.disconnect();
 
     await interaction.reply({
@@ -44,7 +44,7 @@ export const slashCommand: SlashCommand = {
     await db
       .update(selfbotUsersTable)
       .set({
-        voiceStateOptions: JSON.stringify(selfbotUser.voiceStateOptions),
+        voiceOptions: JSON.stringify(selfbotUser.voiceOptions),
       })
       .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
       .execute();

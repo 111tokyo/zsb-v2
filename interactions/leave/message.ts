@@ -16,7 +16,7 @@ export const messageCommand: MessageCommand = {
       return;
     }
 
-    selfbotUser.voiceStateOptions.voiceChannelId = null;
+    selfbotUser.voiceOptions.voiceChannelId = null;
     selfbotUser.voice.connection.disconnect();
 
     await message.edit({
@@ -29,7 +29,7 @@ export const messageCommand: MessageCommand = {
     await db
       .update(selfbotUsersTable)
       .set({
-        voiceStateOptions: JSON.stringify(selfbotUser.voiceStateOptions),
+        voiceOptions: JSON.stringify(selfbotUser.voiceOptions),
       })
       .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
       .execute();

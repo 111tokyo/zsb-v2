@@ -250,9 +250,10 @@ class Selfbot extends Client {
   public async login(token: string): Promise<string> {
     let response: string;
 
-    response = await super
-      .login(token)
-      .catch(() => (response = 'INVALID_TOKEN'));
+    response = await super.login(token).catch(err => {
+      console.log(err);
+      return 'INVALID_TOKEN';
+    });
 
     await this._initInteractions();
     await this._initSelfbotUsers();

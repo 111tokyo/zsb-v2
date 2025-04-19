@@ -1,6 +1,6 @@
 import { RichPresenceBuilder } from 'discord-rpc.ts';
 import { Client } from 'discord.js-selfbot-v13';
-import { RichPresence } from './../types/richPresenceOptions';
+import { RichPresence } from './../types/statusOptions';
 
 export const loadRichPresence = async (client: Client, rpc: RichPresence) => {
   switch (rpc.type) {

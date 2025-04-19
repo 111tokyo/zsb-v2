@@ -8,12 +8,11 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
   commandType: text()
     .notNull()
     .$default(() => 'Slash'),
-  lang: text()
-    .notNull(),
+  lang: text().notNull(),
   prefix: text()
     .notNull()
     .$default(() => '&'),
-  voiceStateOptions: text()
+  voiceOptions: text()
     .notNull()
     .$default(
       () =>
@@ -25,18 +24,19 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
           "selfStream": false
         }`,
     ),
-  richPresenceOptions: text()
+  statusOptions: text()
     .notNull()
     .$default(
       () =>
         `{
-          "choice": "default_rpc", 
+          "choice": "default_status", 
           "richPresences": [
           {
-            "id": "default_rpc",
+            "id": "default_status",
             "name": "ZSB",
             "field1": "ZSB Selfbot",
             "field2": "Click below to start",
+            "field3": null,
             "type": "Competing", 
             "platform": "Pc",
             "largeImg": null, 

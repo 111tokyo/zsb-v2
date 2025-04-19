@@ -1,6 +1,6 @@
 import { PlatformType, RichPresenceType } from 'discord-rpc.ts';
 
-export type RichPresenceOptions = {
+export type statusOptions = {
   choice: string | null;
   richPresences: RichPresence[];
 };

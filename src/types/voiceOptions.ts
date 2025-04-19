@@ -1,4 +1,4 @@
-export type VoiceStateOptions = {
+export type voiceOptions = {
   voiceChannelId: string | null;
   selfMute: boolean;
   selfDeaf: boolean;
