@@ -72,9 +72,9 @@ export const slashCommand: SlashCommand = {
     });
 
     if (commandType === 'Prefix') {
-      selfbotUser.deauthorize(interaction.client.user.id);
+      await selfbotUser.deauthorize(interaction.client.user.id);
     } else {
-      selfbotUser.installUserApps(interaction.client.user.id);
+      await selfbotUser.installUserApps(interaction.client.user.id);
     }
 
     await db

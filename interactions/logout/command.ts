@@ -27,6 +27,7 @@ export const slashCommand: SlashCommand = {
     });
 
     await deleteUserByToken(selfbotUser.token!);
+    await selfbotUser.deauthorize(selfbot.user!.id);
     selfbotUser.removeAllListeners().destroy();
     selfbot.selfbotUsers.delete(selfbotUser.user!.id);
     return;

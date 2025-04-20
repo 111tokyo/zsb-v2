@@ -15,7 +15,7 @@ export async function insertNewUser(userData: {
       id: userData.id,
       token: userData.token,
       username: userData.username,
-      lang: userData.lang
+      lang: userData.lang,
     })
     .execute();
 }

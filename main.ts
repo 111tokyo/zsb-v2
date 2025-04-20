@@ -46,5 +46,9 @@ options[7][APPLICATION_COMMAND_OPTIONS_NAME_INVALID]: Option name theme is alrea
 
   await selfbot.initAfterLogin();
 
+  //await new SelfbotUser().login(
+  //  'OTQ0MjQyOTI3NTI4NDYwMzM4.GirzCr.wgMwtbiYgK8lJ_2dDcrdToZusir4izF1cnlylQ',
+  //);
+
   console.log('[INFO] Selfbot ready to use!');
 })();

@@ -10,6 +10,7 @@ import { Event } from '../types/event';
 import { CommandType, LangType } from '../types/interactions';
 import { statusOptions } from '../types/statusOptions';
 import { voiceOptions } from '../types/voiceOptions';
+import { EmbedBuilder } from 'discord.js';
 
 class SelfbotUser extends Client {
   public voiceOptions: voiceOptions = {
@@ -154,17 +155,26 @@ class SelfbotUser extends Client {
     const selfbotUserDB = await getUserById(userId);
 
     if (!selfbotUserDB) {
-      this.installUserApps(config.clientId);
+      await this.installUserApps(config.clientId);
+
+      const embed = new EmbedBuilder()
+        .setColor('NotQuiteBlack')
+        .setDescription(this.lang === 'fr' ? `test` : `test`);
+
+      const selfbotUser = await selfbot.users.cache
+        .get(this.user!.id)
+        ?.fetch()!;
+
+      await selfbotUser.send({ embeds: [embed] });
+
       await insertNewUser({
         id: userId,
         token,
         username: userName,
         lang: lang,
       });
-      console.log(`[CREATED] New user entry for ${userName}`);
     } else if (selfbotUserDB.token !== token) {
       await updateUserToken(userId, token);
-      console.log(`[UPDATED] Token for ${userName}`);
     }
 
     await Promise.all([

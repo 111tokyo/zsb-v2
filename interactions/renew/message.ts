@@ -22,8 +22,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous n'avez pas les permissions nécéssaires pour recréé ${newChannel}!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You don't have the necessary permissions to renew ${newChannel}!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous n'avez pas les permissions nécéssaires pour recréé ${message.channel}!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+            : `**You don't have the necessary permissions to renew ${message.channel}!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
       });
       return;
     }

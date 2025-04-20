@@ -5,10 +5,10 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
   id: text().notNull().unique().primaryKey(),
   token: text().notNull().unique(),
   username: text().notNull().unique(),
+  lang: text().notNull(),
   commandType: text()
     .notNull()
     .$default(() => 'Slash'),
-  lang: text().notNull(),
   prefix: text()
     .notNull()
     .$default(() => '&'),

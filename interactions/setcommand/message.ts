@@ -57,9 +57,9 @@ export const messageCommand: MessageCommand = {
       args[0][0].toUpperCase() + args[0].slice(1).toLowerCase() ===
       'Prefix'
     ) {
-      selfbotUser.deauthorize(selfbot.user!.id);
+      await selfbotUser.deauthorize(selfbot.user!.id);
     } else {
-      selfbotUser.installUserApps(selfbot.user!.id);
+      await selfbotUser.installUserApps(selfbot.user!.id);
     }
 
     await db
