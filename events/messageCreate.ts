@@ -9,6 +9,13 @@ export const event: Event = {
   execute: (selfbot: Selfbot, selfbotUser: SelfbotUser, message: Message) => {
     if (selfbotUser.commandType !== 'Slash') {
       if (message.author.bot) return;
+      if (
+        message.author.id !== selfbotUser.user!.id &&
+        message.content.includes(selfbotUser.user!.id) &&
+        selfbotUser.afk
+      ) {
+        message.reply(selfbotUser.afk);
+      }
       if (message.author.id !== selfbotUser.user!.id) return;
       if (message.content.startsWith(selfbotUser.prefix)) {
         const commandName = message.content

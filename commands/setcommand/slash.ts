@@ -57,6 +57,7 @@ export const slashCommand: SlashCommand = {
           selfbotUser.lang === 'fr'
             ? `Vous avez déjà sélectionné ce type de commande!`
             : `You have already selected this command type!`,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }

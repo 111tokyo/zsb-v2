@@ -33,7 +33,7 @@ export const loadSlashCommand = async (
   interactionSubPath: string,
 ) => {
   const slashCommandFile: { slashCommand: SlashCommand } = await import(
-    `../../interactions/${interactionSubPath}/command`
+    `../../commands/${interactionSubPath}/slash`
   );
 
   if (slashCommands.has(interactionSubPath.split('/')[0])) {

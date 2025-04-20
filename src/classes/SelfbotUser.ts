@@ -3,14 +3,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { selfbot } from '../../main';
 import config from '../config';
-import { insertNewUser, updateUserToken } from '../db/actions';
+import {
+  deleteUserByToken,
+  insertNewUser,
+  updateUserToken,
+} from '../db/actions';
 import { getSpecificUserData, getUserById } from '../db/queries';
 import { loadRichPresence } from '../loaders/richpresence';
 import { Event } from '../types/event';
 import { CommandType, LangType } from '../types/interactions';
 import { statusOptions } from '../types/statusOptions';
 import { voiceOptions } from '../types/voiceOptions';
-import { EmbedBuilder } from 'discord.js';
+import { sendJSONEmbed } from '../util/sendJSONEmbed';
 
 class SelfbotUser extends Client {
   public voiceOptions: voiceOptions = {
@@ -29,6 +33,7 @@ class SelfbotUser extends Client {
   public prefix = '&';
   public snipe: Map<string, Message> = new Map();
   public cache: Map<string, any> = new Map();
+  public afk: string | null = null;
   private _createdAt = Date.now();
 
   constructor() {
@@ -44,11 +49,12 @@ class SelfbotUser extends Client {
     });
   }
 
-  private _clearCache() {
+  private _interval() {
     setInterval(
       () => {
         this.cache.clear();
         this.snipe.clear();
+        this._applyVoiceState();
       },
       1000 * 60 * 60 * 3,
     );
@@ -133,8 +139,15 @@ class SelfbotUser extends Client {
       this.lang = (userData.lang as LangType) ?? 'en';
       this.prefix = userData.prefix ?? '&';
 
-      await Promise.all([this._applyVoiceState(), this._applyRichPresence()]);
+      await Promise.all([this._applyVoiceState(), this._applyRichPresence]);
     }
+  }
+
+  public async logout() {
+    await deleteUserByToken(this.token!);
+    await this.deauthorize(selfbot.user!.id);
+    this.removeAllListeners().destroy();
+    selfbot.selfbotUsers.delete(this.user!.id);
   }
 
   public async login(token: string): Promise<string> {
@@ -157,15 +170,9 @@ class SelfbotUser extends Client {
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId);
 
-      const embed = new EmbedBuilder()
-        .setColor('NotQuiteBlack')
-        .setDescription(this.lang === 'fr' ? `test` : `test`);
+      const embeds = [{}];
 
-      const selfbotUser = await selfbot.users.cache
-        .get(this.user!.id)
-        ?.fetch()!;
-
-      await selfbotUser.send({ embeds: [embed] });
+      await sendJSONEmbed(this.user!.id, embeds, 'test');
 
       await insertNewUser({
         id: userId,
@@ -180,7 +187,7 @@ class SelfbotUser extends Client {
     await Promise.all([
       this._loadInitialData(),
       this._initEvents(),
-      this._clearCache(),
+      this._interval(),
     ]);
 
     const loginTime = Date.now() - this._createdAt;

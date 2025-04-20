@@ -61,9 +61,9 @@ class Selfbot extends Client {
   }
 
   private async _initInteractions() {
-    const interactionsPath = existsSync('./.build/interactions')
-      ? './.build/interactions'
-      : './interactions';
+    const interactionsPath = existsSync('./.build/commands')
+      ? './.build/commands'
+      : './commands';
 
     const getInteractions = async (dirPath: string): Promise<string[]> => {
       let InteractionPaths: string[] = [];
@@ -106,7 +106,7 @@ class Selfbot extends Client {
         interactionPath,
       ).replace(/\\/g, '/');
 
-      if (interactionType === 'command') {
+      if (interactionType === 'slash') {
         return loadSlashCommand(this, interactionSubPath);
       }
 

@@ -5,8 +5,6 @@ import {
 } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { SlashCommand } from '../../src/types/interactions';
-import { deleteUserByToken } from '../../src/db/actions';
-import { selfbot } from '../../main';
 
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
@@ -26,10 +24,7 @@ export const slashCommand: SlashCommand = {
       flags: MessageFlags.Ephemeral,
     });
 
-    await deleteUserByToken(selfbotUser.token!);
-    await selfbotUser.deauthorize(selfbot.user!.id);
-    selfbotUser.removeAllListeners().destroy();
-    selfbot.selfbotUsers.delete(selfbotUser.user!.id);
+    await selfbotUser.logout();
     return;
   },
 };

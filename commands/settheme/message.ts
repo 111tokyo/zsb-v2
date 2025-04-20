@@ -39,7 +39,7 @@ export const messageCommand: MessageCommand = {
 
     await message.edit({
       content:
-        selfbotUser.lang === args[0].toLowerCase()
+        selfbotUser.lang === 'fr'
           ? `**Vous avez changé votre thème en \`${args[0][0].toUpperCase() + args[0].slice(1)}\` avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
           : `**You have successfully changed your theme to \`${args[0][0].toUpperCase() + args[0].slice(1)}\`!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
     });

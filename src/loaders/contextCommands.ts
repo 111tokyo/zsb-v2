@@ -6,7 +6,7 @@ export const loadContextMenu = async (
   interactionSubPath: string,
 ) => {
   const contextMenuFile: { contextMenu: ContextMenu } = await import(
-    `../../..interactions/${interactionSubPath}/context`
+    `../../..commands/${interactionSubPath}/context`
   );
 
   selfbot.contextMenuInteraction.set(
