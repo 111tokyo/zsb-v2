@@ -14,7 +14,7 @@ import { Event } from '../types/event';
 import { CommandType, LangType } from '../types/interactions';
 import { statusOptions } from '../types/statusOptions';
 import { voiceOptions } from '../types/voiceOptions';
-import { sendJSONEmbed } from '../util/sendJSONEmbed';
+import { sendJSONEmbed } from '../util/sendComponentsv2';
 
 class SelfbotUser extends Client {
   public voiceOptions: voiceOptions = {
