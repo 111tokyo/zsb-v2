@@ -7,8 +7,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier une raison! (*Exemple*: \`${selfbotUser.prefix}goafk dark\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a reason! (*Exemple*: \`${selfbotUser.prefix}goafk dark\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier une raison! (*Exemple*: \`${selfbotUser.prefix}afk dark\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+            : `**You must specify a reason! (*Exemple*: \`${selfbotUser.prefix}afk dark\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
       });
       return;
     }

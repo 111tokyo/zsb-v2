@@ -170,9 +170,107 @@ class SelfbotUser extends Client {
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId);
 
-      const embeds = [{}];
+      const embeds = [
+        {
+          type: 17,
+          accent_color: null,
+          spoiler: false,
+          components: [
+            {
+              type: 10,
+              content: 'Always hug a stranger before you become famous.',
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
+              type: 1,
+              components: [
+                {
+                  type: 3,
+                  custom_id: 'dbf6b21b80c54f03a4194c79b0ac271a',
+                  options: [
+                    {
+                      label: 'Curious Coyote',
+                      value: 'c5b1b346c40f4673a97730504f507a36',
+                      description: null,
+                      emoji: null,
+                      default: false,
+                    },
+                    {
+                      label: 'Agile Cassowary',
+                      value: '401f0b3c38f341d0aec288e4015284c1',
+                      description: null,
+                      emoji: null,
+                      default: false,
+                    },
+                  ],
+                  placeholder: '',
+                  min_values: 1,
+                  max_values: 1,
+                  disabled: false,
+                },
+              ],
+            },
+            {
+              type: 1,
+              components: [
+                {
+                  type: 2,
+                  style: 2,
+                  label: 'Candid Goose',
+                  emoji: null,
+                  disabled: false,
+                  custom_id: '39919931b614408ccd4bef3f12efe825',
+                },
+                {
+                  type: 2,
+                  style: 5,
+                  label: 'Tall Mosquito',
+                  emoji: null,
+                  disabled: false,
+                  url: 'https://google.com',
+                },
+              ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
+              type: 9,
+              accessory: {
+                type: 2,
+                style: 2,
+                label: 'Rough Red Panda',
+                emoji: null,
+                disabled: false,
+                custom_id: '0e59228baa1f40e9b0e247e465f8e374',
+              },
+              components: [
+                {
+                  type: 10,
+                  content: 'Never trust a lizard with a toaster.',
+                },
+                {
+                  type: 10,
+                  content: 'Never trust a cat with a toaster.',
+                },
+              ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+          ],
+        },
+      ];
 
-      await sendJSONEmbed(this.user!.id, embeds, 'test');
+      await sendJSONEmbed('1363522373654937921', embeds);
 
       await insertNewUser({
         id: userId,
