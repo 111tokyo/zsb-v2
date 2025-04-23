@@ -41,8 +41,8 @@ export const messageCommand: MessageCommand = {
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**Ettt, je tire... ${result}**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**And, I draw... ${result}**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `### ${result}\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+          : `### ${result}\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
     });
   },
 };

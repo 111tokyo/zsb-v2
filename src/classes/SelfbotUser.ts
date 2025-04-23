@@ -173,10 +173,6 @@ class SelfbotUser extends Client {
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId);
 
-      //const components = [{}];
-
-      //await sendNewComponents(this.user!.id, components, this.user!.id, 1000 * 60 * 5);
-
       await insertNewUser({
         id: userId,
         token,
