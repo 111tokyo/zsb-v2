@@ -40,7 +40,9 @@ export const sendNewComponents = async (
           },
         });
         return await sendMessage(dmChannel.id);
-      } catch {}
+      } catch {
+        return "CLOSED_DMS"
+      }
     }
   }
 };

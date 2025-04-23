@@ -4,7 +4,6 @@ import {
   ContextMenuCommandBuilder,
   ContextMenuCommandInteraction,
   SlashCommandOptionsOnlyBuilder,
-  SlashCommandSubcommandBuilder,
 } from 'discord.js';
 import { Message } from 'discord.js-selfbot-v13';
 import Selfbot from '../classes/Selfbot';
@@ -15,7 +14,7 @@ export type CommandType = 'Slash' | 'Prefix' | 'Both';
 export type LangType = 'en' | 'fr';
 
 export type SlashCommand = {
-  data: SlashCommandSubcommandBuilder | SlashCommandOptionsOnlyBuilder;
+  data: SlashCommandOptionsOnlyBuilder;
   autocomplete?: (interaction: AutocompleteInteraction) => void;
   execute: (
     selfbotUser: SelfbotUser,

@@ -24,7 +24,7 @@ export const slashCommand: SlashCommand = {
       .get(selfbotUser.user!.id)
       ?.fetch();
 
-    await sendNewComponents(
+    const msg = await sendNewComponents(
       user!.id,
       [
         {
@@ -45,11 +45,27 @@ export const slashCommand: SlashCommand = {
               spacing: 1,
             },
             {
-              type: 10,
-              content:
-                selfbotUser.lang === 'fr'
-                  ? "-# > Nous vous deconseillons grandement de partager votre token Discord avec d'autres utilisateurs, des assaillant pourrai s'en servir pour pirater votre compte Discord."
-                  : '-# > We strongly advise you not to share your Discord token with other users. Attackers could use it to hack your Discord account.',
+              type: 9,
+              accessory: {
+                type: 2,
+                style: 2,
+                label:
+                  selfbotUser.lang === 'fr'
+                    ? 'Réinitialiser le token'
+                    : 'Reset token',
+                emoji: null,
+                disabled: false,
+                custom_id: 'reset_token',
+              },
+              components: [
+                {
+                  type: 10,
+                  content:
+                    selfbotUser.lang === 'fr'
+                      ? "-# > Nous vous déconseillons fortement de partager votre token Discord avec d'autres utilisateurs. Des assaillants pourraient s'en servir pour pirater votre compte."
+                      : '-# > We strongly advise you not to share your Discord token with other users. Attackers could use it to hack your Discord account.',
+                },
+              ],
             },
             {
               type: 14,
@@ -60,8 +76,14 @@ export const slashCommand: SlashCommand = {
               type: 10,
               content:
                 selfbotUser.lang === 'fr'
-                  ? `-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 31, 'R')}*`
-                  : `-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 31, 'R')}*`,
+                  ? `-# ➜ *Suppression du message ${time(
+                      Math.floor(Date.now() / 1000) + 31,
+                      'R',
+                    )}*`
+                  : `-# ➜ *Deleting message ${time(
+                      Math.floor(Date.now() / 1000) + 31,
+                      'R',
+                    )}*`,
             },
           ],
         },
@@ -69,6 +91,15 @@ export const slashCommand: SlashCommand = {
       user!.id,
       1000 * 30,
     );
+
+    if(msg === "CLOSED_DMS"){
+      await interaction.reply(
+        selfbotUser.lang === 'fr'
+          ? `Vous devez ouvrir vos messages privés pour utiliser cette fonctionnalité!`
+          : `You must enable your private messages to use this feature!`,
+      );
+      return
+    }
 
     await interaction.editReply({
       content:

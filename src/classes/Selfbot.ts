@@ -18,7 +18,6 @@ import { loadContextMenu } from '../loaders/contextCommands';
 import { loadMessageCommand } from '../loaders/messageCommands';
 import {
   loadSlashCommand,
-  settingUpSlashCommands,
 } from '../loaders/slashCommands';
 import SeflbotUser from './SelfbotUser';
 
@@ -122,8 +121,6 @@ class Selfbot extends Client {
     });
 
     await Promise.all(promises);
-
-    settingUpSlashCommands(this);
 
     this.on('interactionCreate', async interaction => {
       if (interaction.isChatInputCommand()) {

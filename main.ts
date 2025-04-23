@@ -21,15 +21,6 @@ export const selfbot = new Selfbot();
 
     if (skippedErrors.includes(error?.message)) return;
 
-    if (
-      error?.message ===
-      `Invalid Form Body
-options[4][APPLICATION_COMMAND_OPTIONS_NAME_INVALID]: Option name command is already used in these options
-options[5][APPLICATION_COMMAND_OPTIONS_NAME_INVALID]: Option name lang is already used in these options
-options[6][APPLICATION_COMMAND_OPTIONS_NAME_INVALID]: Option name prefix is already used in these options
-options[7][APPLICATION_COMMAND_OPTIONS_NAME_INVALID]: Option name theme is already used in these options`
-    )
-      return;
     const errorMessage = error?.stack ?? error?.message ?? String(error);
     selfbot.sendWebhook('Error', errorMessage);
   };
