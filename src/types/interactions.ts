@@ -1,5 +1,7 @@
 import {
+  AnySelectMenuInteraction,
   AutocompleteInteraction,
+  ButtonInteraction,
   ChatInputCommandInteraction,
   ContextMenuCommandBuilder,
   ContextMenuCommandInteraction,
@@ -12,6 +14,17 @@ import SelfbotUser from '../classes/SelfbotUser';
 export type CommandType = 'Slash' | 'Prefix' | 'Both';
 
 export type LangType = 'en' | 'fr';
+
+export type Select = {
+  execute: (
+    selfbotUser: SelfbotUser,
+    interaction: AnySelectMenuInteraction,
+  ) => void;
+};
+
+export type Button = {
+  execute: (selfbotUser: SelfbotUser, interaction: ButtonInteraction) => void;
+};
 
 export type SlashCommand = {
   data: SlashCommandOptionsOnlyBuilder;

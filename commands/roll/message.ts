@@ -7,8 +7,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier un minimum et un maximum! (*Exemple*: \`${selfbotUser.prefix}roulette 1 100\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a minimum and maximum! (*Example*: \`${selfbotUser.prefix}roulette 1 100\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier un minimum et un maximum! (*Exemple*: \`${selfbotUser.prefix}roll 1 100\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+            : `**You must specify a minimum and maximum! (*Example*: \`${selfbotUser.prefix}roll 1 100\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
       });
       return;
     }
