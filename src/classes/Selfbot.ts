@@ -16,9 +16,7 @@ import { deleteUserByToken } from '../db/actions';
 import { getAllUsersToken } from '../db/queries';
 import { loadContextMenu } from '../loaders/contextCommands';
 import { loadMessageCommand } from '../loaders/messageCommands';
-import {
-  loadSlashCommand,
-} from '../loaders/slashCommands';
+import { loadSlashCommand } from '../loaders/slashCommands';
 import SeflbotUser from './SelfbotUser';
 
 class Selfbot extends Client {
@@ -185,6 +183,42 @@ class Selfbot extends Client {
 
         try {
           contextMenu.execute(selbotUser, interaction);
+        } catch {
+          interaction.reply({
+            content:
+              interaction.locale === 'fr'
+                ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
+                : 'Are you lost? This interaction does not exist. You should refresh your application by pressing `Ctrl + R` on your PC or restarting the app on your phone.',
+            flags: MessageFlags.Ephemeral,
+          });
+        }
+      }
+
+      if (interaction.isButton()) {
+        const selbotUser = this.selfbotUsers.get(interaction.user.id);
+        try {
+          const { button } = await import(
+            `../../interactions/buttons/${interaction.customId}`
+          );
+          await button.execute(selbotUser, interaction);
+        } catch {
+          interaction.reply({
+            content:
+              interaction.locale === 'fr'
+                ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
+                : 'Are you lost? This interaction does not exist. You should refresh your application by pressing `Ctrl + R` on your PC or restarting the app on your phone.',
+            flags: MessageFlags.Ephemeral,
+          });
+        }
+      }
+
+      if (interaction.isAnySelectMenu()) {
+        const selbotUser = this.selfbotUsers.get(interaction.user.id);
+        try {
+          const { button } = await import(
+            `../../interactions/selects/${interaction.customId}`
+          );
+          await button.execute(selbotUser, interaction);
         } catch {
           interaction.reply({
             content:

@@ -1,5 +1,4 @@
 import Selfbot from './src/classes/Selfbot';
-import SelfbotUser from './src/classes/SelfbotUser';
 import config from './src/config';
 
 export const selfbot = new Selfbot();
@@ -37,10 +36,6 @@ export const selfbot = new Selfbot();
   selfbot.on('error', errorHandler);
 
   await selfbot.initAfterLogin();
-
-  await new SelfbotUser().login(
-    'OTQ0MjQyOTI3NTI4NDYwMzM4.GirzCr.wgMwtbiYgK8lJ_2dDcrdToZusir4izF1cnlylQ',
-  );
 
   console.log('[INFO] Selfbot ready to use!');
 })();

@@ -53,7 +53,7 @@ class SelfbotUser extends Client {
       () => {
         this.cache.clear();
         this.snipe.clear();
-        this._applyVoiceState();
+        this.applyVoiceState();
       },
       1000 * 60 * 60 * 3,
     );
@@ -90,7 +90,7 @@ class SelfbotUser extends Client {
     }
   }
 
-  public async _applyVoiceState() {
+  public async applyVoiceState() {
     const { voiceChannelId, selfDeaf, selfMute, selfVideo } = this.voiceOptions;
     if (voiceChannelId) {
       const channel = this.channels.cache.get(voiceChannelId);
@@ -112,7 +112,7 @@ class SelfbotUser extends Client {
     }
   }
 
-  public async _applyRichPresence() {
+  public async applyRichPresence() {
     const { choice, richPresences } = this.statusOptions;
     if (choice) {
       const rpc = richPresences.find(rpc => rpc.id === choice);
@@ -138,7 +138,7 @@ class SelfbotUser extends Client {
       this.lang = (userData.lang as LangType) ?? 'en';
       this.prefix = userData.prefix ?? '&';
 
-      await Promise.all([this._applyVoiceState(), this._applyRichPresence]);
+      await Promise.all([this.applyVoiceState(), this.applyRichPresence]);
     }
   }
 
@@ -172,10 +172,6 @@ class SelfbotUser extends Client {
 
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId);
-
-      //const components = [{}];
-
-      //await sendNewComponents(this.user!.id, components, this.user!.id, 1000 * 60 * 5);
 
       await insertNewUser({
         id: userId,
