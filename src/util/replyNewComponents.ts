@@ -33,7 +33,7 @@ export const replyNewComponents = async (
             },
           },
         );
-      } catch (editError) {
+      } catch {
       }
     } else {
     }

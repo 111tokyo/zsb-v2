@@ -12,14 +12,19 @@ export const messageCommand: MessageCommand = {
         {
           type: 17,
           accent_color: null,
-          spoiler: true,
+          spoiler: false,
           components: [
+            {
+              type: 14,
+              divider: true,
+              spacing: 1
+            },
             {
               type: 1,
               components: [
                 {
                   type: 3,
-                  custom_id: 'select_vcoptions',
+                  custom_id: 'vcoptions',
                   options: [
                     {
                       label:
@@ -90,20 +95,13 @@ export const messageCommand: MessageCommand = {
             {
               type: 14,
               divider: true,
-              spacing: 1,
+              spacing: 1
             },
             {
               type: 10,
-              content:
-                selfbotUser.lang === 'fr'
-                  ? `-# ➜ *Suppression du message ${time(
-                      Math.floor(Date.now() / 1000) + 31,
-                      'R',
-                    )}*`
-                  : `-# ➜ *Deleting message ${time(
-                      Math.floor(Date.now() / 1000) + 31,
-                      'R',
-                    )}*`,
+              content: selfbotUser.lang === 'fr'
+                ? '-# ➜ N\'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale.'
+                : '-# ➜ Don\'t forget that you must have the permissions to join the voice channel.',
             },
           ],
         },

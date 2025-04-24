@@ -9,56 +9,67 @@ export const messageCommand: MessageCommand = {
     const msg = await sendNewComponents(
       user!.id,
       [
+      {
+        type: 17,
+        accent_color: null,
+        spoiler: true,
+        components: [
         {
-          type: 17,
-          accent_color: null,
-          spoiler: true,
+          type: 10,
+          content:
+          selfbotUser.lang === 'fr'
+            ? `Votre token discord:\`\`\`${selfbotUser.token}\`\`\``
+            : `Your discord token:\`\`\`${selfbotUser.token}\`\`\``,
+        },
+        {
+          type: 1,
           components: [
-            {
-              type: 10,
-              content:
-                selfbotUser.lang === 'fr'
-                  ? `Votre token discord:\`\`\`${selfbotUser.token}\`\`\``
-                  : `Your discord token:\`\`\`${selfbotUser.token}\`\`\``,
+          {
+            type: 2,
+            style: 2,
+            label:
+            selfbotUser.lang === 'fr'
+              ? 'Comment réinitialiser son token?'
+              : 'How do I reset my token?',
+            emoji: {
+            id: '1364588505321181275',
             },
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  style: 2,
-                  label:
-                    selfbotUser.lang === 'fr'
-                      ? 'Comment réinitialiser son token?'
-                      : 'How do I reset my token?',
-                  emoji: {
-                    id: '1364588505321181275',
-                  },
-                  disabled: false,
-                  custom_id: 'reset_token',
-                },
-              ],
-            },
-            {
-              type: 14,
-              divider: true,
-              spacing: 1,
-            },
-            {
-              type: 10,
-              content:
-                selfbotUser.lang === 'fr'
-                  ? `-# ➜ *Suppression du message ${time(
-                      Math.floor(Date.now() / 1000) + 31,
-                      'R',
-                    )}*`
-                  : `-# ➜ *Deleting message ${time(
-                      Math.floor(Date.now() / 1000) + 31,
-                      'R',
-                    )}*`,
-            },
+            disabled: false,
+            custom_id: 'reset_token',
+          },
           ],
         },
+        {
+          type: 14,
+          divider: true,
+          spacing: 1,
+        },
+        {
+          type: 10,
+          content: selfbotUser.lang === 'fr'
+            ? `-# > Votre token est privé, ne le partagez pas! Il peut être utilisé pour se connecter à votre compte discord!` 
+            : `-# > Your token is private, do not share it! It can be used to log in to your discord account!`,
+        },
+        {
+          type: 14,
+          divider: true,
+          spacing: 1,
+        },
+        {
+          type: 10,
+          content:
+          selfbotUser.lang === 'fr'
+            ? `-# ➜ *Suppression du message ${time(
+              Math.floor(Date.now() / 1000) + 31,
+              'R',
+            )}*`
+            : `-# ➜ *Deleting message ${time(
+              Math.floor(Date.now() / 1000) + 31,
+              'R',
+            )}*`,
+        },
+        ],
+      },
       ],
       user!.id,
       1000 * 30,

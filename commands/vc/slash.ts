@@ -20,6 +20,11 @@ export const slashCommand: SlashCommand = {
         spoiler: false,
         components: [
           {
+            type: 14,
+            divider: true,
+            spacing: 1
+          },
+          {
             type: 1,
             components: [
               {
@@ -92,6 +97,17 @@ export const slashCommand: SlashCommand = {
               },
             ],
           },
+          {
+            type: 14,
+            divider: true,
+            spacing: 1
+          },
+          {
+            type: 10,
+            content: selfbotUser.lang === 'fr'
+              ? '-# ➜ N\'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale.'
+              : '-# ➜ Don\'t forget that you must have the permissions to join the voice channel.',
+          }
         ],
       },
     ]);
