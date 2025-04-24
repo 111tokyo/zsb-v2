@@ -50,6 +50,18 @@ export const slashCommand: SlashCommand = {
               },
             ],
           },
+          {
+            type: 14,
+            divider: true,
+            spacing: 1,
+          },
+          {
+            type: 10,
+            content:
+              selfbotUser.lang === 'fr'
+                ? `-# > Votre token est privé, ne le partagez pas! Il peut être utilisé pour se connecter à votre compte discord!`
+                : `-# > Your token is private, do not share it! It can be used to log in to your discord account!`,
+          },
         ],
       },
     ]);

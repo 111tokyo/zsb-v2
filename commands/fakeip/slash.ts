@@ -20,8 +20,8 @@ export const slashCommand: SlashCommand = {
 
         await interaction.reply({
             content: selfbotUser.lang === 'fr'
-                ? `### Adresse IP générée : \`${fakeIP}\``
-                : `### Generated IP address: \`${fakeIP}\``,
+                ? `Adresse IP générée: \`${fakeIP}\``
+                : `Generated IP address: \`${fakeIP}\``,
             flags: MessageFlags.Ephemeral,
         });
 

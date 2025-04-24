@@ -17,7 +17,7 @@ export const messageCommand: MessageCommand = {
             {
               type: 14,
               divider: true,
-              spacing: 1
+              spacing: 1,
             },
             {
               type: 1,
@@ -95,19 +95,20 @@ export const messageCommand: MessageCommand = {
             {
               type: 14,
               divider: true,
-              spacing: 1
+              spacing: 1,
             },
             {
               type: 10,
-              content: selfbotUser.lang === 'fr'
-                ? '-# ➜ N\'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale.'
-                : '-# ➜ Don\'t forget that you must have the permissions to join the voice channel.',
+              content:
+                selfbotUser.lang === 'fr'
+                  ? "-# ➜ N'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale."
+                  : "-# ➜ Don't forget that you must have the permissions to join the voice channel.",
             },
           ],
         },
       ],
       user!.id,
-      1000 * 30,
+      1000 * 60 * 2,
     );
 
     if (msg === 'CLOSED_DMS') {
