@@ -9,8 +9,11 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('faketoken')
-    .setDescription('Generates a fake Discord token.')
-    .setDescriptionLocalization('fr', 'Génère un faux token Discord.'),
+    .setDescription('Allows you to generates a fake Discord token.')
+    .setDescriptionLocalization(
+      'fr',
+      'Permet de génèrer un faux token Discord.',
+    ),
 
   execute: async (
     selfbotUser: SelfbotUser,

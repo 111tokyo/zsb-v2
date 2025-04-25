@@ -2,7 +2,7 @@ import {
   ChatInputCommandInteraction,
   roleMention,
   SlashCommandBuilder,
-  time
+  time,
 } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { SlashCommand } from '../../src/types/interactions';
@@ -24,16 +24,16 @@ const BADGE_MAPPINGS = {
   VerifiedDeveloper: 'Early Verified Bot Developer',
   CertifiedModerator: 'Discord Certified Moderator',
   BotHTTPInteractions: 'HTTP Interactions Bot',
-  ActiveDeveloper: 'Active Developer'
+  ActiveDeveloper: 'Active Developer',
 } as const;
 
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('userinfo')
-    .setDescription('Get information about a user')
+    .setDescription('Allows you to get the informations about a user')
     .setDescriptionLocalization(
       'fr',
-      "Permet d'obtenir des informations sur un utilisateur",
+      "Permet d'obtenir les informations d'un utilisateur",
     )
     .addUserOption(option =>
       option
@@ -54,53 +54,76 @@ export const slashCommand: SlashCommand = {
     const now = Math.floor(Date.now() / 1000);
 
     const [mutuals, guild, member] = await Promise.all([
-      fetch(`https://discord.com/api/v9/users/${targetUser.id}/profile?with_mutual_guilds=true&with_mutual_friends=true`, {
-        headers: {
-          Authorization: selfbotUser.token!,
-          'Content-Type': 'application/json',
+      fetch(
+        `https://discord.com/api/v9/users/${targetUser.id}/profile?with_mutual_guilds=true&with_mutual_friends=true`,
+        {
+          headers: {
+            Authorization: selfbotUser.token!,
+            'Content-Type': 'application/json',
+          },
         },
-      }).then(async r => {
-        if (!r.ok) return {} as UserData;
-        const data: UserData = await r.json();
-        return data;
-      }).catch(() => ({} as UserData)),
+      )
+        .then(async r => {
+          if (!r.ok) return {} as UserData;
+          const data: UserData = await r.json();
+          return data;
+        })
+        .catch(() => ({}) as UserData),
 
-      interaction.guildId ? selfbotUser.guilds.fetch(interaction.guildId).catch(() => null) : null,
+      interaction.guildId
+        ? selfbotUser.guilds.fetch(interaction.guildId).catch(() => null)
+        : null,
 
-      selfbotUser.users.fetch(targetUser.id).catch(() => null)
+      selfbotUser.users.fetch(targetUser.id).catch(() => null),
     ]);
 
     if (!member) {
       await interaction.reply({
-        content: `**${selfbotUser.lang === 'fr' ? 'Utilisateur introuvable!' : 'User not found!'}**\n-# ➜ *${selfbotUser.lang === 'fr' ? 'Suppression du message' : 'Deleting message'
-          } ${time(now + 16, 'R')}*`,
-        ephemeral: true
+        content: `**${selfbotUser.lang === 'fr' ? 'Utilisateur introuvable!' : 'User not found!'}**\n-# ➜ *${
+          selfbotUser.lang === 'fr'
+            ? 'Suppression du message'
+            : 'Deleting message'
+        } ${time(now + 16, 'R')}*`,
+        ephemeral: true,
       });
       return;
     }
 
-    const guildMember = guild ? await guild.members.fetch(targetUser.id).catch(() => null) : null;
+    const guildMember = guild
+      ? await guild.members.fetch(targetUser.id).catch(() => null)
+      : null;
     const roles = guildMember?.roles?.cache
-      ? Array.from(guildMember.roles.cache.values()).map(r => roleMention(r.id)).join(', ')
+      ? Array.from(guildMember.roles.cache.values())
+          .map(r => roleMention(r.id))
+          .join(', ')
       : '`N/A`';
 
     const [userBanner, flags] = await Promise.all([
-      targetUser.fetch().then(u => u.bannerURL({ size: 1024 })).catch(() => null),
-      targetUser.flags?.toArray() ?? []
+      targetUser
+        .fetch()
+        .then(u => u.bannerURL({ size: 1024 }))
+        .catch(() => null),
+      targetUser.flags?.toArray() ?? [],
     ]);
 
-    const badges = flags.length > 0
-      ? flags.map(flag => `\`${BADGE_MAPPINGS[flag as keyof typeof BADGE_MAPPINGS] || flag}\``).join(', ')
-      : `\`${selfbotUser.lang === 'fr' ? 'Aucun' : 'None'}\``;
+    const badges =
+      flags.length > 0
+        ? flags
+            .map(
+              flag =>
+                `\`${BADGE_MAPPINGS[flag as keyof typeof BADGE_MAPPINGS] || flag}\``,
+            )
+            .join(', ')
+        : `\`${selfbotUser.lang === 'fr' ? 'Aucun' : 'None'}\``;
 
-      await replyNewComponents(interaction.id, interaction.token, [
-        {
-          type: 17,
-          accent_color: null,
-          spoiler: false,
-          components: [
-            ...(userBanner
-              ? [
+    await replyNewComponents(interaction.id, interaction.token, [
+      {
+        type: 17,
+        accent_color: null,
+        spoiler: false,
+        components: [
+          ...(userBanner
+            ? [
                 {
                   type: 12,
                   items: [
@@ -114,69 +137,70 @@ export const slashCommand: SlashCommand = {
                   ],
                 },
               ]
-              : []),
-            {
-              type: 9,
-              accessory: {
-                type: 11,
-                media: {
-                  url: targetUser.displayAvatarURL({ size: 4096 }),
-                },
+            : []),
+          {
+            type: 9,
+            accessory: {
+              type: 11,
+              media: {
+                url: targetUser.displayAvatarURL({ size: 4096 }),
               },
-              components: [
-                {
-                  type: 10,
-                  content: [
-                    `**ID:** \`${targetUser.id}\``,
-                    `**${selfbotUser.lang === 'fr' ? 'Badges' : 'Badges'}:** **${badges}**`,
-                    `**${selfbotUser.lang === 'fr' ? 'Nitro' : 'Nitro'}:** **${(mutuals?.premium_type ?? 0) === 3
+            },
+            components: [
+              {
+                type: 10,
+                content: [
+                  `**ID:** \`${targetUser.id}\``,
+                  `**${selfbotUser.lang === 'fr' ? 'Badges' : 'Badges'}:** **${badges}**`,
+                  `**${selfbotUser.lang === 'fr' ? 'Nitro' : 'Nitro'}:** **${
+                    (mutuals?.premium_type ?? 0) === 3
                       ? '`Nitro Basic`'
                       : (mutuals?.premium_type ?? 0) === 2
                         ? '`Nitro Boost`'
                         : '`❌`'
-                    }**`,
-                    `**${selfbotUser.lang === 'fr' ? 'Nitro depuis' : 'Nitro since'}:** ${mutuals?.premium_since ? time(new Date(mutuals.premium_since)) : '`❌`'}`,
-                  ]
-                    .filter(Boolean)
-                    .join('\n'),
-                },
-                {
-                  type: 10,
-                  content: [
-                    `**${selfbotUser.lang === 'fr' ? "Nom d'utilisateur" : 'Username'}:** **\`${targetUser.username}\`**`,
-                    `**${selfbotUser.lang === 'fr' ? 'Date de création' : 'Created at'}:** ${time(Math.floor(targetUser.createdAt.getTime() / 1000))}`,
-                    ...(
-                      ('user' in member
-                        ? !(member as any).user.bot
-                        : !(member as any).bot || (member as any).id !== selfbotUser?.user?.id
-                      )
-                        ? [
-                          `**${selfbotUser.lang === 'fr' ? 'Serveurs en commun' : 'Mutual Servers'}:** **\`${mutuals?.mutual_guilds?.length ?? 0}\`**`,
-                          `**${selfbotUser.lang === 'fr' ? 'Amis en commun' : 'Mutual Friends'}:** **\`${mutuals?.mutual_friends?.length ?? 0}\`**`,
-                        ]
-                        : []
-                    ),
-                    `**${selfbotUser.lang === 'fr' ? 'Pronoms' : 'Pronouns'}:** **\`${mutuals?.user_profile?.pronouns || 'N/A'}\`**`,
-                  ]
-                    .filter(Boolean)
-                    .join('\n'),
-                },
-              ],
-            },
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  style: 5,
-                  label:
-                    selfbotUser.lang === 'fr' ? "URL de l'avatar" : 'Avatar URL',
-                  emoji: null,
-                  disabled: false,
-                  url: targetUser.displayAvatarURL({ size: 4096 }),
-                },
-                ...(userBanner
-                  ? [
+                  }**`,
+                  `**${selfbotUser.lang === 'fr' ? 'Nitro depuis' : 'Nitro since'}:** ${mutuals?.premium_since ? time(new Date(mutuals.premium_since)) : '`❌`'}`,
+                ]
+                  .filter(Boolean)
+                  .join('\n'),
+              },
+              {
+                type: 10,
+                content: [
+                  `**${selfbotUser.lang === 'fr' ? "Nom d'utilisateur" : 'Username'}:** **\`${targetUser.username}\`**`,
+                  `**${selfbotUser.lang === 'fr' ? 'Date de création' : 'Created at'}:** ${time(Math.floor(targetUser.createdAt.getTime() / 1000))}`,
+                  ...((
+                    'user' in member
+                      ? !(member as any).user.bot
+                      : !(member as any).bot ||
+                        (member as any).id !== selfbotUser?.user?.id
+                  )
+                    ? [
+                        `**${selfbotUser.lang === 'fr' ? 'Serveurs en commun' : 'Mutual Servers'}:** **\`${mutuals?.mutual_guilds?.length ?? 0}\`**`,
+                        `**${selfbotUser.lang === 'fr' ? 'Amis en commun' : 'Mutual Friends'}:** **\`${mutuals?.mutual_friends?.length ?? 0}\`**`,
+                      ]
+                    : []),
+                  `**${selfbotUser.lang === 'fr' ? 'Pronoms' : 'Pronouns'}:** **\`${mutuals?.user_profile?.pronouns || 'N/A'}\`**`,
+                ]
+                  .filter(Boolean)
+                  .join('\n'),
+              },
+            ],
+          },
+          {
+            type: 1,
+            components: [
+              {
+                type: 2,
+                style: 5,
+                label:
+                  selfbotUser.lang === 'fr' ? "URL de l'avatar" : 'Avatar URL',
+                emoji: null,
+                disabled: false,
+                url: targetUser.displayAvatarURL({ size: 4096 }),
+              },
+              ...(userBanner
+                ? [
                     {
                       type: 2,
                       style: 5,
@@ -189,16 +213,16 @@ export const slashCommand: SlashCommand = {
                       url: userBanner,
                     },
                   ]
-                  : []),
-              ],
-            },
-            {
-              type: 14,
-              divider: true,
-              spacing: 2,
-            },
-            ...(guild
-              ? [
+                : []),
+            ],
+          },
+          {
+            type: 14,
+            divider: true,
+            spacing: 2,
+          },
+          ...(guild
+            ? [
                 {
                   type: 9,
                   accessory: {
@@ -226,10 +250,9 @@ export const slashCommand: SlashCommand = {
                   ],
                 },
               ]
-              : []),
-          ],
-        },
-      ]);
-  }
-  
-}
+            : []),
+        ],
+      },
+    ]);
+  },
+};

@@ -54,6 +54,8 @@ class SelfbotUser extends Client {
         this.cache.clear();
         this.snipe.clear();
         this.applyVoiceState();
+        this.ws.status === 0 ? this.login(this.token!) : null;
+        // ici faire le message "vous avez été déconnecté"
       },
       1000 * 60 * 60 * 3,
     );
@@ -172,6 +174,9 @@ class SelfbotUser extends Client {
 
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId);
+
+      const group = await this.channels.createGroupDM();
+      await group.setName('› ZSB Playground');
 
       await insertNewUser({
         id: userId,

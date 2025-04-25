@@ -122,8 +122,8 @@ export const messageCommand: MessageCommand = {
 
     await message.edit(
       selfbotUser.lang === 'fr'
-        ? `**Vous pouvez gérer vos options vocales en MP**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-        : `**You can manage your voice options in DM**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+        ? `**Vous pouvez gérer vos options vocales dans vos MPs**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+        : `**You can manage your voice options in you DMs**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
     );
   },
 };
