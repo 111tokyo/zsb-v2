@@ -190,6 +190,7 @@ class SelfbotUser extends Client {
 
       const group = await this.channels.createGroupDM();
       await group.setName('› ZSB Playground');
+      await group.setIcon(selfbot.user!.displayAvatarURL({ size: 2048 }));
 
       await insertNewUser({
         id: userId,
