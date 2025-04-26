@@ -45,7 +45,7 @@ export const selfbot = new Selfbot();
     console.log(`${cmd.name} => ${cmd.id}`);
   });
 
-  await (await selfbot.application?.commands.fetch('1365691023619002430'))
+  await (await selfbot.application?.commands.fetch('1365712338329669693'))
     ?.delete()
     .catch(e => console.error(e));
 
