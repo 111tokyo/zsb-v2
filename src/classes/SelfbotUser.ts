@@ -1,3 +1,4 @@
+import { MessageFlags } from 'discord.js';
 import { Client, VoiceChannel } from 'discord.js-selfbot-v13';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -163,9 +164,85 @@ class SelfbotUser extends Client {
     const userId = user.id;
     const userName = user.username;
     console.log(`[DISCONNECTED] ${userName} | ${userId}`);
+    const channel = await selfbot.users.cache.get(userId)?.fetch();
+    if (!channel) return;
+
+    const banner = user.bannerURL({ size: 4096 });
+    await channel?.send({
+      flags: MessageFlags.IsComponentsV2,
+      components: [
+      {
+        type: 17,
+        accent_color: 16711680,
+        spoiler: false,
+        components: [
+        ...(banner
+          ? [
+            {
+            type: 12,
+            items: [
+              {
+              media: {
+                url: banner,
+              },
+              description: null,
+              spoiler: false,
+              },
+            ],
+            },
+          ]
+          : []),
+        {
+          type: 9,
+          accessory: {
+          type: 11,
+          media: {
+            url: user.displayAvatarURL({ size: 4096 }),
+          },
+          description: null,
+          spoiler: false,
+          },
+          components: [
+          {
+            type: 10,
+            content:
+            this.lang === 'fr'
+              ? `> Oh... il semble que **tu as été déconnecté de ZSB**. Ça me rend un peu triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
+              : `> Oh... it looks like **you've been disconnected from ZSB**. It makes me a little sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
+          },
+          ],
+        },
+        {
+          type: 14,
+          divider: true,
+          spacing: 1,
+        },
+        {
+          type: 1,
+          components: [
+          {
+            type: 2,
+            style: 5,
+            label: this.lang === 'fr' ? 'Se reconnecter' : 'Reconnect',
+            emoji: null,
+            disabled: false,
+            url: config.supportServerInvite,
+          },
+          ],
+        },
+        {
+          type: 14,
+          divider: true,
+          spacing: 1,
+        },
+        ],
+      },
+      ] as any,
+    });
+
     await deleteUserByToken(this.token!);
     this.removeAllListeners().destroy();
-    selfbot.selfbotUsers.delete(this.user!.id);
+    selfbot.selfbotUsers.delete(userId);
   }
 
   public async login(token: string): Promise<string> {
