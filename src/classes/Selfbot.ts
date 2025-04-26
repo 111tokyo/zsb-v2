@@ -229,6 +229,23 @@ class Selfbot extends Client {
           });
         }
       }
+      if (interaction.isModalSubmit()) {
+        const selbotUser = this.selfbotUsers.get(interaction.user.id);
+        try {
+          const { button } = await import(
+            `../../interactions/modals/${interaction.customId}`
+          );
+          await button.execute(selbotUser, interaction);
+        } catch {
+          interaction.reply({
+            content:
+              interaction.locale === 'fr'
+                ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
+                : 'Are you lost? This interaction does not exist. You should refresh your application by pressing `Ctrl + R` on your PC or restarting the app on your phone.',
+            flags: MessageFlags.Ephemeral,
+          });
+        }
+      }
     });
   }
 

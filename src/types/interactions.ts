@@ -5,6 +5,7 @@ import {
   ChatInputCommandInteraction,
   ContextMenuCommandBuilder,
   MessageContextMenuCommandInteraction,
+  ModalSubmitInteraction,
   SlashCommandOptionsOnlyBuilder,
   UserContextMenuCommandInteraction,
 } from 'discord.js';
@@ -21,6 +22,10 @@ export type Select = {
 
 export type Button = {
   execute: (selfbotUser: SelfbotUser, interaction: ButtonInteraction) => void;
+};
+
+export type Modal = {
+  execute: (selfbotUser: SelfbotUser, interaction: ModalSubmitInteraction) => void;
 };
 
 export type SlashCommand = {
