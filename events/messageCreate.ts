@@ -1,21 +1,26 @@
-import SelfbotUser from '../src/classes/SelfbotUser';
-import { Event } from '../src/types/event';
 import { Message } from 'discord.js-selfbot-v13';
 import Selfbot from '../src/classes/Selfbot';
+import SelfbotUser from '../src/classes/SelfbotUser';
+import { Event } from '../src/types/event';
 
 export const event: Event = {
   type: 'messageCreate',
   once: false,
   execute: (selfbot: Selfbot, selfbotUser: SelfbotUser, message: Message) => {
+    if (
+      (message.author.id !== selfbotUser.user!.id &&
+        message.content.includes(selfbotUser.user!.id) &&
+        selfbotUser.afk) ||
+      (message.author.id !== selfbotUser.user!.id &&
+        message.channel.type === 'DM' &&
+        selfbotUser.afk)
+    ) {
+      message.reply(selfbotUser.afk);
+      message.markRead();
+    }
+
     if (selfbotUser.commandType !== 'Slash') {
       if (message.author.bot) return;
-      if (
-        message.author.id !== selfbotUser.user!.id &&
-        message.content.includes(selfbotUser.user!.id) &&
-        selfbotUser.afk
-      ) {
-        message.reply(selfbotUser.afk);
-      }
       if (message.author.id !== selfbotUser.user!.id) return;
       if (message.content.startsWith(selfbotUser.prefix)) {
         const commandName = message.content

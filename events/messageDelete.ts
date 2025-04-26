@@ -13,7 +13,7 @@ export const event: Event = {
   ) => {
     if (!message) return;
     if (!message.author?.id) return;
-    //if (message.author?.id === selfbotUser.user!.id) return;
+    if (message.author?.id === selfbotUser.user!.id) return;
     if (message.author?.bot) return;
 
     message.avatarURL = message.author.displayAvatarURL({
