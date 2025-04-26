@@ -36,7 +36,6 @@ export const selfbot = new Selfbot();
   selfbot.on('error', errorHandler);
 
   await selfbot.initAfterLogin();
-
   /* // Example of fetching and deleting a command
 
   const commands = await selfbot.application!.commands.fetch();

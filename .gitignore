@@ -11,5 +11,9 @@ node_modules
 package-lock.json
 pnpm-lock.yaml
 
+
 # Ignore log files
 debug.log
+
+# Ignore Development database file
+src/db/dev.db

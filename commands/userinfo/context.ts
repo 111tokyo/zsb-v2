@@ -37,7 +37,6 @@ export const contextCommand: ContextCommand<UserContextMenuCommandInteraction> =
       selfbotUser: SelfbotUser,
       interaction: UserContextMenuCommandInteraction,
     ) => {
-      await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
       const targetUser = interaction.targetUser;
 
@@ -199,6 +198,6 @@ export const contextCommand: ContextCommand<UserContextMenuCommandInteraction> =
             ],
           },
         ] as any,
-      });
+      })
     },
   };
