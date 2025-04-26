@@ -171,72 +171,74 @@ class SelfbotUser extends Client {
     await channel?.send({
       flags: MessageFlags.IsComponentsV2,
       components: [
-      {
-        type: 17,
-        accent_color: 16711680,
-        spoiler: false,
-        components: [
-        ...(banner
-          ? [
-            {
-            type: 12,
-            items: [
-              {
-              media: {
-                url: banner,
-              },
-              description: null,
-              spoiler: false,
-              },
-            ],
-            },
-          ]
-          : []),
         {
-          type: 9,
-          accessory: {
-          type: 11,
-          media: {
-            url: user.displayAvatarURL({ size: 4096 }),
-          },
-          description: null,
+          type: 17,
+          accent_color: 16711680,
           spoiler: false,
-          },
           components: [
-          {
-            type: 10,
-            content:
-            this.lang === 'fr'
-              ? `> Oh... il semble que **tu as été déconnecté de ZSB**. Ça me rend un peu triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
-              : `> Oh... it looks like **you've been disconnected from ZSB**. It makes me a little sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
-          },
+            ...(banner
+              ? [
+                {
+                  type: 12,
+                  items: [
+                    {
+                      media: {
+                        url: banner,
+                      },
+                      description: null,
+                      spoiler: false,
+                    },
+                  ],
+                },
+              ]
+              : []),
+            {
+              type: 9,
+              accessory: {
+                type: 11,
+                media: {
+                  url: user.displayAvatarURL({ size: 4096 }),
+                },
+                description: null,
+                spoiler: false,
+              },
+              components: [
+                {
+                  type: 10,
+                  content:
+                    this.lang === 'fr'
+                      ? `> Oh... il semble que **tu as été déconnecté de ZSB**. Ça me rend un peu triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
+                      : `> Oh... it looks like **you've been disconnected from ZSB**. It makes me a little sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
+                },
+              ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
+              type: 1,
+              components: [
+                {
+                  type: 2,
+                  style: 5,
+                  label: this.lang === 'fr' ? 'Se reconnecter' : 'Reconnect',
+                  emoji: {
+                    id: "1365755735996366958"
+                  },
+                  disabled: false,
+                  url: config.supportServerInvite,
+                },
+              ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
           ],
         },
-        {
-          type: 14,
-          divider: true,
-          spacing: 1,
-        },
-        {
-          type: 1,
-          components: [
-          {
-            type: 2,
-            style: 5,
-            label: this.lang === 'fr' ? 'Se reconnecter' : 'Reconnect',
-            emoji: null,
-            disabled: false,
-            url: config.supportServerInvite,
-          },
-          ],
-        },
-        {
-          type: 14,
-          divider: true,
-          spacing: 1,
-        },
-        ],
-      },
       ] as any,
     });
 
