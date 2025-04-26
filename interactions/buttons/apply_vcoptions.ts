@@ -60,7 +60,7 @@ export const button: Button = {
                     },
                   ],
                   placeholder: selfbotUser.lang
-                    ? "Choisis t'es options vocales"
+                    ? 'Choisis tes options vocales'
                     : 'Select your voice options',
                   min_values: 0,
                   max_values: 3,
@@ -173,7 +173,7 @@ export const button: Button = {
                       },
                     ],
                     placeholder: selfbotUser.lang
-                      ? "Choisis t'es options vocales"
+                      ? 'Choisis tes options vocales'
                       : 'Select your voice options',
                     min_values: 0,
                     max_values: 3,

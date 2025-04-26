@@ -37,5 +37,19 @@ export const selfbot = new Selfbot();
 
   await selfbot.initAfterLogin();
 
+  /* // Example of fetching and deleting a command
+
+  const commands = await selfbot.application!.commands.fetch();
+
+  commands.forEach(cmd => {
+    console.log(`${cmd.name} => ${cmd.id}`);
+  });
+
+  await (await selfbot.application?.commands.fetch('1365691023619002430'))
+    ?.delete()
+    .catch(e => console.error(e));
+
+  */
+
   console.log('[INFO] Selfbot ready to use!');
 })();
