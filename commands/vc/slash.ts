@@ -22,7 +22,7 @@ export const slashCommand: SlashCommand = {
           {
             type: 14,
             divider: true,
-            spacing: 1
+            spacing: 1,
           },
           {
             type: 1,
@@ -42,7 +42,7 @@ export const slashCommand: SlashCommand = {
                         ? "Permet d'apparaitre avec le microphone coupé"
                         : 'Allows you to appear with the microphone cut',
                     emoji: {
-                      id: '1364590640557457408',
+                      id: '1364582553389891684',
                     },
                     default: selfbotUser.voiceOptions.selfMute,
                   },
@@ -100,14 +100,15 @@ export const slashCommand: SlashCommand = {
           {
             type: 14,
             divider: true,
-            spacing: 1
+            spacing: 1,
           },
           {
             type: 10,
-            content: selfbotUser.lang === 'fr'
-              ? '-# ➜ N\'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale.'
-              : '-# ➜ Don\'t forget that you must have the permissions to join the voice channel.',
-          }
+            content:
+              selfbotUser.lang === 'fr'
+                ? "-# ➜ N'oubliez pas que vous devez avoir les permissons pour rejoindre la vocale."
+                : "-# ➜ Don't forget that you must have the permissions to join the voice channel.",
+          },
         ],
       },
     ]);

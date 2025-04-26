@@ -37,7 +37,7 @@ export const messageCommand: MessageCommand = {
                           ? "Permet d'apparaitre avec le microphone coupé"
                           : 'Allows you to appear with the microphone cut',
                       emoji: {
-                        id: '1364590640557457408',
+                        id: '1364582553389891684',
                       },
                       default: selfbotUser.voiceOptions.selfMute,
                     },

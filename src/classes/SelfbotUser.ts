@@ -1,4 +1,4 @@
-import { Client, Message, VoiceChannel } from 'discord.js-selfbot-v13';
+import { Client, VoiceChannel } from 'discord.js-selfbot-v13';
 import fs from 'node:fs';
 import path from 'node:path';
 import { selfbot } from '../../main';
@@ -12,6 +12,7 @@ import { getSpecificUserData, getUserById } from '../db/queries';
 import { loadRichPresence } from '../loaders/richpresence';
 import { Event } from '../types/event';
 import { CommandType, LangType } from '../types/interactions';
+import { SnipeMessage } from '../types/snipe';
 import { statusOptions } from '../types/statusOptions';
 import { voiceOptions } from '../types/voiceOptions';
 
@@ -30,7 +31,7 @@ class SelfbotUser extends Client {
   public commandType: CommandType = 'Slash';
   public lang: LangType = 'en';
   public prefix = '&';
-  public snipe: Map<string, Message> = new Map();
+  public snipe: Map<string, SnipeMessage[]> = new Map();
   public cache: Map<string, any> = new Map();
   public afk: string | null = null;
   private _createdAt = Date.now();
