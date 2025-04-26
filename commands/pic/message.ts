@@ -45,6 +45,11 @@ export const messageCommand: MessageCommand = {
               ],
             },
             {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
               type: 1,
               components: [
                 {
@@ -61,6 +66,11 @@ export const messageCommand: MessageCommand = {
                   url: avatar,
                 },
               ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
             },
           ],
         },

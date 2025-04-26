@@ -37,7 +37,7 @@ export const slashCommand: SlashCommand = {
     });
 
     if (!banner) {
-      if(targetUser.id === selfbotUser.user!.id) {
+      if (targetUser.id === selfbotUser.user!.id) {
         interaction.reply({
           content:
             selfbotUser.lang === 'fr'
@@ -45,7 +45,7 @@ export const slashCommand: SlashCommand = {
               : 'You do not have a banner.',
           flags: MessageFlags.Ephemeral,
         });
-        return
+        return;
       }
       interaction.reply({
         content:
@@ -78,6 +78,11 @@ export const slashCommand: SlashCommand = {
               ],
             },
             {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
               type: 1,
               components: [
                 {
@@ -94,6 +99,11 @@ export const slashCommand: SlashCommand = {
                   url: banner,
                 },
               ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
             },
           ],
         },
