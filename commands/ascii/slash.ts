@@ -10,13 +10,19 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('ascii')
-    .setDescription('Converts text to ASCII art')
-    .setDescriptionLocalization('fr', 'Convertit du texte en art ASCII')
+    .setDescription('Allows you to converts a text to ASCII art')
+    .setDescriptionLocalization(
+      'fr',
+      'Permet de convertir un texte en art ASCII',
+    )
     .addStringOption(option =>
       option
         .setName('text')
-        .setDescription('The text to convert')
-        .setDescriptionLocalization('fr', 'Le texte à convertir')
+        .setDescription('The text you want to convert')
+        .setDescriptionLocalization(
+          'fr',
+          'Le texte que vous souhaitez convertir',
+        )
         .setRequired(true),
     ),
 

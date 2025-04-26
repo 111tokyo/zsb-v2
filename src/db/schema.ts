@@ -8,7 +8,7 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
   lang: text().notNull(),
   commandType: text()
     .notNull()
-    .$default(() => 'Slash'),
+    .$default(() => 'Both'),
   prefix: text()
     .notNull()
     .$default(() => '&'),

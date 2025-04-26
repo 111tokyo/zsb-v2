@@ -4,16 +4,13 @@ import {
   ButtonInteraction,
   ChatInputCommandInteraction,
   ContextMenuCommandBuilder,
-  ContextMenuCommandInteraction,
+  MessageContextMenuCommandInteraction,
   SlashCommandOptionsOnlyBuilder,
+  UserContextMenuCommandInteraction,
 } from 'discord.js';
 import { Message } from 'discord.js-selfbot-v13';
 import Selfbot from '../classes/Selfbot';
 import SelfbotUser from '../classes/SelfbotUser';
-
-export type CommandType = 'Slash' | 'Prefix' | 'Both';
-
-export type LangType = 'en' | 'fr';
 
 export type Select = {
   execute: (
@@ -35,12 +32,12 @@ export type SlashCommand = {
   ) => void;
 };
 
-export type ContextMenu = {
+export type ContextCommand<T extends MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction = MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction> = {
   data: ContextMenuCommandBuilder;
   execute: (
     selfbotUser: SelfbotUser,
-    interaction: ContextMenuCommandInteraction,
-  ) => void;
+    interaction: T,
+  ) => Promise<void>;
 };
 
 export type MessageCommand = {

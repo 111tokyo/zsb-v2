@@ -7,7 +7,8 @@ import { eq } from 'drizzle-orm';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import db from '../../src/db';
 import { selfbotUsersTable } from '../../src/db/schema';
-import { LangType, SlashCommand } from '../../src/types/interactions';
+import { LangType } from '../../src/types/selfbot';
+import { SlashCommand } from '../../src/types/interactions';
 
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()

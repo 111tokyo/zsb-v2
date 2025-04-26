@@ -10,18 +10,20 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('spam')
-    .setDescription('Send a message multiple times quickly.')
+    .setDescription('Allows you to send a message multiple times quickly.')
     .setDescriptionLocalization(
       'fr',
-      'Envoyer un message plusieurs fois rapidement.',
+      "Permet d'envoyer un message plusieurs fois rapidement.",
     )
     .addIntegerOption(option =>
       option
         .setName('number')
-        .setDescription('The number of times to send the message.')
+        .setDescription(
+          'The number of times you want to send the message. (max: 50)',
+        )
         .setDescriptionLocalization(
           'fr',
-          'Le nombre de fois à envoyer le message.',
+          'Le nombre de fois que vous souhaitez envoyer le message. (max: 50)',
         )
         .setMaxValue(50)
         .setMinValue(1)

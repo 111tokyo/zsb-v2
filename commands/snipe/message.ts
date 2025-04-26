@@ -69,10 +69,18 @@ export const messageCommand: MessageCommand = {
       // Author name
       ctx.font = 'bold 100px "Noto Sans", Arial, sans-serif';
       ctx.fillStyle = '#FFFFFF';
-      ctx.fillText(snipedMessage.author.displayName, pseudoX, pseudoY);
+      ctx.fillText(
+        snipedMessage.author.displayName || snipedMessage.author.username,
+        pseudoX,
+        pseudoY,
+      );
 
       let currentX =
-        pseudoX + ctx.measureText(snipedMessage.author.displayName).width + 60;
+        pseudoX +
+        ctx.measureText(
+          snipedMessage.author.displayName || snipedMessage.author.username,
+        ).width +
+        60;
 
       // Clan tag and logo
       const clanTag =
@@ -267,11 +275,17 @@ export const messageCommand: MessageCommand = {
         // Author name
         ctx.font = 'bold 100px "Noto Sans", Arial, sans-serif';
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText(snipedMessage.author.displayName, pseudoX, pseudoY);
+        ctx.fillText(
+          snipedMessage.author.displayName || snipedMessage.author.username,
+          pseudoX,
+          pseudoY,
+        );
 
         let currentX =
           pseudoX +
-          ctx.measureText(snipedMessage.author.displayName).width +
+          ctx.measureText(
+            snipedMessage.author.displayName || snipedMessage.author.username,
+          ).width +
           60;
 
         // Clan tag and logo

@@ -6,12 +6,14 @@ import config from '../config';
 import {
   deleteUserByToken,
   insertNewUser,
+  updateUserStatusOptions,
   updateUserToken,
+  updateUserVoiceOptions,
 } from '../db/actions';
 import { getSpecificUserData, getUserById } from '../db/queries';
 import { loadRichPresence } from '../loaders/richpresence';
 import { Event } from '../types/event';
-import { CommandType, LangType } from '../types/interactions';
+import { CommandType, LangType } from '../types/selfbot';
 import { SnipeMessage } from '../types/snipe';
 import { statusOptions } from '../types/statusOptions';
 import { voiceOptions } from '../types/voiceOptions';
@@ -52,11 +54,10 @@ class SelfbotUser extends Client {
   private _interval() {
     setInterval(
       () => {
+        this.ws.status === 0 ? this.logout() : null;
         this.cache.clear();
         this.snipe.clear();
         this.applyVoiceState();
-        this.ws.status === 0 ? this.login(this.token!) : null;
-        // ici faire le message "vous avez été déconnecté"
       },
       1000 * 60 * 60 * 3,
     );
@@ -123,6 +124,18 @@ class SelfbotUser extends Client {
     }
   }
 
+  public async setDBData() {
+    const user = this.user;
+    if (!user) return;
+    const userData = await getSpecificUserData(user.id);
+    if (userData) {
+      await Promise.all([
+        await updateUserVoiceOptions(user.id, this.voiceOptions),
+        await updateUserStatusOptions(user.id, this.statusOptions),
+      ]);
+    }
+  }
+
   private async _loadInitialData() {
     const user = this.user;
     if (!user) return;
@@ -151,7 +164,6 @@ class SelfbotUser extends Client {
     const userName = user.username;
     console.log(`[DISCONNECTED] ${userName} | ${userId}`);
     await deleteUserByToken(this.token!);
-    await this.deauthorize(selfbot.user!.id);
     this.removeAllListeners().destroy();
     selfbot.selfbotUsers.delete(this.user!.id);
   }

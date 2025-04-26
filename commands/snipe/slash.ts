@@ -21,7 +21,13 @@ export const slashCommand: SlashCommand = {
     .addIntegerOption(option =>
       option
         .setName('amount')
-        .setDescription('The number of deleted messages to snipe')
+        .setDescription(
+          'The number of deleted messages you want to snipe. (max: 10)',
+        )
+        .setDescriptionLocalization(
+          'fr',
+          'Le nombre de messages supprimés que vous souhaitez sniper. (max: 10)',
+        )
         .setMaxValue(10)
         .setMinValue(2)
         .setRequired(false),
@@ -131,11 +137,17 @@ export const slashCommand: SlashCommand = {
         // Author name
         ctx.font = 'bold 100px "Noto Sans", Arial, sans-serif';
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText(snipedMessage.author.displayName, pseudoX, pseudoY);
+        ctx.fillText(
+          snipedMessage.author.displayName || snipedMessage.author.username,
+          pseudoX,
+          pseudoY,
+        );
 
         let currentX =
           pseudoX +
-          ctx.measureText(snipedMessage.author.displayName).width +
+          ctx.measureText(
+            snipedMessage.author.displayName || snipedMessage.author.username,
+          ).width +
           60;
 
         // Clan tag and logo

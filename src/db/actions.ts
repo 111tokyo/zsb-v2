@@ -1,5 +1,7 @@
 import { eq } from 'drizzle-orm';
-import { CommandType, LangType } from '../types/interactions';
+import { CommandType, LangType } from '../types/selfbot';
+import { statusOptions } from '../types/statusOptions';
+import { voiceOptions } from '../types/voiceOptions';
 import db from './index';
 import { selfbotUsersTable } from './schema';
 
@@ -51,6 +53,28 @@ export async function updateUserLang(userId: string, lang: LangType) {
   return db
     .update(selfbotUsersTable)
     .set({ lang: lang })
+    .where(eq(selfbotUsersTable.id, userId))
+    .execute();
+}
+
+export async function updateUserVoiceOptions(
+  userId: string,
+  voiceOptions: voiceOptions,
+) {
+  return db
+    .update(selfbotUsersTable)
+    .set({ voiceOptions: JSON.stringify(voiceOptions) })
+    .where(eq(selfbotUsersTable.id, userId))
+    .execute();
+}
+
+export async function updateUserStatusOptions(
+  userId: string,
+  statusOptions: statusOptions,
+) {
+  return db
+    .update(selfbotUsersTable)
+    .set({ statusOptions: JSON.stringify(statusOptions) })
     .where(eq(selfbotUsersTable.id, userId))
     .execute();
 }

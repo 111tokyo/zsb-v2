@@ -2,7 +2,8 @@ import { time } from 'discord.js';
 import { eq } from 'drizzle-orm';
 import db from '../../src/db';
 import { selfbotUsersTable } from '../../src/db/schema';
-import { CommandType, MessageCommand } from '../../src/types/interactions';
+import { CommandType } from '../../src/types/selfbot';
+import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser, message, args: string[]) {
