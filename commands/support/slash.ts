@@ -7,8 +7,8 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
-import { SlashCommand } from '../../src/types/interactions';
 import config from '../../src/config';
+import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('support')
@@ -25,6 +25,7 @@ export const slashCommand: SlashCommand = {
         .setLabel(
           selfbotUser.lang === 'fr' ? 'Serveur support' : 'Support server',
         )
+        .setEmoji('1366058652192215134')
         .setURL(config.supportServerInvite),
     );
 

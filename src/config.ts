@@ -10,6 +10,7 @@ const config = {
   supportServerInvite: 'https://discord.gg/zsb',
   APIs: {
     aiKey: process.env.API_AI_TOKEN || '',
+    prevnameKey: process.env.API_PREVNAME_TOKEN || '',
   },
 };
 
