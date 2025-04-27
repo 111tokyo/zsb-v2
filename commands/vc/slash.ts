@@ -47,7 +47,7 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfMute,
                     },
                     {
-                      label: selfbotUser.lang ? 'Être en sourdine' : 'Be deaf',
+                      label: selfbotUser.lang === 'fr' ? 'Être en sourdine' : 'Be deaf',
                       value: 'deaf',
                       description:
                         selfbotUser.lang === 'fr'
@@ -59,7 +59,7 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfDeaf,
                     },
                     {
-                      label: selfbotUser.lang
+                      label: selfbotUser.lang === 'fr'
                         ? 'Activer la caméra'
                         : 'Enable camera',
                       value: 'camera',
@@ -73,7 +73,7 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfVideo,
                     },
                   ],
-                  placeholder: selfbotUser.lang
+                  placeholder: selfbotUser.lang === 'fr'
                     ? 'Choisis tes options vocales'
                     : 'Select your voice options',
                   min_values: 0,
