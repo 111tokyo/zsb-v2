@@ -1,0 +1,15 @@
+import config from '../config';
+
+const SnowayAPI = require('snoway-api');
+const api = new SnowayAPI(config.APIs.prevnameKey);
+
+const prevnamesRequest = async (userId: string) => {
+  try {
+    const prevnames = await api.allPrevnames(userId);
+    return prevnames.names;
+  } catch {
+    return null;
+  }
+};
+
+export { prevnamesRequest };

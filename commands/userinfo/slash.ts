@@ -124,6 +124,9 @@ export const slashCommand: SlashCommand = {
                 media: {
                   url: targetUser.displayAvatarURL({ size: 4096 }),
                 },
+      
+                description: null,
+                spoiler: false
               },
               components: [
                 {

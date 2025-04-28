@@ -197,9 +197,12 @@ class Selfbot extends Client {
       if (interaction.isButton()) {
         const selbotUser = this.selfbotUsers.get(interaction.user.id);
 
-        const ignoreButton = ['help_back', 'help_next'].includes(
-          interaction.customId,
-        );
+        const ignoreButton = [
+          'help_back',
+          'help_next',
+          'next',
+          'previous',
+        ].includes(interaction.customId);
 
         if (ignoreButton) return;
 

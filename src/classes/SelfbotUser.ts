@@ -178,19 +178,19 @@ class SelfbotUser extends Client {
           components: [
             ...(banner
               ? [
-                {
-                  type: 12,
-                  items: [
-                    {
-                      media: {
-                        url: banner,
+                  {
+                    type: 12,
+                    items: [
+                      {
+                        media: {
+                          url: banner,
+                        },
+                        description: null,
+                        spoiler: false,
                       },
-                      description: null,
-                      spoiler: false,
-                    },
-                  ],
-                },
-              ]
+                    ],
+                  },
+                ]
               : []),
             {
               type: 9,
@@ -225,7 +225,7 @@ class SelfbotUser extends Client {
                   style: 5,
                   label: this.lang === 'fr' ? 'Se reconnecter' : 'Reconnect',
                   emoji: {
-                    id: "1365755735996366958"
+                    id: '1365755735996366958',
                   },
                   disabled: false,
                   url: config.supportServerInvite,

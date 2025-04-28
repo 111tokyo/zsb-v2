@@ -25,7 +25,10 @@ export type Button = {
 };
 
 export type Modal = {
-  execute: (selfbotUser: SelfbotUser, interaction: ModalSubmitInteraction) => void;
+  execute: (
+    selfbotUser: SelfbotUser,
+    interaction: ModalSubmitInteraction,
+  ) => void;
 };
 
 export type SlashCommand = {
@@ -37,12 +40,15 @@ export type SlashCommand = {
   ) => void;
 };
 
-export type ContextCommand<T extends MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction = MessageContextMenuCommandInteraction | UserContextMenuCommandInteraction> = {
+export type ContextCommand<
+  T extends
+    | MessageContextMenuCommandInteraction
+    | UserContextMenuCommandInteraction =
+    | MessageContextMenuCommandInteraction
+    | UserContextMenuCommandInteraction,
+> = {
   data: ContextMenuCommandBuilder;
-  execute: (
-    selfbotUser: SelfbotUser,
-    interaction: T,
-  ) => Promise<void>;
+  execute: (selfbotUser: SelfbotUser, interaction: T) => Promise<void>;
 };
 
 export type MessageCommand = {

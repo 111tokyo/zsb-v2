@@ -14,6 +14,13 @@ export const loadSlashCommand = async (
     slashCommandFile.slashCommand,
   );
 
-  selfbot.application!.commands.create(slashCommandFile.slashCommand.data.setIntegrationTypes([1])
-  .setContexts([0, 1, 2]));
+  selfbot.application!.commands.create(
+    slashCommandFile.slashCommand.data
+      .setIntegrationTypes([1])
+      .setContexts([0, 1, 2]),
+  ).catch((err) => {
+    console.error(
+      err,
+    );
+  });
 };
