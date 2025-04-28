@@ -17,13 +17,18 @@ import { getAllUsersToken } from '../db/queries';
 import { loadContextMenu } from '../loaders/contextCommands';
 import { loadMessageCommand } from '../loaders/messageCommands';
 import { loadSlashCommand } from '../loaders/slashCommands';
+import {
+  ContextCommand,
+  MessageCommand,
+  SlashCommand,
+} from '../types/interactions';
 import SeflbotUser from './SelfbotUser';
 
 class Selfbot extends Client {
   public selfbotUsers = new Map<string, SeflbotUser>();
-  public messageCommandInteraction = new Map<string, any>();
-  public slashCommandInteraction = new Map<string, any>();
-  public contextMenuInteraction = new Map<string, any>();
+  public messageCommandInteraction = new Map<string, MessageCommand>();
+  public slashCommandInteraction = new Map<string, SlashCommand>();
+  public contextMenuInteraction = new Map<string, ContextCommand>();
   public userNb = 0;
   private _webhookClient = new WebhookClient({
     url: config.webhookURL,
@@ -151,7 +156,7 @@ class Selfbot extends Client {
         }
 
         try {
-          command.execute(selbotUser, interaction);
+          command?.execute(selbotUser, interaction);
         } catch {
           interaction.reply({
             content:
@@ -182,7 +187,7 @@ class Selfbot extends Client {
         }
 
         try {
-          contextMenu.execute(selbotUser, interaction);
+          contextMenu?.execute(selbotUser, interaction);
         } catch {
           interaction.reply({
             content:

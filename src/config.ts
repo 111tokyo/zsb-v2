@@ -8,8 +8,8 @@ const config = {
   dbFilePath: process.env.DB_FILE_PATH || '',
   sbVersion: '0.0.8',
   supportServerInvite: 'https://discord.gg/zsb',
-  APIs: {
-    aiKey: process.env.API_AI_TOKEN || '',
+  libs: {
+    aiKey: process.env.API_AI_KEY || '',
     prevnameKey: process.env.API_PREVNAME_TOKEN || '',
   },
 };

@@ -12,7 +12,7 @@ export const slashCommand: SlashCommand = {
     .setDescription('Allows you to send a message to all your friends.')
     .setDescriptionLocalization(
       'fr',
-      'Permet d\'envoyer un message à tous vos amis.',
+      "Permet d'envoyer un message à tous vos amis.",
     ),
 
   execute: async (
@@ -25,7 +25,7 @@ export const slashCommand: SlashCommand = {
       await interaction.reply({
         content:
           selfbotUser.lang === 'fr'
-            ? 'Vous n\'avez pas d\'amis.'
+            ? "Vous n'avez pas d'amis."
             : 'You have no friends.',
         flags: MessageFlags.Ephemeral,
       });
@@ -62,7 +62,9 @@ export const slashCommand: SlashCommand = {
                     selfbotUser.lang === 'fr'
                       ? 'Envoyer le message'
                       : 'Send the message',
-                  emoji: null,
+                  emoji: {
+                    id: '1366475326569582633',
+                  },
                   disabled: false,
                   custom_id: 'dmfriends',
                 },

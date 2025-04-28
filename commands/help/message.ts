@@ -47,14 +47,15 @@ export const messageCommand: MessageCommand = {
       Math.ceil(commands.length / COMMANDS_PER_PAGE),
     );
 
+    const header =
+      selfbotUser.lang === 'fr'
+        ? `Les options mises entre \`<...>\` sont obligatoires, contrairement aux options mis entre \`[...]\` qui sont facultatives.\n`
+        : `Options enclosed in \`<...>\` are mandatory, unlike options enclosed in \`[...]\`, which are optional.\n\n`;
+
     const getPageContent = (page: number) => {
       const start = (page - 1) * COMMANDS_PER_PAGE;
       const pageCommands = commands.slice(start, start + COMMANDS_PER_PAGE);
-      const header =
-        selfbotUser.lang === 'fr'
-          ? `Les options mises entre \`<...>\` sont obligatoires, contrairement aux options mis entre \`[...]\` qui sont facultatives.\n`
-          : `Options enclosed in \`<...>\` are mandatory, unlike options enclosed in \`[...]\`, which are optional.\n\n`;
-      return header + pageCommands.join('\n');
+      return pageCommands.join('\n');
     };
 
     const getComponents = (page: number) =>
@@ -66,7 +67,21 @@ export const messageCommand: MessageCommand = {
           components: [
             {
               type: 10,
+              content: header,
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
+            },
+            {
+              type: 10,
               content: getPageContent(page),
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
             },
             {
               type: 1,
@@ -98,6 +113,11 @@ export const messageCommand: MessageCommand = {
                   custom_id: 'help_next',
                 },
               ],
+            },
+            {
+              type: 14,
+              divider: true,
+              spacing: 1,
             },
           ],
         },

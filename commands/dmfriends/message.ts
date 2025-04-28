@@ -46,7 +46,9 @@ export const messageCommand: MessageCommand = {
                       selfbotUser.lang === 'fr'
                         ? 'Envoyer le message'
                         : 'Send the message',
-                    emoji: null,
+                    emoji: {
+                      id: '1366475326569582633',
+                    },
                     disabled: false,
                     custom_id: 'dmfriends',
                   },

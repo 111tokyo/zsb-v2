@@ -25,8 +25,8 @@ export const messageCommand: MessageCommand = {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `Vous n'êtes pas dans un salon vocal.\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `You are not in a voice channel.\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous n'êtes pas dans un salon vocal.**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
+            : `**You are not in a voice channel.**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
       });
       return;
     }
@@ -46,8 +46,8 @@ export const messageCommand: MessageCommand = {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Cette utilisateur n'est pas dans un salon vocal!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**Cette utilisateur is not in a voice channel!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `__${user.displayName || user.user.username}__ n'est pas dans un salon vocal!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
+            : `__${user.displayName || user.user.username}__ is not in a voice channel!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
       });
       return;
     }
@@ -57,8 +57,8 @@ export const messageCommand: MessageCommand = {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous avez déplacer l'utilisateur avec succes!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**You !**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous avez déplacer __${user.displayName || user.user.username}__ avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
+            : `**You have succesfully moved __${user.displayName || user.user.username}__!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
       });
     } catch {
       message.edit({
@@ -69,7 +69,7 @@ export const messageCommand: MessageCommand = {
       });
       return;
     }
-    
+
     return;
   },
 };
