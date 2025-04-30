@@ -66,7 +66,15 @@ export const slashCommand: SlashCommand = {
       userId = selfbotUser.user!.id;
     }
     const prevnames: Prevname[] = await prevnamesRequest(userId);
-
+    if (prevnames === null) {
+        await interaction.reply(
+            selfbotUser.lang === 'fr'
+                ? `Une erreur est survenue.`
+                : `An error occurred.`,
+        );
+        return;
+    }
+    
     let user = selfbotUser.users.cache.get(userId)!;
 
     if (!user) {
@@ -80,77 +88,77 @@ export const slashCommand: SlashCommand = {
       const end = start + itemsPerPage;
       const namesList = names.slice(start, end);
 
-      const namesString =
-        namesList.length > 0
-          ? namesList
-              .map(
-                (name: Prevname, index: number) =>
-                  `> ${start + index + 1}. **\`${
-                    name.name
-                  }\`** — <t:${Math.floor(
-                    new Date(name.date * 1000).getTime() / 1000,
-                  )}:R>`,
-              )
-              .filter(Boolean)
-              .join('\n')
-          : selfbotUser.lang === 'fr'
-            ? `Aucun résultat trouvé.`
-            : `No results found.`;
+            const namesString = namesList.length > 0
+                ? namesList
+                    .map(
+                        (name: Prevname, index: number) =>
+                            `> ${start + index + 1}. **\`${name.name
+                            }\`** — <t:${Math.floor(
+                                new Date(name.date * 1000).getTime() / 1000
+                            )}:R>`
+                    )
+                    .filter(Boolean)
+                    .join("\n")
+                : selfbotUser.lang === "fr"
+                    ? `Aucun résultat trouvé.`
+                    : `No results found.`
 
-      const messageOptions = {
-        type: 17,
-        accent_color: null,
-        spoiler: false,
-        components: [
-          {
-            type: 10,
-            content: namesString,
-          },
-          {
-            type: 14,
-            divider: true,
-            spacing: 1,
-          },
-          {
-            type: 1,
-            components: [
-              {
-                type: 2,
-                style: 2,
-                emoji: {
-                  id: '1366064859258556446',
-                },
-                disabled: page === 1,
-                custom_id: 'previous',
-              },
-              {
-                type: 2,
-                style: 2,
-                label: `${page}/${totalPages}`,
-                emoji: null,
-                disabled: true,
-                custom_id: 'page_indicator',
-              },
-              {
-                type: 2,
-                style: 2,
-                emoji: {
-                  id: '1366064861548642425',
-                },
-                disabled: page === totalPages,
-                custom_id: 'next',
-              },
-            ],
-          },
-          {
-            type: 14,
-            divider: true,
-            spacing: 1,
-          },
-        ] as any,
-      };
-      return messageOptions;
-    };
+            const messageOptions = {
+                type: 17,
+                accent_color: null,
+                spoiler: false,
+                components: [
+                    {
+                        type: 10,
+                        content: namesString,
+                    },
+
+
+                    {
+                        type: 14,
+                        divider: true,
+                        spacing: 1,
+                    },
+                    {
+                        type: 1,
+                        components: [
+                            {
+                                type: 2,
+                                style: 2,
+                                emoji: {
+                                    id: "1366064859258556446",
+                                },
+                                disabled: page === 1,
+                                custom_id: "previous"
+                            },
+                            {
+                                type: 2,
+                                style: 2,
+                                label: `${page}/${totalPages}`,
+                                emoji: null,
+                                disabled: true,
+                                custom_id: 'page_indicator',
+                            },
+                            {
+                                type: 2,
+                                style: 2,
+                                emoji: {
+                                    id: "1366064861548642425",
+                                },
+                                disabled: page === totalPages,
+                                custom_id: "next"
+                            }
+                        ]
+                    },
+                    {
+                        type: 14,
+                        divider: true,
+                        spacing: 1,
+                    },
+                ] as any
+            };
+            return messageOptions;
+        };
 
     let names: Prevname[];
     switch (type) {
@@ -186,29 +194,32 @@ export const slashCommand: SlashCommand = {
       components: [embed],
     });
 
-    if (totalPages > 1) {
-      const filter: any = (i: CollectedInteraction) =>
-        i.user.id === interaction.user.id;
-      const collector = msg?.createMessageComponentCollector({
-        filter,
-        time: 1000 * 60 * 2,
-      });
+        if (totalPages > 1) {
+            const filter: any = (i: CollectedInteraction) =>
+                i.user.id === interaction.user.id;
+            const collector = msg?.createMessageComponentCollector({
+                filter,
+                time: 1000 * 60 * 2,
+            });
 
-      collector?.on('collect', async i => {
-        if (i.customId === 'previous') {
-          currentPage--;
-        } else if (i.customId === 'next') {
-          currentPage++;
-        }
+            collector?.on("collect", async (i) => {
+                if (i.customId === "previous") {
+                    currentPage--;
+                } else if (i.customId === "next") {
+                    currentPage++;
+                }
 
         embed = await generateEmbed(currentPage, names);
 
-        await i.update({ components: [embed] });
-      });
-      collector?.on('end', async () => {
-        await msg?.delete().catch(() => null);
-      });
-      return;
+                await i.update({ components: [embed] })
+
+            }
+            );
+            collector?.on("end", async () => {
+                await msg?.delete().catch(() => null);
+            }
+            );
+            return;
+        }
     }
-  },
-};
+  }
