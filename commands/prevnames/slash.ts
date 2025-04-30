@@ -1,92 +1,88 @@
 import {
-  ChatInputCommandInteraction,
-  CollectedInteraction,
-  MessageFlags,
-  SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    CollectedInteraction,
+    MessageFlags,
+    SlashCommandBuilder,
 } from 'discord.js';
 import selfbotUser from '../../src/classes/SelfbotUser';
 import { prevnamesRequest } from '../../src/lib/prevnames';
 import { SlashCommand } from '../../src/types/interactions';
+import { Prevname } from '../../src/types/prevnames';
 
-type Prevname = {
-  name: string;
-  date: number;
-  source: string;
-};
 
 export const slashCommand: SlashCommand = {
-  data: new SlashCommandBuilder()
-    .setName('prevnames')
-    .setDescription('Allows you to retrieve the previous names of a user.')
-    .setDescriptionLocalization(
-      'fr',
-      "Permet d'obtenir les anciens noms d'un utilisateur.",
-    )
-    .addStringOption(option =>
-      option
-        .setDescription('The type of previous name to retrieve.')
-        .setName('type')
+    data: new SlashCommandBuilder()
+        .setName('prevnames')
+        .setDescription('Allows you to retrieve the previous names of a user.')
         .setDescriptionLocalization(
-          'fr',
-          'Le type de nom précédent à récupérer.',
+            'fr',
+            "Permet d'obtenir les anciens noms d'un utilisateur.",
         )
-        .addChoices(
-          {
-            name: '➥ Username',
-            value: 'username',
-          },
-          {
-            name: '➥ Displayname',
-            value: 'display',
-          },
+        .addStringOption(option =>
+            option
+                .setDescription('The type of previous name to retrieve.')
+                .setName('type')
+                .setDescriptionLocalization(
+                    'fr',
+                    'Le type de nom précédent à récupérer.',
+                )
+                .addChoices(
+                    {
+                        name: '➥ Username',
+                        value: 'username',
+                    },
+                    {
+                        name: '➥ Displayname',
+                        value: 'display',
+                    },
+                )
+                .setRequired(true),
         )
-        .setRequired(true),
-    )
-    .addUserOption(option =>
-      option
-        .setDescription(
-          'The user that you want to retrieve the previous names.',
-        )
-        .setName('user')
-        .setDescriptionLocalization(
-          'fr',
-          "L'utilisateur dont vous souhaitez obtenir les anciens noms.",
-        )
-        .setRequired(false),
-    ),
+        .addUserOption(option =>
+            option
+                .setDescription(
+                    'The user that you want to retrieve the previous names.',
+                )
+                .setName('user')
+                .setDescriptionLocalization(
+                    'fr',
+                    "L'utilisateur dont vous souhaitez obtenir les anciens noms.",
+                )
+                .setRequired(false),
+        ),
 
-  execute: async (
-    selfbotUser: selfbotUser,
-    interaction: ChatInputCommandInteraction,
-  ) => {
-    let userId = interaction.options.getUser('user')?.id;
-    const type = interaction.options.getString('type');
+    execute: async (
+        selfbotUser: selfbotUser,
+        interaction: ChatInputCommandInteraction,
+    ) => {
+        let userId = interaction.options.getUser('user')?.id;
+        const type = interaction.options.getString('type');
 
-    if (!userId) {
-      userId = selfbotUser.user!.id;
-    }
-    const prevnames: Prevname[] = await prevnamesRequest(userId);
-    if (prevnames === null) {
-        await interaction.reply(
-            selfbotUser.lang === 'fr'
-                ? `Une erreur est survenue.`
-                : `An error occurred.`,
-        );
-        return;
-    }
-    
-    let user = selfbotUser.users.cache.get(userId)!;
+        if (!userId) {
+            userId = selfbotUser.user!.id;
+        }
+        const prevnames = await prevnamesRequest(userId);
+        if (!prevnames) {
+            await interaction.reply(
+                selfbotUser.lang === 'fr'
+                    ? `L'API est actuellement indisponible.`
+                    : `The API is currently unavailable.`,
+            );
+            return;
+        }
 
-    if (!user) {
-      user = await selfbotUser.users.cache.get(userId)?.fetch(true)!;
-    }
+        let user = selfbotUser.users.cache.get(userId)!;
 
-    const itemsPerPage = 10;
-    let currentPage = 1;
-    const generateEmbed = async (page: number, names: Prevname[]) => {
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const namesList = names.slice(start, end);
+        if (!user) {
+            user = await selfbotUser.users.cache.get(userId)?.fetch(true)!;
+        }
+
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        const generateEmbed = async (page: number, names: Prevname[]) => {
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const namesList = names.slice(start, end);
 
             const namesString = namesList.length > 0
                 ? namesList
@@ -160,39 +156,39 @@ export const slashCommand: SlashCommand = {
             return messageOptions;
         };
 
-    let names: Prevname[];
-    switch (type) {
-      case 'username':
-        names = prevnames.filter(
-          (name: Prevname) =>
-            name.name != '' &&
-            name.name &&
-            name.source === 'names' &&
-            name.date,
-        );
+        let names: Prevname[];
+        switch (type) {
+            case 'username':
+                names = prevnames.filter(
+                    (name: Prevname) =>
+                        name.name != '' &&
+                        name.name &&
+                        name.source === 'names' &&
+                        name.date,
+                );
 
-        break;
-      case 'display':
-      default:
-        names = prevnames.filter(
-          (name: Prevname) =>
-            name.name != '' &&
-            name.name &&
-            name.source === 'display' &&
-            name.date,
-        );
-        break;
-    }
+                break;
+            case 'display':
+            default:
+                names = prevnames.filter(
+                    (name: Prevname) =>
+                        name.name != '' &&
+                        name.name &&
+                        name.source === 'display' &&
+                        name.date,
+                );
+                break;
+        }
 
-    names.sort((a: Prevname, b: Prevname) => b.date - a.date);
+        names.sort((a: Prevname, b: Prevname) => b.date - a.date);
 
-    const totalPages = Math.max(1, Math.ceil(names.length / itemsPerPage));
-    let embed = await generateEmbed(currentPage, names);
+        const totalPages = Math.max(1, Math.ceil(names.length / itemsPerPage));
+        let embed = await generateEmbed(currentPage, names);
 
-    const msg = await interaction.reply({
-      flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-      components: [embed],
-    });
+        const msg = await interaction.reply({
+            flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+            components: [embed],
+        });
 
         if (totalPages > 1) {
             const filter: any = (i: CollectedInteraction) =>
@@ -209,7 +205,7 @@ export const slashCommand: SlashCommand = {
                     currentPage++;
                 }
 
-        embed = await generateEmbed(currentPage, names);
+                embed = await generateEmbed(currentPage, names);
 
                 await i.update({ components: [embed] })
 
@@ -222,4 +218,4 @@ export const slashCommand: SlashCommand = {
             return;
         }
     }
-  }
+}
