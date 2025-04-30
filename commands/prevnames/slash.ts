@@ -5,7 +5,7 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import selfbotUser from '../../src/classes/SelfbotUser';
-import { getPrevs } from '../../src/lib/prevnames';
+import { getGlobals, getUsernames } from '../../src/lib/prevnames';
 import { SlashCommand } from '../../src/types/interactions';
 import { Prevname } from '../../src/types/prevnames';
 
@@ -61,25 +61,16 @@ export const slashCommand: SlashCommand = {
       userId = selfbotUser.user!.id;
     }
 
-    const prevnames = await getPrevs(userId);
-
-    if (!prevnames) {
-      await interaction.reply(
-        selfbotUser.lang === 'fr'
-          ? `L'API est actuellement indisponible.`
-          : `The API is currently unavailable.`,
-      );
-      return;
-    }
-
     const user = await selfbotUser.users.cache.get(userId)?.fetch(true)!;
 
     if (!user) {
-      await interaction.reply(
-        selfbotUser.lang === 'fr'
-          ? `L'utilisateur n'existe pas.`
-          : `The user does not exist.`,
-      );
+      await interaction.reply({
+        flags: [MessageFlags.Ephemeral],
+        content:
+          selfbotUser.lang === 'fr'
+            ? `L'utilisateur n'existe pas.`
+            : `The user does not exist.`,
+      });
       return;
     }
 
@@ -162,28 +153,13 @@ export const slashCommand: SlashCommand = {
       };
       return messageOptions;
     };
-
-    let names: Prevname[];
+    let names: any
     switch (type) {
       case 'username':
-        names = prevnames.filter(
-          (name: Prevname) =>
-            name.name != '' &&
-            name.name &&
-            name.source === 'names' &&
-            name.date,
-        );
-
-        break;
+        names = await getUsernames(user.id) 
+      break;
       case 'display':
-      default:
-        names = prevnames.filter(
-          (name: Prevname) =>
-            name.name != '' &&
-            name.name &&
-            name.source === 'display' &&
-            name.date,
-        );
+        names = await getGlobals(user.id) 
         break;
     }
 

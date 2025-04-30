@@ -1,6 +1,6 @@
 import { MessageFlags, time } from 'discord.js';
 import selfbotUser from '../../src/classes/SelfbotUser';
-import { getPrevs } from '../../src/lib/prevnames';
+import { getUsernames, getGlobals } from '../../src/lib/prevnames';
 import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
@@ -9,15 +9,6 @@ export const messageCommand: MessageCommand = {
     const now = Math.floor(Date.now() / 1000);
     const userId = message.mentions.users.first()?.id || selfbotUser.user!.id;
 
-    const prevnames = await getPrevs(userId);
-    if (!prevnames) {
-      await message.edit(
-        selfbotUser.lang === 'fr'
-          ? `**L'API est actuellement indisponible.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-          : `**The API is currently unavailable.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
-      );
-      return;
-    }
 
     const [targetUser, user] = await Promise.all([
       selfbotUser.users.fetch(userId).catch(() => null),
@@ -50,14 +41,15 @@ export const messageCommand: MessageCommand = {
       });
       return;
     }
-
-    const names = prevnames.filter(
-      (user: { name: string; date: number; source: string }) =>
-        user.name &&
-        user.date &&
-        user.source === (type === 'username' ? 'names' : 'display'),
-    );
-
+    let names: any
+    switch (type) {
+      case 'username':
+        names = await getUsernames(targetUser.id) 
+      break;
+      case 'display':
+        names = await getGlobals(targetUser.id) 
+        break;
+    }
     const itemsPerPage = 10;
     let currentPage = 1;
     const totalPages = Math.max(1, Math.ceil(names.length / itemsPerPage));
