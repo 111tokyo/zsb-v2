@@ -40,7 +40,6 @@
     "discord.js-selfbot-v13": "^3.6.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.41.0",
-    "figlet": "^1.8.1",
-    "snoway-api": "^1.5.1"
+    "figlet": "^1.8.1"
   }
 }

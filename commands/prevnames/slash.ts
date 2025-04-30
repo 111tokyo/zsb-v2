@@ -61,7 +61,9 @@ export const slashCommand: SlashCommand = {
         if (!userId) {
             userId = selfbotUser.user!.id;
         }
-        const prevnames = await prevnamesRequest(userId);
+
+        const prevnames = await prevnamesRequest(userId)
+        
         if (!prevnames) {
             await interaction.reply(
                 selfbotUser.lang === 'fr'

@@ -7,7 +7,7 @@ interface APIResponse {
 
 export default class ZsbPrev {
     readonly #apiKey: string;
-    readonly #baseUrl = 'https://api.snoway-bots.xyz/api/v1';
+    readonly #baseUrl = 'https://prevname-discord.vercel.app/api/search?id=';
     readonly #timeout = 5000;
 
     constructor(apiKey: string) {
@@ -38,43 +38,35 @@ export default class ZsbPrev {
         }
     }
 
-    async getNames(userID: string) {
+    public async getNames(userID: string) {
         try {
-            return await this.#fetchData('/prevname/get', 'POST', { userId: userID });
+            const data = await this.#fetchData(userID, 'POST');
+            const prevnames = data.prevname || [];
+            return prevnames.map((name: any) => ({
+                id: name.id,
+                name: name.name,
+                date: name.date,
+                source: name.source
+            }));
         } catch{
             return null;
         }
     }
 
-    async getDisplay(userID: string) {
+    public async getDisplay(userID: string) {
         try {
-            return await this.#fetchData('/prevDisplay/get', 'POST', { userId: userID });
+            return await this.#fetchData(userID, 'POST', { userId: userID });
         } catch {
             return null;
         }
     }
 
-    async allPrevnames(userID: string): Promise<Prevname[] | null> {
+    public async allPrevnames(userID: string): Promise<Prevname[] | null> {
         try {
-            return await this.#fetchData('/allprevnames', 'POST', { userId: userID });
+            return await this.#fetchData(userID, 'POST', { userId: userID });
         } catch {
             return null;
         }
     }
 
-    async ping() {
-        try {
-            return await this.#fetchData('/ping', 'GET');
-        } catch {
-            return null;
-        }
-    }
-
-    async count() {
-        try {
-            return await this.#fetchData('/prevname/count', 'GET');
-        } catch {
-            return null;
-        }
-    }
 }
