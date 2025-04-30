@@ -30,7 +30,7 @@ export const event: Event = {
         const args = message.content.slice(1).trim().split(' ').slice(1);
         const command = selfbot.messageCommandInteraction.get(commandName);
         try {
-          command.execute(selfbot, selfbotUser, message, args);
+          command!.execute(selfbot, selfbotUser, message, args);
           setTimeout(async () => {
             await message.delete().catch(() => null);
           }, 15000);

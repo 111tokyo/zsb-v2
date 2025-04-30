@@ -128,7 +128,7 @@ export const messageCommand: MessageCommand = {
         flags: MessageFlags.IsComponentsV2,
         components: getComponents(currentPage),
       })
-      .catch(e => console.log(e));
+      .catch(() => null);
 
     if (!msg) {
       await message.edit(
