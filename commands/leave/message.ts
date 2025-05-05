@@ -17,14 +17,15 @@ export const messageCommand: MessageCommand = {
     }
 
     selfbotUser.voiceOptions.voiceChannelId = null;
-    selfbotUser.voice.connection.disconnect();
-
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
           ? `**Vous avez quitter ${selfbotUser.voice.connection.channel} avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
           : `**You've succesfully left ${selfbotUser.voice.connection}!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
     });
+
+    selfbotUser.voice.connection.disconnect();
+
 
     await db
       .update(selfbotUsersTable)

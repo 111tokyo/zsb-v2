@@ -31,8 +31,6 @@ export const slashCommand: SlashCommand = {
     }
 
     selfbotUser.voiceOptions.voiceChannelId = null;
-    selfbotUser.voice.connection.disconnect();
-
     await interaction.reply({
       content:
         selfbotUser.lang === 'fr'
@@ -40,6 +38,8 @@ export const slashCommand: SlashCommand = {
           : `You've succesfully left ${selfbotUser.voice.connection}!`,
       flags: MessageFlags.Ephemeral,
     });
+
+    selfbotUser.voice.connection.disconnect();
 
     await db
       .update(selfbotUsersTable)
