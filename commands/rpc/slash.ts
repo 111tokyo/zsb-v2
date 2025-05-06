@@ -3,7 +3,6 @@ import {
   MessageFlags,
   SlashCommandBuilder,
 } from 'discord.js';
-import { selfbot } from '../../main';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { SlashCommand } from '../../src/types/interactions';
 
@@ -42,18 +41,6 @@ export const slashCommand: SlashCommand = {
           accent_color: null,
           spoiler: false,
           components: [
-            {
-              type: 12,
-              items: [
-                {
-                  media: {
-                    url: selfbot.user!.avatarURL(),
-                  },
-                  description: null,
-                  spoiler: false,
-                },
-              ],
-            },
             {
               type: 1,
               components: [

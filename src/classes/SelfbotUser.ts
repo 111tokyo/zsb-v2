@@ -36,6 +36,7 @@ class SelfbotUser extends Client {
   public prefix = '&';
   public snipe: Map<string, SnipeMessage[]> = new Map();
   public cache: Map<string, any> = new Map();
+  public cooldowns: Map<string, number> = new Map();
   public afk: string | null = null;
   private _createdAt = Date.now();
 
@@ -57,6 +58,7 @@ class SelfbotUser extends Client {
       () => {
         this.ws.status === 0 ? this.logout() : null;
         this.cache.clear();
+        this.cooldowns.clear();
         this.snipe.clear();
         this.applyVoiceState();
       },
@@ -163,7 +165,6 @@ class SelfbotUser extends Client {
     const user = this.user!;
     const userId = user.id;
     const userName = user.username;
-    console.log(`[DISCONNECTED] ${userName} | ${userId}`);
     const channel = await selfbot.users.cache.get(userId)?.fetch();
     if (!channel) return;
 
@@ -176,39 +177,15 @@ class SelfbotUser extends Client {
           accent_color: 16711680,
           spoiler: false,
           components: [
-            ...(banner
-              ? [
-                  {
-                    type: 12,
-                    items: [
-                      {
-                        media: {
-                          url: banner,
-                        },
-                        description: null,
-                        spoiler: false,
-                      },
-                    ],
-                  },
-                ]
-              : []),
             {
-              type: 9,
-              accessory: {
-                type: 11,
-                media: {
-                  url: user.displayAvatarURL({ size: 4096 }),
-                },
-                description: null,
-                spoiler: false,
-              },
+              type: 10,
               components: [
                 {
                   type: 10,
                   content:
                     this.lang === 'fr'
-                      ? `> Oh... il semble que **tu as été déconnecté de ZSB**. Ça me rend un peu triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
-                      : `> Oh... it looks like **you've been disconnected from ZSB**. It makes me a little sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
+                      ? `> Oh... il semble que **tu as été déconnecté de ZSB**. C'est triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
+                      : `> Oh... it looks like **you've been disconnected from ZSB**. It's sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
                 },
               ],
             },
@@ -245,6 +222,7 @@ class SelfbotUser extends Client {
     await deleteUserByToken(this.token!);
     this.removeAllListeners().destroy();
     selfbot.selfbotUsers.delete(userId);
+    console.log(`[DISCONNECTED] ${userName} | ${userId}`);
   }
 
   public async login(token: string): Promise<string> {

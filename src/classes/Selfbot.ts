@@ -128,13 +128,13 @@ class Selfbot extends Client {
     this.on('interactionCreate', async interaction => {
       if (interaction.isChatInputCommand()) {
         const command = this.slashCommandInteraction.get(
-          interaction.options.getSubcommand(false) || interaction.commandName,
+          interaction.commandName,
         );
 
-        const selbotUser = this.selfbotUsers.get(interaction.user.id);
+        const selfbotUser = this.selfbotUsers.get(interaction.user.id);
 
-        if (!selbotUser) {
-          interaction.reply({
+        if (!selfbotUser) {
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? `Pour utiliser cette interaction, vous devez tout d'abord vous [connecter ici](${config.supportServerInvite}) !`
@@ -144,10 +144,10 @@ class Selfbot extends Client {
           return;
         }
 
-        if (selbotUser.commandType === 'Prefix') {
-          interaction.reply({
+        if (selfbotUser.commandType === 'Prefix') {
+          await interaction.reply({
             content:
-              selbotUser.lang === 'fr'
+            selfbotUser.lang === 'fr'
                 ? 'Vous avez désactivé les commandes slash. Vous ne pouvez utiliser que les commandes via préfixe.'
                 : 'You have disabled slash commands. You can only use prefix-based commands.',
             flags: MessageFlags.Ephemeral,
@@ -155,12 +155,35 @@ class Selfbot extends Client {
           return;
         }
 
+        if(selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)){
+          await interaction.reply({
+            content:
+            selfbotUser.lang === 'fr'
+                ? 'Attention vous exécutez cette commande trop rapidement! Veuillez patienter un instant avant de réessayer..'
+                : 'Warning you\'re executing this command too quickly! Please wait a moment and try again.',
+            flags: MessageFlags.Ephemeral,
+          });
+          return
+        }
+
         try {
-          command?.execute(selbotUser, interaction);
+          await command?.execute(selfbotUser, interaction);
+
+          let commandCooldown;
+          if(selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)){
+            commandCooldown = selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)! * 3
+          } else {
+           commandCooldown = 1000
+          }
+
+          selfbotUser.cooldowns.set(`slashCommand_${interaction.commandName}`, commandCooldown)
+          setTimeout(() => {
+            selfbotUser.cooldowns.delete(`slashCommand_${interaction.commandName}`)
+          }, commandCooldown)
         } catch {
           interaction.reply({
             content:
-              selbotUser.lang === 'fr'
+            selfbotUser.lang === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
                 : 'Are you lost? This interaction does not exist. You should refresh your application by pressing `Ctrl + R` on your PC or restarting the app on your phone.',
             flags: MessageFlags.Ephemeral,

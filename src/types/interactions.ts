@@ -37,7 +37,7 @@ export type SlashCommand = {
   execute: (
     selfbotUser: SelfbotUser,
     interaction: ChatInputCommandInteraction,
-  ) => void;
+  ) => Promise<void>;
 };
 
 export type ContextCommand<
@@ -57,5 +57,5 @@ export type MessageCommand = {
     selfbotUser: SelfbotUser,
     message: Message,
     args: string[],
-  ) => void;
+  ) => Promise<void>;
 };
