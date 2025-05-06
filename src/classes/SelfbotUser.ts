@@ -168,7 +168,6 @@ class SelfbotUser extends Client {
     const channel = await selfbot.users.cache.get(userId)?.fetch();
     if (!channel) return;
 
-    const banner = user.bannerURL({ size: 4096 });
     await channel?.send({
       flags: MessageFlags.IsComponentsV2,
       components: [
