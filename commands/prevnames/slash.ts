@@ -5,7 +5,7 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import selfbotUser from '../../src/classes/SelfbotUser';
-import { getGlobals, getUsernames } from '../../src/lib/prevnames';
+import { prevnamesRequest } from '../../src/lib/prevnames';
 import { SlashCommand } from '../../src/types/interactions';
 import { Prevname } from '../../src/types/prevnames';
 
@@ -84,16 +84,15 @@ export const slashCommand: SlashCommand = {
       const namesString =
         namesList.length > 0
           ? namesList
-              .map(
-                (name: Prevname, index: number) =>
-                  `> ${start + index + 1}. **\`${
-                    name.name
-                  }\`** — <t:${Math.floor(
-                    new Date(name.date * 1000).getTime() / 1000,
-                  )}:R>`,
-              )
-              .filter(Boolean)
-              .join('\n')
+            .map(
+              (name: Prevname, index: number) =>
+                `> ${start + index + 1}. **\`${name.name
+                }\`** — <t:${Math.floor(
+                  new Date(name.date * 1000).getTime() / 1000,
+                )}:R>`,
+            )
+            .filter(Boolean)
+            .join('\n')
           : selfbotUser.lang === 'fr'
             ? `Aucun résultat trouvé.`
             : `No results found.`;
@@ -153,13 +152,26 @@ export const slashCommand: SlashCommand = {
       };
       return messageOptions;
     };
-    let names: any
+    const prevnames = await prevnamesRequest(userId)
+    let names: Prevname[] = [];
     switch (type) {
       case 'username':
-        names = await getUsernames(user.id) 
-      break;
+        names = prevnames.filter(
+          (name: Prevname) =>
+            name.name != '' &&
+            name.name &&
+            name.source === 'names' &&
+            name.date,
+        );
+
+        break;
       case 'display':
-        names = await getGlobals(user.id) 
+        names = prevnames.filter((name: Prevname) =>
+          name.name != '' &&
+          name.name &&
+          name.date &&
+          name.source === 'display'
+        );
         break;
     }
 

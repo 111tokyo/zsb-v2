@@ -1,30 +1,15 @@
-export const getUsernames = async (userId: string) => {
-  try {
-    const response = await fetch(
-      `https://prevname-discord.vercel.app/api/search?id=${userId}`,
-      {
-        method: 'GET',
-      },
-    );
+import ZsbPrev from '../classes/ZsbPrev';
+import config from '../config';
+const api = new ZsbPrev(config.libs.prevnameKey);
 
-    const data = await response.json();
-    return data?.prevname ?? null;
+const prevnamesRequest = async (userId: string) => {
+  try {
+    const prevnames = await api.allPrevnames(userId);
+    return (prevnames as any).names
   } catch {
     return null;
   }
 };
-export const getGlobals = async (userId: string) => {
-  try {
-    const response = await fetch(
-      `https://prevname-discord.vercel.app/api/search?id=${userId}`,
-      {
-        method: 'GET',
-      },
-    );
 
-    const data = await response.json();
-    return data?.prevglobalname ?? null;
-  } catch {
-    return null;
-  }
-};
+export { prevnamesRequest };
+

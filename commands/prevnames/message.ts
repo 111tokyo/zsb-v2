@@ -1,7 +1,8 @@
 import { MessageFlags, time } from 'discord.js';
 import selfbotUser from '../../src/classes/SelfbotUser';
-import { getUsernames, getGlobals } from '../../src/lib/prevnames';
 import { MessageCommand } from '../../src/types/interactions';
+import { Prevname } from '../../src/types/prevnames';
+import { prevnamesRequest } from '../../src/lib/prevnames';
 
 export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser: selfbotUser, message, args: string[]) {
@@ -41,13 +42,26 @@ export const messageCommand: MessageCommand = {
       });
       return;
     }
-    let names: any
+    const prevnames = await prevnamesRequest(userId)
+    let names: Prevname[] = [];
     switch (type) {
       case 'username':
-        names = await getUsernames(targetUser.id) 
-      break;
+        names = prevnames.filter(
+          (name: Prevname) =>
+            name.name != '' &&
+            name.name &&
+            name.source === 'names' &&
+            name.date,
+        );
+
+        break;
       case 'display':
-        names = await getGlobals(targetUser.id) 
+        names = prevnames.filter((name: Prevname) =>
+          name.name != '' &&
+          name.name &&
+          name.date &&
+          name.source === 'display'
+        );
         break;
     }
     const itemsPerPage = 10;
@@ -61,11 +75,11 @@ export const messageCommand: MessageCommand = {
       const namesString =
         namesList.length > 0
           ? namesList
-              .map(
-                (user: { name: string; date: number }, index: number) =>
-                  `> ${start + index + 1}. **\`${user.name}\`** — <t:${Math.floor(user.date)}:R>`,
-              )
-              .join('\n')
+            .map(
+              (user: { name: string; date: number }, index: number) =>
+                `> ${start + index + 1}. **\`${user.name}\`** — <t:${Math.floor(user.date)}:R>`,
+            )
+            .join('\n')
           : selfbotUser.lang === 'fr'
             ? `Aucun résultat trouvé.`
             : `No results found.`;
