@@ -32,6 +32,7 @@
     "zod": "^3.24.3"
   },
   "dependencies": {
+    "@hono/node-server": "^1.14.1",
     "@libsql/client": "^0.15.4",
     "@types/figlet": "^1.7.0",
     "canvas": "^3.1.0",
@@ -40,6 +41,7 @@
     "discord.js-selfbot-v13": "^3.6.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.41.0",
-    "figlet": "^1.8.1"
+    "figlet": "^1.8.1",
+    "hono": "^4.7.8"
   }
 }

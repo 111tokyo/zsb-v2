@@ -5,8 +5,8 @@ export const messageCommand: MessageCommand = {
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**Vous avez été déconnecté de ZSB avec succès!**`
-          : `**You've been succesfully logout from ZSB!**`,
+          ? `**Vous avez été déconnecté de User.exe avec succès!**`
+          : `**You've been succesfully logout from User.exe!**`,
     });
 
     await selfbotUser.logout();

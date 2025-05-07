@@ -183,8 +183,8 @@ class SelfbotUser extends Client {
                   type: 10,
                   content:
                     this.lang === 'fr'
-                      ? `> Oh... il semble que **tu as été déconnecté de ZSB**. C'est triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
-                      : `> Oh... it looks like **you've been disconnected from ZSB**. It's sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
+                      ? `> Oh... il semble que **tu as été déconnecté de User.exe**. C'est triste de te voir partir comme ça... si tu veux revenir, il te suffit de cliquer sur le bouton ci-dessous. On t'attend !`
+                      : `> Oh... it looks like **you've been disconnected from User.exe**. It's sad to see you go like this... if you want to come back, just click the button below. We'll be waiting for you!`,
                 },
               ],
             },
@@ -245,7 +245,7 @@ class SelfbotUser extends Client {
       await this.installUserApps(config.clientId);
 
       const group = await this.channels.createGroupDM();
-      await group.setName('› ZSB Playground');
+      await group.setName('› Playground');
       await group.setIcon(selfbot.user!.displayAvatarURL({ size: 2048 }));
 
       await insertNewUser({

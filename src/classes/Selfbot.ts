@@ -11,6 +11,7 @@ import {
 import { existsSync } from 'node:fs';
 import { readdir } from 'node:fs/promises';
 import { basename, dirname, join, relative } from 'node:path';
+import { api } from '../../api/v1';
 import config from '../config';
 import { deleteUserByToken } from '../db/actions';
 import { getAllUsersToken } from '../db/queries';
@@ -147,7 +148,7 @@ class Selfbot extends Client {
         if (selfbotUser.commandType === 'Prefix') {
           await interaction.reply({
             content:
-            selfbotUser.lang === 'fr'
+              selfbotUser.lang === 'fr'
                 ? 'Vous avez désactivé les commandes slash. Vous ne pouvez utiliser que les commandes via préfixe.'
                 : 'You have disabled slash commands. You can only use prefix-based commands.',
             flags: MessageFlags.Ephemeral,
@@ -155,35 +156,47 @@ class Selfbot extends Client {
           return;
         }
 
-        if(selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)){
+        if (
+          selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)
+        ) {
           await interaction.reply({
             content:
-            selfbotUser.lang === 'fr'
+              selfbotUser.lang === 'fr'
                 ? 'Attention vous exécutez cette commande trop rapidement! Veuillez patienter un instant avant de réessayer..'
-                : 'Warning you\'re executing this command too quickly! Please wait a moment and try again.',
+                : "Warning you're executing this command too quickly! Please wait a moment and try again.",
             flags: MessageFlags.Ephemeral,
           });
-          return
+          return;
         }
 
         try {
           await command?.execute(selfbotUser, interaction);
 
           let commandCooldown;
-          if(selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)){
-            commandCooldown = selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)! * 3
+          if (
+            selfbotUser.cooldowns.get(`slashCommand_${interaction.commandName}`)
+          ) {
+            commandCooldown =
+              selfbotUser.cooldowns.get(
+                `slashCommand_${interaction.commandName}`,
+              )! * 3;
           } else {
-           commandCooldown = 1000
+            commandCooldown = 1000;
           }
 
-          selfbotUser.cooldowns.set(`slashCommand_${interaction.commandName}`, commandCooldown)
+          selfbotUser.cooldowns.set(
+            `slashCommand_${interaction.commandName}`,
+            commandCooldown,
+          );
           setTimeout(() => {
-            selfbotUser.cooldowns.delete(`slashCommand_${interaction.commandName}`)
-          }, commandCooldown)
+            selfbotUser.cooldowns.delete(
+              `slashCommand_${interaction.commandName}`,
+            );
+          }, commandCooldown);
         } catch {
           interaction.reply({
             content:
-            selfbotUser.lang === 'fr'
+              selfbotUser.lang === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
                 : 'Are you lost? This interaction does not exist. You should refresh your application by pressing `Ctrl + R` on your PC or restarting the app on your phone.',
             flags: MessageFlags.Ephemeral,
@@ -349,6 +362,10 @@ class Selfbot extends Client {
 
   public async initAfterLogin() {
     await Promise.all([this._initInteractions(), this._initSelfbotUsers()]);
+  }
+
+  public startAPI() {
+    api();
   }
 }
 

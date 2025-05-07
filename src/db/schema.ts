@@ -33,8 +33,8 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
           "richPresences": [
           {
             "id": "default_status",
-            "name": "ZSB",
-            "field1": "ZSB Selfbot",
+            "name": "User.exe",
+            "field1": "User.exe",
             "field2": "Click below to start",
             "field3": null,
             "type": "Competing", 

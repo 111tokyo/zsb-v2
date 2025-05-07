@@ -36,6 +36,7 @@ export const selfbot = new Selfbot();
   selfbot.on('error', errorHandler);
 
   await selfbot.initAfterLogin();
+  selfbot.startAPI();
   /* // Example of fetching and deleting a command
 
   const commands = await selfbot.application!.commands.fetch();
@@ -47,7 +48,6 @@ export const selfbot = new Selfbot();
   await (await selfbot.application?.commands.fetch('1365712338329669693'))
     ?.delete()
     .catch(e => console.error(e));
-
   */
 
   console.log('[INFO] Selfbot ready to use!');

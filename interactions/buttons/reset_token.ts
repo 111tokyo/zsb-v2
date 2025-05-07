@@ -6,8 +6,8 @@ export const button: Button = {
     interaction.reply({
       content:
         selfbotUser.lang === 'fr'
-          ? 'Pour réinitialiser votre token Discord, il vous suffit de changer votre mot de passe (même si vous remettez le même). Attention: cela vous déconnectera de ZSB, pensez donc à vous reconnecter après!'
-          : 'To reset your Discord token, simply change your password (even if you use the same one again). Note: this will log you out of ZSB, so make sure to log back in afterwards!',
+          ? 'Pour réinitialiser votre token Discord, il vous suffit de changer votre mot de passe (même si vous remettez le même). Attention: cela vous déconnectera de User.exe, pensez donc à vous reconnecter après!'
+          : 'To reset your Discord token, simply change your password (even if you use the same one again). Note: this will log you out of User.exe, so make sure to log back in afterwards!',
       flags: MessageFlags.Ephemeral,
     });
   },
