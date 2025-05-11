@@ -9,6 +9,11 @@ const config = {
   sbVersion: '0.0.8',
   supportServerInvite: 'https://discord.gg/user.exe',
   supportServerId: '943628184124018708',
+  voiceChannelIds: [
+    '1369747856046559283',
+    '1369747924543868938',
+    '1369747981120569465',
+  ],
   api: {
     port: 3000,
   },

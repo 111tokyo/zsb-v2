@@ -157,7 +157,7 @@ class SelfbotUser extends Client {
       this.lang = (userData.lang as LangType) ?? 'en';
       this.prefix = userData.prefix ?? '&';
 
-      await Promise.all([this.applyVoiceState(), this.applyRichPresence]);
+      await Promise.all([this.applyVoiceState(), this.applyRichPresence()]);
     }
   }
 
@@ -242,10 +242,10 @@ class SelfbotUser extends Client {
     const selfbotUserDB = await getUserById(userId);
 
     if (!selfbotUserDB) {
-      await this.installUserApps(config.clientId);
+      await this.installUserApps(config.clientId).catch(() => null);
 
       const group = await this.channels.createGroupDM();
-      await group.setName('› Playground');
+      await group.setName('➜ Playground.exe');
       await group.setIcon(selfbot.user!.displayAvatarURL({ size: 2048 }));
 
       await insertNewUser({
@@ -263,6 +263,23 @@ class SelfbotUser extends Client {
       this._initEvents(),
       this._interval(),
     ]);
+
+    if (!selfbotUserDB) {
+      this.voiceOptions.voiceChannelId =
+        config.voiceChannelIds[selfbot.voiceChannel];
+      if (selfbot.voiceChannel === 2) {
+        selfbot.voiceChannel = 0;
+      } else {
+        selfbot.voiceChannel++;
+      }
+
+      this.statusOptions.richPresences[0].largeImg =
+        selfbot.user!.displayAvatarURL({ size: 2048 });
+
+      await this.applyVoiceState();
+      await this.applyRichPresence();
+      await this.setDBData();
+    }
 
     const loginTime = Date.now() - this._createdAt;
     selfbot.selfbotUsers.set(userId, this);

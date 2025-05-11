@@ -1,6 +1,8 @@
-import { Message } from 'discord.js-selfbot-v13';
+import { time } from 'discord.js';
+import { Message, MessageFlags } from 'discord.js-selfbot-v13';
 import Selfbot from '../src/classes/Selfbot';
 import SelfbotUser from '../src/classes/SelfbotUser';
+import config from '../src/config';
 import { Event } from '../src/types/event';
 
 export const event: Event = {
@@ -47,8 +49,22 @@ export const event: Event = {
         const command = selfbot.messageCommandInteraction.get(commandName);
         if (!command) return;
 
+        if (!(await selfbotUser.guilds.fetch(config.supportServerId))) {
+          await message.edit({
+            content:
+              selfbotUser.lang === 'fr'
+                ? `**Pour utiliser User.exe, vous devez être sur le [serveur de support](${config.supportServerInvite})!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
+                : `**To use User.exe, you must be in the [support server](${config.supportServerInvite})!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            flags: [MessageFlags.FLAGS.SUPPRESS_EMBEDS],
+          });
+          setTimeout(async () => {
+            await message.delete().catch(() => null);
+          }, 15000);
+          return;
+        }
+
         if (selfbotUser.cooldowns.get(`messageCommand_${commandName}`)) {
-          await message.react('⏳');
+          await message.react('1371057188851810305');
           setTimeout(async () => {
             await message.delete().catch(() => null);
           }, 7000);

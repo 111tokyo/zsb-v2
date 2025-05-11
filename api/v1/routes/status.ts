@@ -8,7 +8,7 @@ const execute = async (c: Context) => {
     stringStatus: 'success',
     code: 'SUCCESS',
     message: 'ok',
-    result: selfbot.userNb,
+    result: { userNb: selfbot.userNb, ping: selfbot.ws.ping },
   });
 };
 

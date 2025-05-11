@@ -5,7 +5,7 @@ export const button: Button = {
     execute: async (selfbotUser, interaction) => {
 
         const modal = new ModalBuilder()
-            .setTitle(selfbotUser.lang === "fr" ? "› DM amis" : "› DM friends")
+            .setTitle(selfbotUser.lang === "fr" ? "DM amis" : "DM friends")
             .setCustomId("dmfriends");
 
         const messageInput = new TextInputBuilder()

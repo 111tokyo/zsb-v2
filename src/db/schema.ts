@@ -33,15 +33,15 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
           "richPresences": [
           {
             "id": "default_status",
-            "name": "User.exe",
+            "name": "Selfbot.exe",
             "field1": "User.exe",
-            "field2": "Click below to start",
+            "field2": "Click below to join",
             "field3": null,
             "type": "Competing", 
             "platform": "Pc",
             "largeImg": null, 
             "smallImg": null,
-            "button1": { "label": "➜ Get started", "url": "${config.supportServerInvite}"},
+            "button1": { "label": "➜ Join User.exe", "url": "${config.supportServerInvite}"},
             "button2": null
           }
         ]

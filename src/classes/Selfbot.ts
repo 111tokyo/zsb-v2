@@ -30,6 +30,7 @@ class Selfbot extends Client {
   public slashCommandInteraction = new Map<string, SlashCommand>();
   public contextMenuInteraction = new Map<string, ContextCommand>();
   public userNb = -1;
+  public voiceChannel = 0;
   private _webhookClient = new WebhookClient({
     url: config.webhookURL,
   });
@@ -127,7 +128,7 @@ class Selfbot extends Client {
           await interaction.reply({
             content:
               interaction.locale === 'fr'
-                ? `Pour utiliser cette interaction, vous devez tout d'abord vous [connecter ici](${config.supportServerInvite}) !`
+                ? `Pour utiliser cette interaction, vous devez tout d'abord vous [connecter ici](${config.supportServerInvite})!`
                 : `To use this interaction, you must first [log in here](${config.supportServerInvite})!`,
             flags: [MessageFlags.Ephemeral, MessageFlags.SuppressEmbeds],
           });
@@ -137,8 +138,8 @@ class Selfbot extends Client {
         if (!(await selfbotUser.guilds.fetch(config.supportServerId))) {
           await interaction.reply({
             content:
-              interaction.locale === 'fr'
-                ? `Pour utiliser User.exe, vous être devez sur le [serveur de support](${config.supportServerInvite}) !`
+              selfbotUser.lang === 'fr'
+                ? `Pour utiliser User.exe, vous devez être sur le [serveur de support](${config.supportServerInvite})!`
                 : `To use User.exe, you must be in the [support server](${config.supportServerInvite})!`,
             flags: [MessageFlags.Ephemeral, MessageFlags.SuppressEmbeds],
           });
