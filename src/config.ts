@@ -8,6 +8,7 @@ const config = {
   dbFilePath: process.env.DB_FILE_PATH || '',
   sbVersion: '0.0.8',
   supportServerInvite: 'https://discord.gg/user.exe',
+  supportServerId: '943628184124018708',
   api: {
     port: 3000,
   },

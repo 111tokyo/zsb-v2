@@ -5,7 +5,6 @@ import {
   GatewayIntentBits,
   MessageFlags,
   Partials,
-  PresenceUpdateStatus,
   WebhookClient,
 } from 'discord.js';
 import { existsSync } from 'node:fs';
@@ -30,7 +29,7 @@ class Selfbot extends Client {
   public messageCommandInteraction = new Map<string, MessageCommand>();
   public slashCommandInteraction = new Map<string, SlashCommand>();
   public contextMenuInteraction = new Map<string, ContextCommand>();
-  public userNb = 0;
+  public userNb = -1;
   private _webhookClient = new WebhookClient({
     url: config.webhookURL,
   });
@@ -50,16 +49,6 @@ class Selfbot extends Client {
         Partials.GuildScheduledEvent,
         Partials.ThreadMember,
       ],
-      presence: {
-        activities: [
-          {
-            name: `v${config.sbVersion}`,
-            type: ActivityType.Streaming,
-            url: 'https://www.twitch.tv/aquinasctf',
-          },
-        ],
-        status: PresenceUpdateStatus.Idle,
-      },
     });
   }
 
@@ -140,6 +129,17 @@ class Selfbot extends Client {
               interaction.locale === 'fr'
                 ? `Pour utiliser cette interaction, vous devez tout d'abord vous [connecter ici](${config.supportServerInvite}) !`
                 : `To use this interaction, you must first [log in here](${config.supportServerInvite})!`,
+            flags: [MessageFlags.Ephemeral, MessageFlags.SuppressEmbeds],
+          });
+          return;
+        }
+
+        if (!(await selfbotUser.guilds.fetch(config.supportServerId))) {
+          await interaction.reply({
+            content:
+              interaction.locale === 'fr'
+                ? `Pour utiliser User.exe, vous être devez sur le [serveur de support](${config.supportServerInvite}) !`
+                : `To use User.exe, you must be in the [support server](${config.supportServerInvite})!`,
             flags: [MessageFlags.Ephemeral, MessageFlags.SuppressEmbeds],
           });
           return;
@@ -353,6 +353,18 @@ class Selfbot extends Client {
       console.log(err);
       return 'INVALID_TOKEN';
     });
+
+    this.user?.setActivity({
+      name: `・Executing ${this.userNb} users`,
+      type: ActivityType.Custom,
+    });
+
+    setInterval(() => {
+      this.user?.setActivity({
+        name: `・Executing ${this.userNb} users`,
+        type: ActivityType.Custom,
+      });
+    }, 1000 * 10);
 
     await this._initInteractions();
     await this._initSelfbotUsers();

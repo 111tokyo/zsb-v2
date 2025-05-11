@@ -6,25 +6,33 @@ import { Event } from '../src/types/event';
 export const event: Event = {
   type: 'messageCreate',
   once: false,
-  execute: async (selfbot: Selfbot, selfbotUser: SelfbotUser, message: Message) => {
+  execute: async (
+    selfbot: Selfbot,
+    selfbotUser: SelfbotUser,
+    message: Message,
+  ) => {
     if (
-      !selfbotUser.cooldowns.get(`afk_${message.author.id}`) && message.author.id !== selfbotUser.user!.id && selfbotUser.afk &&
-      (message.channel.type === 'DM' || message.content.includes(selfbotUser.user!.id)) 
+      !selfbotUser.cooldowns.get(`afk_${message.author.id}`) &&
+      message.author.id !== selfbotUser.user!.id &&
+      selfbotUser.afk &&
+      (message.channel.type === 'DM' ||
+        message.content.includes(selfbotUser.user!.id))
     ) {
       message.reply(selfbotUser.afk);
       message.markRead();
 
       let afkCooldown;
-      if(selfbotUser.cooldowns.get(`afk_${message.author.id}`)){
-        afkCooldown = selfbotUser.cooldowns.get(`afk_${message.author.id}`)! * 3
+      if (selfbotUser.cooldowns.get(`afk_${message.author.id}`)) {
+        afkCooldown =
+          selfbotUser.cooldowns.get(`afk_${message.author.id}`)! * 3;
       } else {
-        afkCooldown = 1500
+        afkCooldown = 1500;
       }
 
-      selfbotUser.cooldowns.set(`afk_${message.author.id}`, afkCooldown)
+      selfbotUser.cooldowns.set(`afk_${message.author.id}`, afkCooldown);
       setTimeout(() => {
-        selfbotUser.cooldowns.delete(`afk_${message.author.id}`)
-      }, afkCooldown)
+        selfbotUser.cooldowns.delete(`afk_${message.author.id}`);
+      }, afkCooldown);
     }
 
     if (selfbotUser.commandType !== 'Slash') {
@@ -37,29 +45,36 @@ export const event: Event = {
           .split(' ')[0];
         const args = message.content.slice(1).trim().split(' ').slice(1);
         const command = selfbot.messageCommandInteraction.get(commandName);
-        if(!command) return
-        
-        if(selfbotUser.cooldowns.get(`command_${commandName}`)){
-          await message.react("⏳")
-          return
+        if (!command) return;
+
+        if (selfbotUser.cooldowns.get(`messageCommand_${commandName}`)) {
+          await message.react('⏳');
+          setTimeout(async () => {
+            await message.delete().catch(() => null);
+          }, 7000);
+          return;
         }
 
         await command!.execute(selfbot, selfbotUser, message, args);
-        
+
         let commandCooldown;
-        if(selfbotUser.cooldowns.get(`messageCommand_${commandName}`)){
-          commandCooldown = selfbotUser.cooldowns.get(`messageCommand_${commandName}`)! * 3
+        if (selfbotUser.cooldowns.get(`messageCommand_${commandName}`)) {
+          commandCooldown =
+            selfbotUser.cooldowns.get(`messageCommand_${commandName}`)! * 3;
         } else {
-          commandCooldown = 1500
+          commandCooldown = 1500;
         }
 
-        selfbotUser.cooldowns.set(`messageCommand_${commandName}`, commandCooldown)
+        selfbotUser.cooldowns.set(
+          `messageCommand_${commandName}`,
+          commandCooldown,
+        );
         setTimeout(() => {
-          selfbotUser.cooldowns.delete(`messageCommand_${commandName}`)
-        }, commandCooldown)
+          selfbotUser.cooldowns.delete(`messageCommand_${commandName}`);
+        }, commandCooldown);
 
         setTimeout(async () => {
-        await message.delete().catch(() => null);
+          await message.delete().catch(() => null);
         }, 15000);
       }
     }
