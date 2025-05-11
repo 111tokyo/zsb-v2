@@ -1,18 +1,19 @@
 import { time } from 'discord.js';
-import { MessageCommand } from '../../src/types/interactions';
 import { VoiceBasedChannel } from 'discord.js-selfbot-v13';
+import { eq } from 'drizzle-orm';
 import db from '../../src/db';
 import { selfbotUsersTable } from '../../src/db/schema';
-import { eq } from 'drizzle-orm';
+import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     if (!message.inGuild()) {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez être sur un serveur pour executer cette commande!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must be in a guild to execute this command!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez être sur un serveur pour executer cette commande!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must be in a guild to execute this command!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -21,8 +22,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier un salon vocal à rejoindre! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a voice channel to join! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'}\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier un salon vocal à rejoindre! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must specify a voice channel to join! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'}\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -36,8 +37,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Ce salon vocal n'existe pas ou est inaccessible! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**This voice channel doesn't exist or is inaccessible! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'})**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Ce salon vocal n'existe pas ou est inaccessible! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**This voice channel doesn't exist or is inaccessible! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'})**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -54,8 +55,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous ne pouvez pas rejoindre ce salon vocal! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You can't join this voice channel! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'})**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous ne pouvez pas rejoindre ce salon vocal! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You can't join this voice channel! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'})**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -65,8 +66,8 @@ export const messageCommand: MessageCommand = {
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**Vous avez rejoint ${channel} avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**You've succesfully joined ${channel}!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Vous avez rejoint ${channel} avec succès!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You've succesfully joined ${channel}!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     });
 
     await db

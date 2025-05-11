@@ -3,6 +3,7 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, _args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
     const timestamp = Date.now().toString();
@@ -20,8 +21,8 @@ export const messageCommand: MessageCommand = {
 
     await message.edit(
       selfbotUser.lang === 'fr'
-        ? `**Token généré: \`${fakeToken}\`**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-        : `**Generated token: \`${fakeToken}\`**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+        ? `**Token généré: \`${fakeToken}\`**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+        : `**Generated token: \`${fakeToken}\`**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     );
   },
 };

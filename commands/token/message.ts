@@ -3,6 +3,7 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser, message, _args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     const user = await selfbot.users.cache.get(selfbotUser.user!.id)?.fetch();
 
     const msg = await user
@@ -71,16 +72,16 @@ export const messageCommand: MessageCommand = {
     if (!msg) {
       await message.edit(
         selfbotUser.lang === 'fr'
-          ? `**Vous devez ouvrir vos messages privés pour utiliser cette fonctionnalité!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**You must enable your private messages to use this feature!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Vous devez ouvrir vos messages privés pour utiliser cette fonctionnalité!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You must enable your private messages to use this feature!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       );
       return;
     }
 
     await message.edit(
       selfbotUser.lang === 'fr'
-        ? `**Vous pouvez retrouver votre token Discord en MP**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-        : `**You can retrieve your Discord token in DM**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+        ? `**Vous pouvez retrouver votre token Discord en MP**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+        : `**You can retrieve your Discord token in DM**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     );
 
     setTimeout(

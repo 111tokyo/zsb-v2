@@ -1,17 +1,28 @@
 import { time } from 'discord.js';
+import { VoiceBasedChannel } from 'discord.js-selfbot-v13';
 import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, args: string[]) {
-    const targetId = args[0]?.replace(/[<@!>]/g, '') || message.author.id;
+    const targetId = args[0]?.replace(/[<@!>]/g, '');
     const now = Math.floor(Date.now() / 1000);
 
     if (!message.inGuild()) {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez être sur un serveur pour executer cette commande!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**You must be in a guild to execute this command!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous devez être sur un serveur pour executer cette commande!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must be in a guild to execute this command!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+      });
+      return;
+    }
+
+    if (!args[0]) {
+      await message.edit({
+        content:
+          selfbotUser.lang === 'fr'
+            ? `**Vous devez spécifier un utilisateur à déplacer de salon vocal! (*Exemple*: ${message.guild?.members.cache.first() ? '\`' + selfbotUser.prefix + `move ${message.guild?.members.cache.first()?.id}\`` : '\`move [userId/userMention]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must specify a user to move! (*Exemple*: ${message.guild?.members.cache.first() ? '\`' + selfbotUser.prefix + `move ${message.guild?.members.cache.first()?.id}\`` : '\`move [userId/userMention]\`'})**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -25,8 +36,8 @@ export const messageCommand: MessageCommand = {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous n'êtes pas dans un salon vocal.**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**You are not in a voice channel.**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous n'êtes pas dans un salon vocal.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You are not in a voice channel.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -42,12 +53,26 @@ export const messageCommand: MessageCommand = {
       return;
     }
 
-    if (!user?.voice.channel) {
+    const userVoiceChannel = user?.voice.channel as VoiceBasedChannel;
+
+    if (!userVoiceChannel) {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `__${user.displayName || user.user.username}__ n'est pas dans un salon vocal!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `__${user.displayName || user.user.username}__ is not in a voice channel!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**__${user.displayName || user.user.username}__ n'est pas dans un salon vocal!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**__${user.displayName || user.user.username}__ is not in a voice channel!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+      });
+      return;
+    }
+
+    if (
+      Array.from(userVoiceChannel.members.keys()).includes(selfbotUser.user!.id)
+    ) {
+      message.edit({
+        content:
+          selfbotUser.lang === 'fr'
+            ? `**__${user.displayName || user.user.username}__ ce trouve déjà dans votre salon vocal!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**__${user.displayName || user.user.username}__ is already in your voice channel!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -57,15 +82,15 @@ export const messageCommand: MessageCommand = {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous avez déplacer __${user.displayName || user.user.username}__ avec succès!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**You have succesfully moved __${user.displayName || user.user.username}__!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous avez déplacer __${user.displayName || user.user.username}__ avec succès!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You have succesfully moved __${user.displayName || user.user.username}__!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
     } catch {
       message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous n'avez pas la permission de déplacer cet utilisateur!**\n-# ➜ *Suppression du message ${time(Math.floor(now / 1000) + 16, 'R')}*`
-            : `**You do not have permission to move this user!**\n-# ➜ *Deleting message ${time(Math.floor(now / 1000) + 16, 'R')}*`,
+            ? `**Vous n'avez pas la permission de déplacer cet utilisateur!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You do not have permission to move this user!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }

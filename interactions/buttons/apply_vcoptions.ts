@@ -3,6 +3,7 @@ import { Button } from '../../src/types/interactions';
 
 export const button: Button = {
   execute: async (selfbotUser, interaction) => {
+    const now = Math.floor(Date.now() / 1000);
     const int = await interaction.update({
       components: [
         {
@@ -33,7 +34,10 @@ export const button: Button = {
                       default: selfbotUser.voiceOptions.selfMute,
                     },
                     {
-                      label: selfbotUser.lang === 'fr' ? 'Être en sourdine' : 'Be deaf',
+                      label:
+                        selfbotUser.lang === 'fr'
+                          ? 'Être en sourdine'
+                          : 'Be deaf',
                       value: 'deaf',
                       description:
                         selfbotUser.lang === 'fr'
@@ -45,9 +49,10 @@ export const button: Button = {
                       default: selfbotUser.voiceOptions.selfDeaf,
                     },
                     {
-                      label: selfbotUser.lang === 'fr'
-                        ? 'Activer la caméra'
-                        : 'Enable camera',
+                      label:
+                        selfbotUser.lang === 'fr'
+                          ? 'Activer la caméra'
+                          : 'Enable camera',
                       value: 'camera',
                       description:
                         selfbotUser.lang === 'fr'
@@ -59,9 +64,10 @@ export const button: Button = {
                       default: selfbotUser.voiceOptions.selfVideo,
                     },
                   ],
-                  placeholder: selfbotUser.lang === 'fr'
-                    ? 'Choisis tes options vocales'
-                    : 'Select your voice options',
+                  placeholder:
+                    selfbotUser.lang === 'fr'
+                      ? 'Choisis tes options vocales'
+                      : 'Select your voice options',
                   min_values: 0,
                   max_values: 3,
                   disabled: false,
@@ -97,8 +103,8 @@ export const button: Button = {
               type: 10,
               content:
                 selfbotUser.lang === 'fr'
-                  ? `-# > Options appliquées avec succès! Vous pourrez réappliquer vos options vocales ${time(Math.floor(Date.now() / 1000) + 16, 'R')}`
-                  : `-# > Options succesfully applied! You will be able to reaply your voice options ${time(Math.floor(Date.now() / 1000) + 16, 'R')}`,
+                  ? `-# > Options appliquées avec succès! Vous pourrez réappliquer vos options vocales ${time(now + 16, 'R')}`
+                  : `-# > Options succesfully applied! You will be able to reaply your voice options ${time(now + 16, 'R')}`,
             },
             {
               type: 14,
@@ -144,12 +150,13 @@ export const button: Button = {
                         default: selfbotUser.voiceOptions.selfMute,
                       },
                       {
-                        label: selfbotUser.lang === 'fr'
-                          ? 'Être en sourdine'
-                          : 'Be deaf',
+                        label:
+                          selfbotUser.lang === 'fr'
+                            ? 'Être en sourdine'
+                            : 'Be deaf',
                         value: 'deaf',
                         description:
-                          selfbotUser.lang  === 'fr'
+                          selfbotUser.lang === 'fr'
                             ? "Permet d'apparaitre en sourdine"
                             : 'Allows you to appear deaf',
                         emoji: {
@@ -158,9 +165,10 @@ export const button: Button = {
                         default: selfbotUser.voiceOptions.selfDeaf,
                       },
                       {
-                        label: selfbotUser.lang === 'fr'
-                          ? 'Activer la caméra'
-                          : 'Enable camera',
+                        label:
+                          selfbotUser.lang === 'fr'
+                            ? 'Activer la caméra'
+                            : 'Enable camera',
                         value: 'camera',
                         description:
                           selfbotUser.lang === 'fr'
@@ -172,9 +180,10 @@ export const button: Button = {
                         default: selfbotUser.voiceOptions.selfVideo,
                       },
                     ],
-                    placeholder: selfbotUser.lang === 'fr'
-                      ? 'Choisis tes options vocales'
-                      : 'Select your voice options',
+                    placeholder:
+                      selfbotUser.lang === 'fr'
+                        ? 'Choisis tes options vocales'
+                        : 'Select your voice options',
                     min_values: 0,
                     max_values: 3,
                     disabled: false,

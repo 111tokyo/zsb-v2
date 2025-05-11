@@ -29,10 +29,10 @@ const BADGE_MAPPINGS = {
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('userinfo')
-    .setDescription('Allows you to get the informations about a user')
+    .setDescription('Allows you to get the informations about a user.')
     .setDescriptionLocalization(
       'fr',
-      "Permet d'obtenir les informations d'un utilisateur",
+      "Permet d'obtenir les informations d'un utilisateur.",
     )
     .addUserOption(option =>
       option
@@ -124,9 +124,9 @@ export const slashCommand: SlashCommand = {
                 media: {
                   url: targetUser.displayAvatarURL({ size: 4096 }),
                 },
-      
+
                 description: null,
-                spoiler: false
+                spoiler: false,
               },
               components: [
                 {

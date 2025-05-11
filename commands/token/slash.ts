@@ -9,8 +9,8 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('token')
-    .setDescription('Allows you to see your Discord token')
-    .setDescriptionLocalization('fr', 'Permet de voir votre token Discord'),
+    .setDescription('Allows you to see your Discord token.')
+    .setDescriptionLocalization('fr', 'Permet de voir votre token Discord.'),
 
   execute: async (
     selfbotUser: SelfbotUser,

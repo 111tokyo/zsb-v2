@@ -5,6 +5,7 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     if (!args[0]) {
       const snipedMessage = selfbotUser.snipe.get(message.channelId)
         ? selfbotUser.snipe.get(message.channelId)![0]
@@ -14,8 +15,8 @@ export const messageCommand: MessageCommand = {
         await message.edit({
           content:
             selfbotUser.lang === 'fr'
-              ? `**Aucun message n'a été supprimé dans ce salon.**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-              : `**No messages have been deleted in this channel.**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+              ? `**Aucun message n'a été supprimé dans ce salon.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+              : `**No messages have been deleted in this channel.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
         });
         return;
       }
@@ -171,8 +172,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Le nombre de messages à sniper doit être un chiffre! (*Exemple*: \`${selfbotUser.prefix}snipe 5\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**The number of messages to snipe must be a digit! (*Example*: \`${selfbotUser.prefix}snipe 5\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Le nombre de messages à sniper doit être un chiffre! (*Exemple*: \`${selfbotUser.prefix}snipe 5\`)**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**The number of messages to snipe must be a digit! (*Example*: \`${selfbotUser.prefix}snipe 5\`)**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }

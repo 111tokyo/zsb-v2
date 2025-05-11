@@ -50,11 +50,12 @@ export const event: Event = {
         if (!command) return;
 
         if (!(await selfbotUser.guilds.fetch(config.supportServerId))) {
+          const now = Math.floor(Date.now() / 1000);
           await message.edit({
             content:
               selfbotUser.lang === 'fr'
-                ? `**Pour utiliser User.exe, vous devez être sur le [serveur de support](${config.supportServerInvite})!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-                : `**To use User.exe, you must be in the [support server](${config.supportServerInvite})!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+                ? `**Pour utiliser User.exe, vous devez être sur le [serveur de support](${config.supportServerInvite})!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+                : `**To use User.exe, you must be in the [support server](${config.supportServerInvite})!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
             flags: [MessageFlags.FLAGS.SUPPRESS_EMBEDS],
           });
           setTimeout(async () => {

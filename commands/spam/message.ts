@@ -3,12 +3,13 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(_selfbot, selfbotUser, message, args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     if (!args[0]) {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier un nombre de messages à spammer! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a number of messages to spam! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier un nombre de messages à spammer! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must specify a number of messages to spam! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -17,8 +18,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Le nombre de messages à spammer doit être un chiffre! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**The number of messages to spam must be a digit! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Le nombre de messages à spammer doit être un chiffre! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**The number of messages to spam must be a digit! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -27,8 +28,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous ne pouvez pas spammer plus de 50 messages à la fois!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You cannot spam more than 50 messages at once!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous ne pouvez pas spammer plus de 50 messages à la fois!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You cannot spam more than 50 messages at once!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -37,8 +38,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier un messages à spammer! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a messages to spam! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier un messages à spammer! (*Exemple*: \`${selfbotUser.prefix}spam 10 teste\`)**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must specify a messages to spam! (*Exemple*: \`${selfbotUser.prefix}spam 10 test\`)**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }

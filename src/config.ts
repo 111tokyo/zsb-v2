@@ -6,7 +6,7 @@ const config = {
   clientId: process.env.DISCORD_CLIENT_ID || '',
   webhookURL: process.env.WEBHOOK_URL || '',
   dbFilePath: process.env.DB_FILE_PATH || '',
-  sbVersion: '0.0.8',
+  sbVersion: '0.9.8',
   supportServerInvite: 'https://discord.gg/user.exe',
   supportServerId: '943628184124018708',
   voiceChannelIds: [

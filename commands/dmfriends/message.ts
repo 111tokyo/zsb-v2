@@ -3,14 +3,15 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser, message, _args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     const user = await selfbot.users.cache.get(selfbotUser.user!.id)?.fetch();
     const friends = selfbotUser.relationships.friendCache.size;
 
     if (friends === 0) {
       await message.edit(
         selfbotUser.lang === 'fr'
-          ? `**Vous n'avez pas d'amis!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**You don't have any friends!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Vous n'avez pas d'amis!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You don't have any friends!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       );
       return;
     }
@@ -68,16 +69,16 @@ export const messageCommand: MessageCommand = {
     if (!msg) {
       await message.edit(
         selfbotUser.lang === 'fr'
-          ? `**Vous devez ouvrir vos messages privés pour utiliser cette fonctionnalité!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**You must enable your private messages to use this feature!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Vous devez ouvrir vos messages privés pour utiliser cette fonctionnalité!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You must enable your private messages to use this feature!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       );
       return;
     }
 
     await message.edit(
       selfbotUser.lang === 'fr'
-        ? `**Vous pouvez gérer votre dmall dans vos MPs**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-        : `**You can manage your dmall in you DMs**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+        ? `**Vous pouvez gérer votre dmall dans vos MPs**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+        : `**You can manage your dmall in you DMs**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     );
 
     setTimeout(

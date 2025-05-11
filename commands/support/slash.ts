@@ -12,8 +12,8 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('support')
-    .setDescription('Allows you to have the User.exe support server')
-    .setDescriptionLocalization('fr', 'Permet de voir le serveur support User.exe'),
+    .setDescription('Allows you to have the User.exe support server.')
+    .setDescriptionLocalization('fr', 'Permet de voir le serveur support User.exe.'),
 
   execute: async (
     selfbotUser: SelfbotUser,

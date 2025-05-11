@@ -3,12 +3,13 @@ import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser, message, args: string[]) {
+    const now = Math.floor(Date.now() / 1000);
     if (!args[0]) {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**Vous devez spécifier un utilisateur à qui récupérer le token! (*Exemple*: \`${selfbotUser.prefix}tokengrab 1139950543113048236\`)**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**You must specify a user to grab the token! (*Exemple*: \`${selfbotUser.prefix}tokengrab 1139950543113048236\`)**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**Vous devez spécifier un utilisateur à qui récupérer le token! (*Exemple*: ${message.guild?.members.cache.first() ? '\`' + selfbotUser.prefix + `tokengrab ${message.guild?.members.cache.first()?.id}\`` : '\`tokengrab [userId/userMention]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You must specify a user to grab the token! (*Exemple*: ${message.guild?.members.cache.first() ? '\`' + selfbotUser.prefix + `tokengrab ${message.guild?.members.cache.first()?.id}\`` : '\`tokengrab [userId/userMention]\`'})**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -21,8 +22,8 @@ export const messageCommand: MessageCommand = {
       await message.edit({
         content:
           selfbotUser.lang === 'fr'
-            ? `**L'utilisateur spécifié n'existe pas ou est inaccessible!**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-            : `**The specified user doesn't exist or is inaccessible!**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+            ? `**L'utilisateur spécifié n'existe pas ou est inaccessible!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**The specified user doesn't exist or is inaccessible!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }
@@ -32,8 +33,8 @@ export const messageCommand: MessageCommand = {
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**Le token discord de ${userMention(userId)} commence par: \`${decoded}-----------------------------------------\`**\n-# ➜ *Suppression du message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`
-          : `**The discord token of ${userMention(userId)} starts with: \`${decoded}-----------------------------------------\`**\n-# ➜ *Deleting message ${time(Math.floor(Date.now() / 1000) + 16, 'R')}*`,
+          ? `**Le token discord de ${userMention(userId)} commence par: \`${decoded}-----------------------------------------\`**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**The discord token of ${userMention(userId)} starts with: \`${decoded}-----------------------------------------\`**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     });
   },
 };

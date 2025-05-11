@@ -9,8 +9,8 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('vc')
-    .setDescription('Allows you to manage your voice options')
-    .setDescriptionLocalization('fr', 'Permet de gérer vos options vocales'),
+    .setDescription('Allows you to manage your voice options.')
+    .setDescriptionLocalization('fr', 'Permet de gérer vos options vocales.'),
 
   execute: async (
     selfbotUser: SelfbotUser,
@@ -47,7 +47,10 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfMute,
                     },
                     {
-                      label: selfbotUser.lang === 'fr' ? 'Être en sourdine' : 'Be deaf',
+                      label:
+                        selfbotUser.lang === 'fr'
+                          ? 'Être en sourdine'
+                          : 'Be deaf',
                       value: 'deaf',
                       description:
                         selfbotUser.lang === 'fr'
@@ -59,9 +62,10 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfDeaf,
                     },
                     {
-                      label: selfbotUser.lang === 'fr'
-                        ? 'Activer la caméra'
-                        : 'Enable camera',
+                      label:
+                        selfbotUser.lang === 'fr'
+                          ? 'Activer la caméra'
+                          : 'Enable camera',
                       value: 'camera',
                       description:
                         selfbotUser.lang === 'fr'
@@ -73,9 +77,10 @@ export const slashCommand: SlashCommand = {
                       default: selfbotUser.voiceOptions.selfVideo,
                     },
                   ],
-                  placeholder: selfbotUser.lang === 'fr'
-                    ? 'Choisis tes options vocales'
-                    : 'Select your voice options',
+                  placeholder:
+                    selfbotUser.lang === 'fr'
+                      ? 'Choisis tes options vocales'
+                      : 'Select your voice options',
                   min_values: 0,
                   max_values: 3,
                   disabled: false,

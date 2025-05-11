@@ -9,10 +9,10 @@ import { SlashCommand } from '../../src/types/interactions';
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('rpc')
-    .setDescription('Allows you to manage your RPC status options')
+    .setDescription('Allows you to manage your RPC status options.')
     .setDescriptionLocalization(
       'fr',
-      'Permet de gérer vos options de status RPC',
+      'Permet de gérer vos options de status RPC.',
     ),
 
   execute: async (
