@@ -15,5 +15,17 @@ export const button: Select = {
     if (interaction.values.includes('camera')) {
       selfbotUser.voiceOptions.selfVideo = true;
     }
+
+    if (!interaction.values.includes('mute')) {
+      selfbotUser.voiceOptions.selfMute = false;
+    }
+
+    if (!interaction.values.includes('deaf')) {
+      selfbotUser.voiceOptions.selfDeaf = false;
+    }
+
+    if (!interaction.values.includes('camera')) {
+      selfbotUser.voiceOptions.selfVideo = false;
+    }
   },
 };

@@ -33,6 +33,19 @@ export const slashCommand: SlashCommand = {
       default: rpc.id === choice,
     }));
 
+    options.push({
+      label: 'No status',
+      value: 'no_status',
+      description:
+        selfbotUser.lang === 'fr'
+          ? "Permet d'apparaître sans RPC"
+          : 'Allows you to appear without a RPC',
+      emoji: {
+        id: '1371498972069367939',
+      },
+      default: choice === null,
+    });
+
     await interaction.reply({
       flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
       components: [

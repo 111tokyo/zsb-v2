@@ -124,6 +124,8 @@ class SelfbotUser extends Client {
     if (choice) {
       const rpc = richPresences.find(rpc => rpc.id === choice);
       if (rpc) await loadRichPresence(this, rpc);
+    } else {
+      this.user!.setPresence({});
     }
   }
 

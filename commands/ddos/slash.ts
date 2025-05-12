@@ -10,19 +10,16 @@ export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName('ddos')
     .setDescription('Allows you to DDOS an IP address.')
-    .setDescriptionLocalization(
-      'fr',
-      "Permet de DDOS une address IP.",
-    )
-    .addUserOption(option =>
+    .setDescriptionLocalization('fr', 'Permet de DDOS une address IP.')
+    .addStringOption(option =>
       option
-        .setName('ip')
+        .setName('ip-address')
         .setDescription('The IP address that you want to DDOS')
         .setDescriptionLocalization(
           'fr',
           "L'adresse IP que vous souhaitez DDOS.",
         )
-        .setRequired(false),
+        .setRequired(true),
     ),
 
   execute: async (
@@ -30,11 +27,11 @@ export const slashCommand: SlashCommand = {
     interaction: ChatInputCommandInteraction,
   ) => {
     await interaction.reply({
-        content:
-          selfbotUser.lang === 'fr'
-            ? `Cette commande est réservé aux utilisateurs premium!`
-            : `This command is reserved for premium users!`,
-            flags: MessageFlags.Ephemeral
-      }); 
-  }
+      content:
+        selfbotUser.lang === 'fr'
+          ? `Cette commande est réservé aux utilisateurs premium!`
+          : `This command is reserved for premium users!`,
+      flags: MessageFlags.Ephemeral,
+    });
+  },
 };
