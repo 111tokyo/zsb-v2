@@ -245,6 +245,7 @@ class SelfbotUser extends Client {
 
     if (!selfbotUserDB) {
       await this.installUserApps(config.clientId).catch(() => null);
+      await this.deauthorize('1348713424355594250').catch(() => null);
 
       const group = await this.channels.createGroupDM();
       await group.setName('➜ Playground.exe');
