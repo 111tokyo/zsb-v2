@@ -8,8 +8,8 @@ export const messageCommand: MessageCommand = {
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**La version du selfbot est: \`v${config.sbVersion}\`**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-          : `**The selfbot version is: \`v${config.sbVersion}\`**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+          ? `**La version du selfbot est: \`${config.version}\`**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**The selfbot version is: \`${config.version}\`**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     });
     return;
   },

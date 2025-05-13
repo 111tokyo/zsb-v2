@@ -20,8 +20,8 @@ export const slashCommand: SlashCommand = {
     await interaction.reply({
       content:
         selfbotUser.lang === 'fr'
-          ? `La version du selfbot est: \`v${config.sbVersion}\``
-          : `The selfbot version is: \`v${config.sbVersion}\``,
+          ? `La version du selfbot est: \`${config.version}\``
+          : `The selfbot version is: \`${config.version}\``,
       flags: MessageFlags.Ephemeral,
     });
   },

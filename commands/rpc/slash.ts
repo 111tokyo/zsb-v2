@@ -100,7 +100,7 @@ export const slashCommand: SlashCommand = {
                   emoji: {
                     id: '1356990747244499188',
                   },
-                  disabled: false,
+                  disabled: true,
                   custom_id: 'create_rpc',
                 },
                 {
@@ -111,9 +111,9 @@ export const slashCommand: SlashCommand = {
                       ? 'Supprimer un RPC'
                       : 'Delete a RPC',
                   emoji: {
-                    id: '1365699526467260537',
+                    id: '1371783183149830234',
                   },
-                  disabled: false,
+                  disabled: true,
                   custom_id: 'delete_rpc',
                 },
               ],
