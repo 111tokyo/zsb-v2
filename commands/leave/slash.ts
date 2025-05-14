@@ -3,11 +3,11 @@ import {
   MessageFlags,
   SlashCommandBuilder,
 } from 'discord.js';
+import { eq } from 'drizzle-orm';
 import SelfbotUser from '../../src/classes/SelfbotUser';
-import { SlashCommand } from '../../src/types/interactions';
 import db from '../../src/db';
 import { selfbotUsersTable } from '../../src/db/schema';
-import { eq } from 'drizzle-orm';
+import { SlashCommand } from '../../src/types/interactions';
 
 export const slashCommand: SlashCommand = {
   data: new SlashCommandBuilder()
@@ -35,7 +35,7 @@ export const slashCommand: SlashCommand = {
       content:
         selfbotUser.lang === 'fr'
           ? `Vous avez quitter ${selfbotUser.voice.connection.channel} avec succès!`
-          : `You've succesfully left ${selfbotUser.voice.connection}!`,
+          : `You've succesfully left ${selfbotUser.voice.connection.channel}!`,
       flags: MessageFlags.Ephemeral,
     });
 

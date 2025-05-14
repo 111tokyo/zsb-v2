@@ -23,7 +23,7 @@ export const messageCommand: MessageCommand = {
         content:
           selfbotUser.lang === 'fr'
             ? `**Vous devez spécifier un salon vocal à rejoindre! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [salonVocal]\`'})**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-            : `**You must specify a voice channel to join! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'}\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+            : `**You must specify a voice channel to join! (*Exemple*: ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first() ? '\`' + selfbotUser.prefix + `join ${message.guild?.channels.cache.filter(c => c.type === 'GUILD_VOICE').first()?.id}\`` : '\`join [voiceChannel]\`'})**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     }

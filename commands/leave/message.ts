@@ -22,7 +22,7 @@ export const messageCommand: MessageCommand = {
       content:
         selfbotUser.lang === 'fr'
           ? `**Vous avez quitter ${selfbotUser.voice.connection.channel} avec succès!**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-          : `**You've succesfully left ${selfbotUser.voice.connection}!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+          : `**You've succesfully left ${selfbotUser.voice.connection.channel}!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     });
 
     selfbotUser.voice.connection.disconnect();
