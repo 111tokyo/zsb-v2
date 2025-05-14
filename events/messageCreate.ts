@@ -65,7 +65,7 @@ export const event: Event = {
         }
 
         if (selfbotUser.cooldowns.get(`messageCommand_${commandName}`)) {
-          await message.react('1371057188851810305');
+          await message.react('🕐');
           setTimeout(async () => {
             await message.delete().catch(() => null);
           }, 7000);

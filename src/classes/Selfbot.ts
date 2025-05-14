@@ -361,12 +361,15 @@ class Selfbot extends Client {
       type: ActivityType.Custom,
     });
 
-    setInterval(() => {
-      this.user?.setActivity({
-        name: `・Executing ${this.userNb} users`,
-        type: ActivityType.Custom,
-      });
-    }, 1000 * 10);
+    setInterval(
+      () => {
+        this.user!.setActivity({
+          name: `・Executing ${this.userNb} users`,
+          type: ActivityType.Custom,
+        });
+      },
+      1000 * 60 * 2,
+    );
 
     await this._initInteractions();
     await this._initSelfbotUsers();
