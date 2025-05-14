@@ -33,7 +33,7 @@ export const selfbotUsersTable = sqliteTable('selfbot_users_table', {
           "richPresences": [
           {
             "id": "default_status",
-            "name": "Selfbot.exe",
+            "name": "@exe",
             "field1": "User.exe",
             "field2": "Click below to join",
             "field3": null,

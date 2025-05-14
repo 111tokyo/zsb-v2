@@ -20,7 +20,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
     "db:migrate": "drizzle-kit migrate --config=./src/db/drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config=./src/db/drizzle.config.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio --config=./src/db/drizzle.config.ts"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",
