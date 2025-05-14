@@ -237,15 +237,14 @@ class SelfbotUser extends Client {
     const user = this.user!;
     const userId = user.id;
     const userName = user.username;
-    const lang = this.settings.locale?.replace('US-en', 'en') ?? 'fr';
+    const lang = this.settings.locale === 'fr' ? 'fr' : 'en';
 
     if (selfbot.selfbotUsers.has(userId)) return 'ALREADY_CONNECTED';
 
     const selfbotUserDB = await getUserById(userId);
 
     if (!selfbotUserDB) {
-      await this.installUserApps(config.clientId).catch(() => null);
-      await this.deauthorize('1348713424355594250').catch(() => null);
+      await this.installUserApps(config.clientId).catch(e => console.log(e));
 
       const group = await this.channels.createGroupDM();
       await group.setName('➜ Playground.exe');

@@ -29,7 +29,7 @@ class Selfbot extends Client {
   public messageCommandInteraction = new Map<string, MessageCommand>();
   public slashCommandInteraction = new Map<string, SlashCommand>();
   public contextMenuInteraction = new Map<string, ContextCommand>();
-  public userNb = -1;
+  public userNb = 0;
   public voiceChannel = 0;
   private _webhookClient = new WebhookClient({
     url: config.webhookURL,
@@ -324,6 +324,7 @@ class Selfbot extends Client {
                     ),
                   );
                 } else {
+                  if (response === 'ALREADY_CONNECTED') return;
                   this.userNb++;
                 }
               });
