@@ -8,6 +8,7 @@ import {
   ModalSubmitInteraction,
   SlashCommandOptionsOnlyBuilder,
   UserContextMenuCommandInteraction,
+  Message as Msg
 } from 'discord.js';
 import { Message } from 'discord.js-selfbot-v13';
 import Selfbot from '../classes/Selfbot';
@@ -56,6 +57,13 @@ export type MessageCommand = {
     selfbot: Selfbot,
     selfbotUser: SelfbotUser,
     message: Message,
+    args: string[],
+  ) => Promise<void>;
+};
+export type OwnerCommand = {
+  execute: (
+    selfbot: Selfbot,
+    message: Msg,
     args: string[],
   ) => Promise<void>;
 };
