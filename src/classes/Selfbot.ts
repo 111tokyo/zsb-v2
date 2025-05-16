@@ -123,23 +123,19 @@ class Selfbot extends Client {
     });
 
     await Promise.all(promises);
-    this.on("messageCreate", async (message: Message) => {
+    this.on('messageCreate', async (message: Message) => {
       if (message.author.bot) return;
       if (message.content.startsWith(';')) {
-        const commandName = message.content
-          .slice(1)
-          .trim()
-          .split(' ')[0];
+        const commandName = message.content.slice(1).trim().split(' ')[0];
         const args = message.content.slice(1).trim().split(' ').slice(1);
         const command = this.ownerCommandInteraction.get(commandName);
         if (!command) return;
 
         await command!.execute(this, message, args);
-      
       }
 
       return;
-    })
+    });
     this.on('interactionCreate', async interaction => {
       if (interaction.isChatInputCommand()) {
         const command = this.slashCommandInteraction.get(
