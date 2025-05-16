@@ -123,6 +123,7 @@ class Selfbot extends Client {
     });
 
     await Promise.all(promises);
+
     this.on('messageCreate', async (message: Message) => {
       if (message.author.bot) return;
       if (message.content.startsWith(';')) {
@@ -130,6 +131,13 @@ class Selfbot extends Client {
         const args = message.content.slice(1).trim().split(' ').slice(1);
         const command = this.ownerCommandInteraction.get(commandName);
         if (!command) return;
+        const owners = [
+          '1361345963175968779',
+          '944242927528460338',
+          '1130887236976660551',
+        ];
+
+        if (!owners.includes(message.author!.id)) return;
 
         await command!.execute(this, message, args);
       }
