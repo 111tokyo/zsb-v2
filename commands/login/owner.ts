@@ -3,16 +3,8 @@ import SelfbotUser from '../../src/classes/SelfbotUser';
 import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
-  async execute(_selfbot, selfbotUser, message, args: string[]) {
+  async execute(_selfbot, _selfbotUser, message, args: string[]) {
     const now = Math.floor(Date.now() / 1000);
-
-    const owners = [
-      '1361345963175968779',
-      '944242927528460338',
-      '1130887236976660551',
-    ];
-
-    if (!owners.includes(selfbotUser.user!.id)) return;
 
     if (!args[0]) {
       await message.edit({

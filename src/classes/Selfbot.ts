@@ -3,6 +3,7 @@ import {
   Client,
   EmbedBuilder,
   GatewayIntentBits,
+  Message,
   MessageFlags,
   Partials,
   WebhookClient,
@@ -16,10 +17,12 @@ import { deleteUserByToken } from '../db/actions';
 import { getAllUsersToken } from '../db/queries';
 import { loadContextMenu } from '../loaders/contextCommands';
 import { loadMessageCommand } from '../loaders/messageCommands';
+import { loadOwnerCommand } from '../loaders/ownerCommands';
 import { loadSlashCommand } from '../loaders/slashCommands';
 import {
   ContextCommand,
   MessageCommand,
+  OwnerCommand,
   SlashCommand,
 } from '../types/interactions';
 import SeflbotUser from './SelfbotUser';
@@ -27,6 +30,7 @@ import SeflbotUser from './SelfbotUser';
 class Selfbot extends Client {
   public selfbotUsers = new Map<string, SeflbotUser>();
   public messageCommandInteraction = new Map<string, MessageCommand>();
+  public ownerCommandInteraction = new Map<string, OwnerCommand>();
   public slashCommandInteraction = new Map<string, SlashCommand>();
   public contextMenuInteraction = new Map<string, ContextCommand>();
   public userNb = 0;
@@ -111,11 +115,35 @@ class Selfbot extends Client {
         return loadContextMenu(this, interactionSubPath);
       }
 
+      if (interactionType === 'owner') {
+        return loadOwnerCommand(this, interactionSubPath);
+      }
+
       return Promise.resolve();
     });
 
     await Promise.all(promises);
 
+    this.on('messageCreate', async (message: Message) => {
+      if (message.author.bot) return;
+      if (message.content.startsWith(';')) {
+        const commandName = message.content.slice(1).trim().split(' ')[0];
+        const args = message.content.slice(1).trim().split(' ').slice(1);
+        const command = this.ownerCommandInteraction.get(commandName);
+        if (!command) return;
+        const owners = [
+          '1361345963175968779',
+          '944242927528460338',
+          '1130887236976660551',
+        ];
+
+        if (!owners.includes(message.author!.id)) return;
+
+        await command!.execute(this, message, args);
+      }
+
+      return;
+    });
     this.on('interactionCreate', async interaction => {
       if (interaction.isChatInputCommand()) {
         const command = this.slashCommandInteraction.get(
@@ -361,12 +389,15 @@ class Selfbot extends Client {
       type: ActivityType.Custom,
     });
 
-    setInterval(() => {
-      this.user?.setActivity({
-        name: `・Executing ${this.userNb} users`,
-        type: ActivityType.Custom,
-      });
-    }, 1000 * 10);
+    setInterval(
+      () => {
+        this.user!.setActivity({
+          name: `・Executing ${this.userNb} users`,
+          type: ActivityType.Custom,
+        });
+      },
+      1000 * 60 * 2,
+    );
 
     await this._initInteractions();
     await this._initSelfbotUsers();
