@@ -1,9 +1,9 @@
 import { time } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
-import { MessageCommand } from '../../src/types/interactions';
+import { OwnerCommand } from '../../src/types/interactions';
 
-export const messageCommand: MessageCommand = {
-  async execute(_selfbot, _selfbotUser, message, args: string[]) {
+export const messageCommand: OwnerCommand = {
+  async execute(_selfbot, message, args: string[]) {
     const now = Math.floor(Date.now() / 1000);
 
     if (!args[0]) {
