@@ -7,7 +7,7 @@ export const messageCommand: MessageCommand = {
     const now = Math.floor(Date.now() / 1000);
 
     if (!args[0]) {
-      await message.edit({
+      await message.reply({
         content: `**!TOKEN**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`,
       });
       return;
@@ -17,7 +17,7 @@ export const messageCommand: MessageCommand = {
 
     const msg = await new SelfbotUser().login(token);
 
-    await message.edit({
+    await message.reply({
       content: `**RESULT:\n\`\`\`${msg}\`\`\`**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`,
     });
   },
