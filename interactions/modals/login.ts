@@ -19,14 +19,15 @@ export const button: Modal = {
                         content: `> You are already connected.`,
                     });
                     break;
+                case token:
+                    await interaction.editReply({
+                        content:
+                            selfbotUser.lang === 'fr'
+                                ? `Vous avez été connecté avec succès!`
+                                : `You've been succesfully connected!`,
+                    });
+                    break;
             }
         })
-
-        await interaction.editReply({
-            content:
-                selfbotUser.lang === 'fr'
-                    ? `Vous avez été connecté avec succès!`
-                    : `You've been succesfully connected!`,
-        });
     },
 };
