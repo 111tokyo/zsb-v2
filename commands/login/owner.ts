@@ -2,7 +2,7 @@ import { time } from 'discord.js';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { OwnerCommand } from '../../src/types/interactions';
 
-export const messageCommand: OwnerCommand = {
+export const ownerCommand: OwnerCommand = {
   async execute(_selfbot, message, args: string[]) {
     const now = Math.floor(Date.now() / 1000);
 

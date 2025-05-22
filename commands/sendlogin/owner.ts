@@ -1,6 +1,6 @@
 import { ButtonBuilder, ButtonStyle, ContainerBuilder, MessageFlags, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder } from 'discord.js';
 import { OwnerCommand } from '../../src/types/interactions';
-export const messageCommand: OwnerCommand = {
+export const ownerCommand: OwnerCommand = {
     async execute(_selfbot, message, _args: string[]) {
 
         const components = [
