@@ -9,7 +9,6 @@ export const loadOwnerCommand = async (
   const ownerCommandFile: { ownerCommand: OwnerCommand } = await import(
     `../../commands/${interactionSubPath}/owner`
   );
-  console.log(ownerCommandFile);
   const ownerCommand = ownerCommandFile.ownerCommand;
   selfbot.ownerCommandInteraction.set(ownerCommandName, ownerCommand);
 };

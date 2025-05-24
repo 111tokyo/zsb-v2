@@ -1,5 +1,4 @@
 import Selfbot from './src/classes/Selfbot';
-import SelfbotUser from './src/classes/SelfbotUser';
 import config from './src/config';
 
 export const selfbot = new Selfbot();
@@ -39,11 +38,6 @@ export const selfbot = new Selfbot();
   await selfbot.initAfterLogin();
   selfbot.startAPI();
 
-  await new SelfbotUser()
-    .login(
-      'OTQ0MjQyOTI3NTI4NDYwMzM4.GirzCr.wgMwtbiYgK8lJ_2dDcrdToZusir4izF1cnlylQ',
-    )
-    .catch(e => console.error(e));
   /* // Example of fetching and deleting a command
 
   const commands = await selfbot.application!.commands.fetch();
