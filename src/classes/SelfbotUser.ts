@@ -239,8 +239,17 @@ class SelfbotUser extends Client {
     const userName = user.username;
     const lang = this.settings.locale === 'fr' ? 'fr' : 'en';
 
-    if (selfbot.selfbotUsers.get(userId)?.ws.status === 0)
-      return 'ALREADY_CONNECTED';
+    const existingUser = selfbot.selfbotUsers.get(userId);
+    if (existingUser) {
+      if (existingUser.ws.status === 0) {
+        await existingUser.logout();
+        selfbot.selfbotUsers.delete(userId);
+        this.login(token);
+        return 'WAITING_FOR_RECONNECT';
+      } else {
+        return 'ALREADY_CONNECTED';
+      }
+    }
 
     const selfbotUserDB = await getUserById(userId);
 

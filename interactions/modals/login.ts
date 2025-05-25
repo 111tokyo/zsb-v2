@@ -25,6 +25,11 @@ export const button: Modal = {
                     content: `> You have been connected with success!`,
                 });
                 break;
+            case 'WAITING_FOR_RECONNECT':
+                await interaction.editReply({
+                    content: `> You are waiting for a reconnect, please wait...`,
+                });
+                break;
         }
     },
 };
