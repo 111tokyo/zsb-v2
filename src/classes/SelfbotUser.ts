@@ -56,7 +56,9 @@ class SelfbotUser extends Client {
   private _interval() {
     setInterval(
       () => {
-        this.ws.status === 0 ? this.logout() : null;
+        if (this.ws.status === 0) {
+          this.logout();
+        }
         this.cache.clear();
         this.cooldowns.clear();
         this.snipe.clear();
@@ -241,14 +243,13 @@ class SelfbotUser extends Client {
 
     const existingUser = selfbot.selfbotUsers.get(userId);
     if (existingUser) {
-      if (existingUser.ws.status === 0) {
-        await existingUser.logout();
-        selfbot.selfbotUsers.delete(userId);
-        this.login(token);
-        return 'WAITING_FOR_RECONNECT';
-      } else {
+      if (existingUser.ws.status !== 0) {
         return 'ALREADY_CONNECTED';
       }
+      console.log(`[CLEANING] ${userName} | ${userId}`);
+      await deleteUserByToken(existingUser.token!);
+      existingUser.removeAllListeners().destroy();
+      selfbot.selfbotUsers.delete(userId);
     }
 
     const selfbotUserDB = await getUserById(userId);

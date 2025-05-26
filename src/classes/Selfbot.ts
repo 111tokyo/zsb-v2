@@ -399,9 +399,6 @@ class Selfbot extends Client {
       1000 * 60 * 2,
     );
 
-    await this._initInteractions();
-    await this._initSelfbotUsers();
-
     return response;
   }
 
