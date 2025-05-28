@@ -49,6 +49,13 @@ export const messageCommand: MessageCommand = {
       })
       .then(messages => messages.filter(message => message.id !== msg.id));
 
+    while (messages.size < parseInt(args[0])) {
+      const fetchedMessages = await message.channel.messages.fetch({
+        limit: parseInt(args[0]) - messages.size,
+      });
+      messages.concat(fetchedMessages.filter(message => message.id !== msg.id));
+    }
+
     let count = 0;
 
     const deletePromises = Array.from(messages.values()).map(async message => {

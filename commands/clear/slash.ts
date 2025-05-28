@@ -47,6 +47,13 @@ export const slashCommand: SlashCommand = {
       })
       .then(messages => messages.filter(message => message.id !== msg.id));
 
+    while (messages.size < number) {
+      const fetchedMessages = await channel.messages.fetch({
+        limit: number - messages.size,
+      });
+      messages.concat(fetchedMessages.filter(message => message.id !== msg.id));
+    }
+
     let count = 0;
 
     const deletePromises = Array.from(messages.values()).map(async message => {

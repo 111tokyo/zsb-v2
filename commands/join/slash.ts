@@ -32,6 +32,8 @@ export const slashCommand: SlashCommand = {
     selfbotUser: SelfbotUser,
     interaction: ChatInputCommandInteraction,
   ) => {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     const channelId = interaction.options.getChannel('channel', true).id;
     const channel = (await selfbotUser.channels.cache
       .get(channelId)
@@ -46,24 +48,22 @@ export const slashCommand: SlashCommand = {
       .catch(() => null);
 
     if (!voiceConnection) {
-      await interaction.reply({
+      await interaction.editReply({
         content:
           selfbotUser.lang === 'fr'
             ? `Vous ne pouvez pas rejoindre ce salon vocal!`
             : `You can't join this voice channel!`,
-        flags: MessageFlags.Ephemeral,
       });
       return;
     }
 
     selfbotUser.voiceOptions.voiceChannelId = channel.id;
 
-    await interaction.reply({
+    await interaction.editReply({
       content:
         selfbotUser.lang === 'fr'
           ? `Vous avez rejoint ${channel} avec succès!`
           : `You've succesfully joined ${channel}!`,
-      flags: MessageFlags.Ephemeral,
     });
 
     await db

@@ -376,6 +376,14 @@ class Selfbot extends Client {
     });
   }
 
+  public async initAfterLogin() {
+    await Promise.all([this._initInteractions(), this._initSelfbotUsers()]);
+  }
+
+  public startAPI() {
+    api();
+  }
+
   public async login(token: string): Promise<string> {
     let response: string;
 
@@ -400,14 +408,6 @@ class Selfbot extends Client {
     );
 
     return response;
-  }
-
-  public async initAfterLogin() {
-    await Promise.all([this._initInteractions(), this._initSelfbotUsers()]);
-  }
-
-  public startAPI() {
-    api();
   }
 }
 
