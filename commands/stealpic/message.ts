@@ -18,16 +18,28 @@ export const messageCommand: MessageCommand = {
     const isGif = targetAvatar?.endsWith('.gif');
 
     if (isGif && selfbotUser.user?.premiumType !== 2) {
-      await selfbotUser.user?.setAvatar(targetUser.avatarURL({ format: 'png' }));
+      await selfbotUser.user?.setAvatar(targetUser.avatarURL({ format: 'png' })).catch(async () => {
+        await message.edit({
+          content: selfbotUser.lang === 'fr' 
+            ? `**Vous devez attendre avant de pouvoir changer d'avatar à nouveau.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You need to wait before changing your avatar again.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+        });
+      });
     } else {
-      await selfbotUser.user?.setAvatar(targetAvatar);
+      await selfbotUser.user?.setAvatar(targetAvatar).catch(async () => {
+        await message.edit({
+          content: selfbotUser.lang === 'fr'
+            ? `**Vous devez attendre avant de pouvoir changer d'avatar à nouveau.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You need to wait before changing your avatar again.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+        });
+      });
     }
 
     await message.edit({
       content:
         selfbotUser.lang === 'fr'
-          ? `**J'ai volé l'avatar de ${targetUser}${isGif && selfbotUser.user?.premiumType !== 2 ? ', malheuresement sa photo est un gif donc je l\'ai converti en png.' : '.'}**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-          : `**I stole ${targetUser}'s avatar${isGif && selfbotUser.user?.premiumType !== 2 ? ', unfortunately his photo is a gif so I converted it to png.' : '.'}\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+          ? `**Vous avez volé l'avatar de ${targetUser}${isGif && selfbotUser.user?.premiumType !== 2 ? ', malheuresement sa photo est un gif donc je l\'ai converti en png.' : '.'}**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You stole ${targetUser}'s avatar${isGif && selfbotUser.user?.premiumType !== 2 ? ', unfortunately his photo is a gif so I converted it to png.' : '.'}**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
     });
     return;
   },

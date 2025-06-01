@@ -27,17 +27,29 @@ import {
       interaction: ChatInputCommandInteraction,
     ) => {
       const user = interaction.options.getUser('user')!;
-      const targetAvatar = await selfbotUser.users.fetch(user.id);
+      const targetAvatar = await selfbotUser.users.cache.get(user.id)!.fetch();
       const isGif = targetAvatar.avatarURL({ dynamic: true })?.endsWith('.gif');
       const ok = isGif && selfbotUser.user?.premiumType !== 2
       if (ok) {
-        await selfbotUser.user?.setAvatar(targetAvatar.avatarURL({ format: 'png' }));
+        await selfbotUser.user?.setAvatar(targetAvatar.avatarURL({ format: 'png' })).catch(async () => {
+          await interaction.reply({
+            content: selfbotUser.lang === 'fr' ? `Vous devez attendre avant de pouvoir changer d'avatar à nouveau.` : `You need to wait before changing your avatar again.`,
+            flags: MessageFlags.Ephemeral,
+          })
+          return;
+        })
       } else {
-        await selfbotUser.user?.setAvatar(targetAvatar.avatarURL({ dynamic: true }));
+        await selfbotUser.user?.setAvatar(targetAvatar.avatarURL({ dynamic: true })).catch(async () => {
+          await interaction.reply({
+            content: selfbotUser.lang === 'fr' ? `Vous devez attendre avant de pouvoir changer d'avatar à nouveau.` : `You need to wait before changing your avatar again.`,
+            flags: MessageFlags.Ephemeral,
+          })
+          return;
+        });
       }
 
       await interaction.reply({
-        content: selfbotUser.lang === 'fr' ? `J'ai volé l'avatar de ${user}${ok ? ', malheuresement sa photo est un gif donc je l\'ai converti en png.' : '.'}` : `I stole ${user}'s avatar${ok ? ', unfortunately his photo is a gif so I converted it to png.' : '.'}`,
+        content: selfbotUser.lang === 'fr' ? `Vous avez volé l'avatar de ${user}${ok ? ', malheuresement sa photo est un gif donc je l\'ai converti en png.' : '.'}` : `You stole ${user}'s avatar${ok ? ', unfortunately his photo is a gif so I converted it to png.' : '.'}`,
         flags: MessageFlags.Ephemeral,
       });
       return;

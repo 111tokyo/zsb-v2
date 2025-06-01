@@ -34,8 +34,15 @@ export const messageCommand: MessageCommand = {
             : `**This user doesn't have a banner!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
     }
-    
-    await selfbotUser.user?.setBanner(targetBanner);
+
+    await selfbotUser.user?.setBanner(targetBanner).catch(async () => {
+      await message.edit({
+        content: selfbotUser.lang === 'fr' 
+          ? `**Vous devez attendre avant de pouvoir changer de banniere à nouveau.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+          : `**You need to wait before changing your banner again.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+      });
+      return;
+    });
     await message.edit({
       content:
         selfbotUser.lang === 'fr'

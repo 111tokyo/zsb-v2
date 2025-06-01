@@ -44,7 +44,15 @@ import {
         return;
        }
 
-      await selfbotUser.user?.setBanner(targetBanner.bannerURL({ dynamic: true }));
+      await selfbotUser.user?.setBanner(targetBanner.bannerURL({ dynamic: true })).catch(async () => {
+        await interaction.reply({
+          content: selfbotUser.lang === 'fr' 
+            ? `Vous devez attendre avant de pouvoir changer de banniere à nouveau.`
+            : `You need to wait before changing your banner again.`,
+            flags: MessageFlags.Ephemeral,
+        });
+        return;
+      });
       await interaction.reply({
         content: selfbotUser.lang === 'fr' ? `J'ai volé la banniere de ${user}` : `I stole ${user}'s banner`,
         flags: MessageFlags.Ephemeral,
