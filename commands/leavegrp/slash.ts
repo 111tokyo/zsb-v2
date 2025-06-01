@@ -4,7 +4,6 @@ import {
   MessageFlags,
   SlashCommandBuilder,
 } from 'discord.js';
-import { GroupDMChannel } from 'discord.js-selfbot-v13';
 import SelfbotUser from '../../src/classes/SelfbotUser';
 import { SlashCommand } from '../../src/types/interactions';
 
@@ -29,11 +28,16 @@ export const slashCommand: SlashCommand = {
       return;
     }
 
-    const channel = (await selfbotUser.channels.fetch(
-      interaction.channelId,
-    )!) as GroupDMChannel;
-
-    await channel.leave(true);
+    await fetch(
+      `https://discord.com/api/v9/channels/${interaction.channelId}?silent=true`,
+      {
+        headers: {
+          authorization: selfbotUser.token!,
+          'Content-Type': 'application/json',
+        },
+        method: 'DELETE',
+      },
+    );
     return;
   },
 };

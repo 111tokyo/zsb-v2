@@ -1,5 +1,4 @@
 import { time } from 'discord.js';
-import { GroupDMChannel } from 'discord.js-selfbot-v13';
 import { MessageCommand } from '../../src/types/interactions';
 
 export const messageCommand: MessageCommand = {
@@ -14,10 +13,17 @@ export const messageCommand: MessageCommand = {
       });
       return;
     }
-
-    const channel = message.channel as GroupDMChannel;
     await message.delete();
-    await channel.leave(true).catch(e => console.log(e));
+    await fetch(
+      `https://discord.com/api/v9/channels/${message.channel.id}?silent=true`,
+      {
+        headers: {
+          authorization: selfbotUser.token!,
+          'Content-Type': 'application/json',
+        },
+        method: 'DELETE',
+      },
+    );
     return;
   },
 };
