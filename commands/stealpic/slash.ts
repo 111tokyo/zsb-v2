@@ -1,5 +1,4 @@
 import {
-    ChannelType,
     ChatInputCommandInteraction,
     MessageFlags,
     SlashCommandBuilder,
