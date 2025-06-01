@@ -1,5 +1,4 @@
 import {
-    ChannelType,
     ChatInputCommandInteraction,
     MessageFlags,
     SlashCommandBuilder,
@@ -47,7 +46,7 @@ import {
 
       await selfbotUser.user?.setBanner(targetBanner.bannerURL({ dynamic: true }));
       await interaction.reply({
-        content: selfbotUser.lang === 'fr' ? `J'ai volé la banniere de ${user}${ok ? ', malheuresement sa banniere est un gif donc je l\'ai converti en png.' : '.'}` : `I stole ${user}'s banner${ok ? ', unfortunately his banner is a gif so I converted it to png.' : '.'}`,
+        content: selfbotUser.lang === 'fr' ? `J'ai volé la banniere de ${user}` : `I stole ${user}'s banner`,
         flags: MessageFlags.Ephemeral,
       });
       return;

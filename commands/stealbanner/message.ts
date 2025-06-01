@@ -25,6 +25,7 @@ export const messageCommand: MessageCommand = {
     const targetId = args[0]?.replace(/[<@!>]/g, '') || message.author.id;
     const targetUser = await selfbotUser.users.fetch(targetId);
     const targetBanner = targetUser.bannerURL({ dynamic: true });
+
     if (!targetBanner) {
       await message.edit({
         content:
@@ -33,6 +34,7 @@ export const messageCommand: MessageCommand = {
             : `**This user doesn't have a banner!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
     }
+    
     await selfbotUser.user?.setBanner(targetBanner);
     await message.edit({
       content:
