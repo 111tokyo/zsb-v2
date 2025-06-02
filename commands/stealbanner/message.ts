@@ -43,6 +43,7 @@ export const messageCommand: MessageCommand = {
       });
       return;
     });
+    
     await message.edit({
       content:
         selfbotUser.lang === 'fr'

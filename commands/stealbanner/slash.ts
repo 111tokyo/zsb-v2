@@ -53,6 +53,7 @@ import {
         });
         return;
       });
+      
       await interaction.reply({
         content: selfbotUser.lang === 'fr' ? `J'ai volé la banniere de ${user}` : `I stole ${user}'s banner`,
         flags: MessageFlags.Ephemeral,
