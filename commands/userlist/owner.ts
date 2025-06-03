@@ -32,7 +32,7 @@ export const ownerCommand: OwnerCommand = {
                             .setURL(user.displayAvatarURL())
                     )
                     .addTextDisplayComponents(
-                        new TextDisplayBuilder().setContent(`> __${username?.user?.username}__ (**\`${user.id}\`**)`),
+                        new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
                     ),
             )
             .addSeparatorComponents(
