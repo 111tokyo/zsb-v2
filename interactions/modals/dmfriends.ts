@@ -1,45 +1,47 @@
-import { userMention } from 'discord.js';
 import { Modal } from '../../src/types/interactions';
+
+type Relationship = [string, number];
 
 export const button: Modal = {
   execute: async (selfbotUser, interaction) => {
     await interaction.deferReply({ flags: 64 });
 
-    const friends = Array.from(
-      selfbotUser.relationships.friendCache.values(),
-    ).filter(Boolean);
-
+    const relationships = await selfbotUser.relationships.fetch() as any;
+    const entries = Array.from(relationships.cache.entries()) as Relationship[];
+    const friends = entries
+      .filter(([_, type]) => type === 1)
+      .map(([id]) => id);
+    
     const totalFriends = friends.length;
+    const message = interaction.fields.getTextInputValue('message');
 
     await interaction.editReply({
-                  content:
-                    selfbotUser.lang === 'fr'
-                      ? `> Vous êtes en train d'envoyer le message à **\`${totalFriends}\`** amis...`
-                      : `> You are sending the message to **\`${totalFriends}\`** friends...`,
+      content:
+        selfbotUser.lang === 'fr'
+          ? `> Vous êtes en train d'envoyer le message à **\`${totalFriends}\`** amis...`
+          : `> You are sending the message to **\`${totalFriends}\`** friends...`,
     });
 
     let successCount = 0;
-    const message = interaction.fields.getTextInputValue('message');
 
-    for (const friend of friends) {
+    for (const friendId of friends) {
       try {
         const dmChannel = await selfbotUser.users
-          .createDM(friend.id)
+          .createDM(friendId)
           .catch(() => null);
         if (!dmChannel) continue;
-        await dmChannel.send(
-          message.replace(/(\{user\})/g, userMention(friend.id)),
-        );
+        await dmChannel.send({ content: message })
         successCount++;
-      } catch {}
+      } catch {
+      }
       await selfbotUser.sleep(1337);
     }
 
     await interaction.editReply({
-                  content:
-                    selfbotUser.lang === 'fr'
-                      ? `> Vous avez envoyé envoyé le message à **\`${successCount}\`** amis avec succès!`
-                      : `> You have succesfully sent the message to **\`${successCount}\`** friends!`,
+      content:
+        selfbotUser.lang === 'fr'
+          ? `> Vous avez envoyé le message à **\`${successCount}\`** amis avec succès!`
+          : `> You have successfully sent the message to **\`${successCount}\`** friends!`,
     });
   },
 };
