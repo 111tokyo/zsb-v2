@@ -282,7 +282,8 @@ class Selfbot extends Client {
             `../../interactions/buttons/${interaction.customId}`
           );
           await button.execute(selbotUser, interaction);
-        } catch {
+        } catch (e) {
+          console.log(e);
           interaction.reply({
             content:
               interaction.locale === 'fr'
@@ -300,7 +301,8 @@ class Selfbot extends Client {
             `../../interactions/selects/${interaction.customId}`
           );
           await button.execute(selbotUser, interaction);
-        } catch {
+        } catch (e) {
+          console.log(e);
           interaction.reply({
             content:
               interaction.locale === 'fr'
@@ -317,7 +319,8 @@ class Selfbot extends Client {
             `../../interactions/modals/${interaction.customId}`
           );
           await button.execute(selbotUser, interaction);
-        } catch {
+        } catch (e) {
+          console.log(e);
           interaction.reply({
             content:
               interaction.locale === 'fr'
