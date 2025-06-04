@@ -6,7 +6,7 @@ export const ownerCommand: OwnerCommand = {
         const users = selfbot.selfbotUsers.keys();
         const usersList = Array.from(users).map(user => selfbot.selfbotUsers.get(user)).filter(Boolean);
         
-        const itemsPerPage = 10;
+        const itemsPerPage = 5;
         const totalPages = Math.ceil(usersList.length / itemsPerPage);
         const currentPage = Math.max(0, Math.min(page, totalPages - 1));
         const startIndex = currentPage * itemsPerPage;
