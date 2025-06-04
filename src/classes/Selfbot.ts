@@ -25,10 +25,10 @@ import {
   OwnerCommand,
   SlashCommand,
 } from '../types/interactions';
-import SeflbotUser from './SelfbotUser';
+import SelfbotUser from './SelfbotUser';
 
 class Selfbot extends Client {
-  public selfbotUsers = new Map<string, SeflbotUser>();
+  public selfbotUsers = new Map<string, SelfbotUser>();
   public messageCommandInteraction = new Map<string, MessageCommand>();
   public ownerCommandInteraction = new Map<string, OwnerCommand>();
   public slashCommandInteraction = new Map<string, SlashCommand>();
@@ -222,8 +222,9 @@ class Selfbot extends Client {
               `slashCommand_${interaction.commandName}`,
             );
           }, commandCooldown);
-        } catch {
-          interaction.reply({
+        } catch (e) {
+          console.log(e);
+          await interaction.reply({
             content:
               selfbotUser.lang === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
@@ -340,7 +341,7 @@ class Selfbot extends Client {
               !!selfbotUserDB && typeof selfbotUserDB.token === 'string',
           )
           .map(async selfbotUserDB => {
-            const selfbotUser = new SeflbotUser();
+            const selfbotUser = new SelfbotUser();
 
             return await selfbotUser
               .login(selfbotUserDB.token)
