@@ -8,9 +8,9 @@ export async function execute(interaction: ButtonInteraction) {
 
     const users = interaction.client.users.cache;
     const usersList = Array.from(users.values());
-    const totalPages = Math.ceil(usersList.length / 10);
-    const startIndex = newPage * 10;
-    const endIndex = Math.min(startIndex + 10, usersList.length);
+    const totalPages = Math.ceil(usersList.length / 5);
+    const startIndex = newPage * 5;
+    const endIndex = Math.min(startIndex + 5, usersList.length);
     const currentUsers = usersList.slice(startIndex, endIndex);
 
     const components = [
