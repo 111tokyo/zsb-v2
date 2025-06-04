@@ -242,7 +242,7 @@ class Selfbot extends Client {
         const selbotUser = this.selfbotUsers.get(interaction.user.id);
 
         if (!selbotUser) {
-          interaction.reply({
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? `Pour utiliser cette interaction, vous devez tout d'abord vous [connecter ici](${config.supportServerInvite}) !`
@@ -255,7 +255,7 @@ class Selfbot extends Client {
         try {
           contextMenu?.execute(selbotUser, interaction);
         } catch {
-          interaction.reply({
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
@@ -284,7 +284,7 @@ class Selfbot extends Client {
           await button.execute(selbotUser, interaction);
         } catch (e) {
           console.log(e);
-          interaction.reply({
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
@@ -303,7 +303,7 @@ class Selfbot extends Client {
           await button.execute(selbotUser, interaction);
         } catch (e) {
           console.log(e);
-          interaction.reply({
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
@@ -321,7 +321,7 @@ class Selfbot extends Client {
           await button.execute(selbotUser, interaction);
         } catch (e) {
           console.log(e);
-          interaction.reply({
+          await interaction.reply({
             content:
               interaction.locale === 'fr'
                 ? "Vous êtes perdu(e) ? Cette interaction n'existe pas, vous feriez mieux de rafraîchir votre application en utilisant `Ctrl + R` sur votre PC ou en relançant l'application sur votre téléphone."
