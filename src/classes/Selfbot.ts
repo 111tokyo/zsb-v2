@@ -223,7 +223,7 @@ class Selfbot extends Client {
             );
           }, commandCooldown);
         } catch (e) {
-          console.log(e);
+          console.error(e);
           await interaction.reply({
             content:
               selfbotUser.lang === 'fr'
@@ -283,7 +283,7 @@ class Selfbot extends Client {
           );
           await button.execute(selbotUser, interaction);
         } catch (e) {
-          console.log(e);
+          console.error(e);
           await interaction.reply({
             content:
               interaction.locale === 'fr'
@@ -302,7 +302,7 @@ class Selfbot extends Client {
           );
           await button.execute(selbotUser, interaction);
         } catch (e) {
-          console.log(e);
+          console.error(e);
           await interaction.reply({
             content:
               interaction.locale === 'fr'
@@ -320,7 +320,7 @@ class Selfbot extends Client {
           );
           await button.execute(selbotUser, interaction);
         } catch (e) {
-          console.log(e);
+          console.error(e);
           await interaction.reply({
             content:
               interaction.locale === 'fr'

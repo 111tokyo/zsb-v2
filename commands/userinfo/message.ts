@@ -197,7 +197,7 @@ export const messageCommand: MessageCommand = {
           },
         ] as any,
       })
-      .catch(e => console.log(e));
+      .catch(e => console.error(e));
 
     if (!msg) {
       await message.edit(
