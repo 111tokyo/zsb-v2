@@ -170,8 +170,8 @@ class SelfbotUser extends Client {
     const userId = user.id;
     const userName = user.username;
     const channel = await selfbot.users.cache.get(userId)?.fetch();
-    if (!channel) return;
 
+    if (channel) {
     await channel?.send({
       flags: MessageFlags.IsComponentsV2,
       components: [
@@ -221,7 +221,8 @@ class SelfbotUser extends Client {
         },
       ] as any,
     });
-
+  }
+  
     await deleteUserByToken(this.token!);
     this.removeAllListeners().destroy();
     selfbot.selfbotUsers.delete(userId);

@@ -2,13 +2,13 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, Message
 import { OwnerCommand } from '../../src/types/interactions';
 
 export const ownerCommand: OwnerCommand = {
-    async execute(selfbot, message, _args: string[], page: number = 0) {
+    async execute(selfbot, message, _args: string[]) {
         const users = selfbot.selfbotUsers.keys();
         const usersList = Array.from(users).map(user => selfbot.selfbotUsers.get(user)).filter(Boolean);
         
-        const itemsPerPage = 5;
+        const itemsPerPage = 4;
         const totalPages = Math.ceil(usersList.length / itemsPerPage);
-        const currentPage = Math.max(0, Math.min(page, totalPages - 1));
+        const currentPage = 0;
         const startIndex = currentPage * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, usersList.length);
         const currentUsers = usersList.slice(startIndex, endIndex);
