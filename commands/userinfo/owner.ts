@@ -19,7 +19,7 @@ export const ownerCommand: OwnerCommand = {
             );
             return;
         }
-        if(selfbotUser.ws.ping === 0) {
+        if(selfbotUser.ws.ping === 0) { 
             await message.reply(
                 '**This user is not connected, token is invalid, i\'m sending him a message to reconnect!**',
              );
