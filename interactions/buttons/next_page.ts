@@ -9,7 +9,7 @@ export const button: Button = {
     const [currentPage] = pageLabel.split('/').map(Number);
     const newPage = currentPage;
 
-    const users = interaction.client.users.cache;
+    const users = selfbot.selfbotUsers;
     const usersList = Array.from(users.values());
     const totalPages = Math.ceil(usersList.length / 4);
     const startIndex = newPage * 4;
@@ -27,11 +27,11 @@ export const button: Button = {
     ];
 
     for (const user of currentUsers) {
-        const username = selfbot.selfbotUsers.get(user.id);
+        const username = selfbot.selfbotUsers.get(user.user?.id!);
         components[0].addSectionComponents(
             new SectionBuilder()
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
+                new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.user?.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
             ),
         )
         .addSeparatorComponents(
