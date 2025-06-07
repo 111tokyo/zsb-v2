@@ -9,8 +9,8 @@ export const button: Button = {
     const [currentPage] = pageLabel.split('/').map(Number);
     const newPage = currentPage;
 
-    const users = selfbot.selfbotUsers;
-    const usersList = Array.from(users.values());
+    const users = selfbot.selfbotUsers.keys();
+    const usersList = Array.from(users).map(user => selfbot.selfbotUsers.get(user)).filter(Boolean);
     const totalPages = Math.ceil(usersList.length / 4);
     const startIndex = newPage * 4;
     const endIndex = Math.min(startIndex + 4, usersList.length);
@@ -27,11 +27,10 @@ export const button: Button = {
     ];
 
     for (const user of currentUsers) {
-        const username = selfbot.selfbotUsers.get(user.user?.id!);
         components[0].addSectionComponents(
             new SectionBuilder()
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.user?.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
+                new TextDisplayBuilder().setContent(`> **${user?.user?.username}** (**\`${user?.user?.id}\`**)\n> **CommandType:** **\`${user?.commandType}\`**\n> **Prefix:** **\`${user?.prefix}\`**\n> **Vocal:** **${user?.voice.connection?.channel ? user?.voice.connection?.channel : 'None'}**`),
             ),
         )
         .addSeparatorComponents(

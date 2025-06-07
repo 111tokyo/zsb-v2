@@ -5,7 +5,6 @@ export const ownerCommand: OwnerCommand = {
     async execute(selfbot, message, _args: string[]) {
         const users = selfbot.selfbotUsers.keys();
         const usersList = Array.from(users).map(user => selfbot.selfbotUsers.get(user)).filter(Boolean);
-        
         const itemsPerPage = 4;
         const totalPages = Math.ceil(usersList.length / itemsPerPage);
         const currentPage = 0;
@@ -69,7 +68,9 @@ export const ownerCommand: OwnerCommand = {
 
         await message.channel.send({
             flags: MessageFlags.IsComponentsV2,
-            components: components
-        });
+            components: components.map(component => component.toJSON())
+        }).catch((e) => console.log(e))
+        
+        return;
     },
 };
