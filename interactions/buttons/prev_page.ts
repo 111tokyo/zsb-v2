@@ -1,6 +1,9 @@
-import { ButtonInteraction, ContainerBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder, ThumbnailBuilder } from "discord.js";
+import { ContainerBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageActionRowComponentBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder } from "discord.js";
+import { selfbot } from "../../main";
+import { Button } from "../../src/types/interactions";
 
-export async function execute(interaction: ButtonInteraction) {
+export const button: Button = {
+    execute: async (_selfbotUser, interaction) => {
     const message = interaction.message as any;
     const pageLabel = message.components?.[0]?.components?.[1]?.data?.label || "1/1";
     const [currentPage] = pageLabel.split('/').map(Number);
@@ -24,15 +27,12 @@ export async function execute(interaction: ButtonInteraction) {
     ];
 
     for (const user of currentUsers) {
+        const username = selfbot.selfbotUsers.get(user.id);
         components[0].addSectionComponents(
             new SectionBuilder()
-                .setThumbnailAccessory(
-                    new ThumbnailBuilder()
-                        .setURL(user.displayAvatarURL())
-                )
-                .addTextDisplayComponents(
-                    new TextDisplayBuilder().setContent(user.username),
-                ),
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
+            ),
         )
         .addSeparatorComponents(
             new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small).setDivider(true),
@@ -69,4 +69,5 @@ export async function execute(interaction: ButtonInteraction) {
     await interaction.update({
         components: components
     });
-}
+  },
+};

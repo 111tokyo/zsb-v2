@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, MessageActionRowComponentBuilder, MessageFlags, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder, ThumbnailBuilder } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, MessageActionRowComponentBuilder, MessageFlags, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, TextDisplayBuilder } from 'discord.js';
 import { OwnerCommand } from '../../src/types/interactions';
 
 export const ownerCommand: OwnerCommand = {
@@ -24,15 +24,10 @@ export const ownerCommand: OwnerCommand = {
         ];
 
         for (const username of currentUsers) {
-            const user = await selfbot.users.fetch(username!.user!.id!);
             components[0].addSectionComponents(
                 new SectionBuilder()
-                    .setThumbnailAccessory(
-                        new ThumbnailBuilder()
-                            .setURL(user.displayAvatarURL())
-                    )
                     .addTextDisplayComponents(
-                        new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${user.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
+                        new TextDisplayBuilder().setContent(`> **${username?.user?.username}** (**\`${username?.user?.id}\`**)\n> **CommandType:** **\`${username?.commandType}\`**\n> **Prefix:** **\`${username?.prefix}\`**\n> **Vocal:** **${username?.voice.connection?.channel ? username?.voice.connection?.channel : 'None'}**`),
                     ),
             )
             .addSeparatorComponents(
