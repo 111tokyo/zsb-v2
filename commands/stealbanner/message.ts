@@ -22,7 +22,7 @@ export const messageCommand: MessageCommand = {
             : `**You must specify a user to steal the banner!**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
     }
-    const targetId = args[0]?.replace(/[<@!>]/g, '') || message.author.id;
+    const targetId = args[0]?.replace(/[<@!>]/g, '');
     const targetUser = await selfbotUser.users.fetch(targetId);
     const targetBanner = targetUser.bannerURL({ dynamic: true });
 
@@ -37,13 +37,14 @@ export const messageCommand: MessageCommand = {
 
     await selfbotUser.user?.setBanner(targetBanner).catch(async () => {
       await message.edit({
-        content: selfbotUser.lang === 'fr' 
-          ? `**Vous devez attendre avant de pouvoir changer de banniere à nouveau.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
-          : `**You need to wait before changing your banner again.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
+        content:
+          selfbotUser.lang === 'fr'
+            ? `**Vous devez attendre avant de pouvoir changer de banniere à nouveau.**\n-# ➜ *Suppression du message ${time(now + 16, 'R')}*`
+            : `**You need to wait before changing your banner again.**\n-# ➜ *Deleting message ${time(now + 16, 'R')}*`,
       });
       return;
     });
-    
+
     await message.edit({
       content:
         selfbotUser.lang === 'fr'

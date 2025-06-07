@@ -39,6 +39,7 @@ export const slashCommand: SlashCommand = {
           selfbotUser.lang === 'fr'
             ? `Votre nouveau préfixe doit être différent de l'actuel!`
             : `Your new prefix must be different from the current one!`,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -61,6 +62,6 @@ export const slashCommand: SlashCommand = {
       .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
       .execute();
 
-      return;
+    return;
   },
 };
