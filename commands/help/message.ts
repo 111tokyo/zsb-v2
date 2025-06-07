@@ -7,6 +7,8 @@ export const messageCommand: MessageCommand = {
   async execute(selfbot, selfbotUser, message, _args: string[]) {
     const user = await selfbot.users.cache.get(selfbotUser.user!.id)?.fetch()!;
     const now = Math.floor(Date.now() / 1000);
+    const prefixCommands = Array.from(selfbot.messageCommandInteraction.keys());
+    console.log(prefixCommands);
 
     const allCommandsFR = Array.from(
       selfbot.slashCommandInteraction.values(),
@@ -20,13 +22,13 @@ export const messageCommand: MessageCommand = {
               .join(' ')
           : '') +
         '\`**\n' +
-        `-# ┖ ${cmdName.data.description_localizations!.fr}`
+        `-# ┖ ${cmdName.data.description_localizations?.fr}`
       );
-    });
-
+    })
     const allCommandsEN = Array.from(
       selfbot.slashCommandInteraction.values(),
     ).map((cmdName: SlashCommand) => {
+      console.log(cmdName.data.name);
       return (
         `- **\`${selfbotUser.prefix}${cmdName.data.name}` +
         (cmdName.data.options && cmdName.data.options.length
@@ -38,8 +40,7 @@ export const messageCommand: MessageCommand = {
         '\`**\n' +
         `-# ┖ ${cmdName.data.description}`
       );
-    });
-
+    })
     let currentPage = 1;
     const commands = selfbotUser.lang === 'fr' ? allCommandsFR : allCommandsEN;
     const totalPages = Math.max(
@@ -128,7 +129,7 @@ export const messageCommand: MessageCommand = {
         flags: MessageFlags.IsComponentsV2,
         components: getComponents(currentPage),
       })
-      .catch(() => null);
+      .catch((e) => console.log(e));
 
     if (!msg) {
       await message.edit(

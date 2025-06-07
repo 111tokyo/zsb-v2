@@ -24,7 +24,6 @@ export const button: Select = {
     .where(eq(selfbotUsersTable.id, selfbotUser.user!.id))
     .execute();
 
-    await interaction.deleteReply();
     const container = new ContainerBuilder();
 
         if (selfbotUser.user?.bannerURL()) {
