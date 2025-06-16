@@ -8,31 +8,34 @@ export const messageCommand: MessageCommand = {
     const user = await selfbot.users.cache.get(selfbotUser.user!.id)?.fetch()!;
     const now = Math.floor(Date.now() / 1000);
     const prefixCommands = Array.from(selfbot.messageCommandInteraction.keys());
-    console.log(prefixCommands);
-
+      
     const allCommandsFR = Array.from(
       selfbot.slashCommandInteraction.values(),
     ).map((cmdName: SlashCommand) => {
-      return (
-        `- **\`${selfbotUser.prefix}${cmdName.data.name}` +
-        (cmdName.data.options && cmdName.data.options.length
-          ? ' ' +
-            cmdName.data.options
-              .map((o: any) => (o.required ? `[${o.name}]` : `<${o.name}>`))
-              .join(' ')
-          : '') +
-        '\`**\n' +
-        `-# ┖ ${cmdName.data.description_localizations?.fr}`
-      );
-    })
-    const allCommandsEN = Array.from(
+      if (prefixCommands.includes(cmdName.data.name)) {
+        return (
+          `- **\`${cmdName.data.name}` +
+          (cmdName.data.options && cmdName.data.options.length
+        ? ' ' +
+          cmdName.data.options
+            .map((o: any) => (o.required ? `[${o.name}]` : `<${o.name}>`))
+            .join(' ')
+        : '') +
+          '\`**\n' +
+          `-# ┖ ${cmdName.data.description_localizations?.fr}`
+        );
+      }
+      return;
+        }).filter(Boolean);
+        
+        const allCommandsEN = Array.from(
       selfbot.slashCommandInteraction.values(),
     ).map((cmdName: SlashCommand) => {
-      console.log(cmdName.data.name);
-      return (
-        `- **\`${selfbotUser.prefix}${cmdName.data.name}` +
-        (cmdName.data.options && cmdName.data.options.length
-          ? ' ' +
+      if (prefixCommands.includes(cmdName.data.name)) {
+        return (
+          `- **\`${selfbotUser.prefix}${cmdName.data.name}` +
+          (cmdName.data.options && cmdName.data.options.length
+            ? ' ' +
             cmdName.data.options
               .map((o: any) => (o.required ? `[${o.name}]` : `<${o.name}>`))
               .join(' ')
@@ -40,7 +43,9 @@ export const messageCommand: MessageCommand = {
         '\`**\n' +
         `-# ┖ ${cmdName.data.description}`
       );
-    })
+    }
+      return;
+    }).filter(Boolean);
     let currentPage = 1;
     const commands = selfbotUser.lang === 'fr' ? allCommandsFR : allCommandsEN;
     const totalPages = Math.max(
