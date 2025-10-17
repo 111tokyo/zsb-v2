@@ -90,7 +90,6 @@ export const messageCommand: MessageCommand = {
     // Helper for error messages
     const editMsg = (content: string) => message.edit({ content });
 
-    // --- Snipe 1 message ---
     if (!args[0]) {
       const snipedMessage = snipeMap?.[0] || null;
       if (!snipedMessage)
