@@ -79,4 +79,5 @@ There is no active support for this project.
 Original Discord server (might be inactive): https://discord.gg/cCFWjhGjAJ
 
 ---
-*Authors: 111tokyo, sqlu*
+- GitHub: [111tokyo](https://github.com/111tokyo), [Snayzou](https://github.com/sqlu)
+- Discord: `111tokyo`, `early.lover`
