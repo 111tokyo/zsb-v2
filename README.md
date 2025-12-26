@@ -31,26 +31,28 @@
 
 3. Configure Environment:
    Create a .env file in the root directory with the following variables:
-
+```
     DISCORD_TOKEN=your_user_token
     DATABASE_URL="file:./dev.db"
     ASSEMBLYAI_API_KEY=your_assemblyai_key
     # Add any other required keys based on the source code
-
+```
 4. Initialize the Database:
    Run the Prisma migration to set up the schema (uses the 'db' script from package.json):
-
+```
     npm run db
-
+```
 5. Run the bot:
 
     # For development (compiles TS and runs):
+```
     npm run dev
-
+```
     # For production:
+```
     npm run build
     npm start
-
+```
 ## 🧰 Tech Stack
 
 - **Runtime**: Node.js
