@@ -21,37 +21,38 @@
 > **Note:** These instructions are for historical reference. You may encounter dependency conflicts.
 
 1. Clone the repository:
-
-    git clone https://github.com/111tokyo/zsb-v2.git
-    cd zsb-v2
-
+```
+git clone https://github.com/111tokyo/zsb-v2.git
+cd zsb-v2
+```
 2. Install dependencies (using NPM):
-
-    npm install
-
+```
+npm install
+```
 3. Configure Environment:
    Create a .env file in the root directory with the following variables:
 ```
-    DISCORD_TOKEN=your_user_token
-    DATABASE_URL="file:./dev.db"
-    ASSEMBLYAI_API_KEY=your_assemblyai_key
-    # Add any other required keys based on the source code
+DISCORD_TOKEN=your_user_token
+DATABASE_URL="file:./dev.db"
+ASSEMBLYAI_API_KEY=your_assemblyai_key
 ```
+# Add any other required keys based on the source code
+
 4. Initialize the Database:
    Run the Prisma migration to set up the schema (uses the 'db' script from package.json):
 ```
-    npm run db
+npm run db
 ```
 5. Run the bot:
 
-    # For development (compiles TS and runs):
+# For development (compiles TS and runs):
 ```
-    npm run dev
+npm run dev
 ```
-    # For production:
+# For production:
 ```
-    npm run build
-    npm start
+npm run build
+npm start
 ```
 ## 🧰 Tech Stack
 
